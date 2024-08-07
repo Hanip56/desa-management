@@ -2,7 +2,6 @@
 
 import { signIn } from "@/auth";
 import { masukSchema } from "@/schemas";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const login = async (values: z.infer<typeof masukSchema>) => {
