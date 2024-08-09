@@ -1,6 +1,6 @@
 import { VariantProps, cva } from "class-variance-authority";
 
-import { cn, formatPercentage } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { IconType } from "react-icons/lib";
 import {
   Card,

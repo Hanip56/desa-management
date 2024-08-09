@@ -6,7 +6,6 @@ import FileSaver from "file-saver";
 type GetAllParams = {
   page?: number;
   limit?: number;
-  token: string;
   search?: string;
 };
 
@@ -21,11 +20,10 @@ type GetAllResponse = {
 export const getAllSuratKelahiran = async ({
   page = 1,
   limit = 1,
-  token,
   search,
 }: GetAllParams) => {
   try {
-    const response = await axiosInstance(token).get<GetAllResponse>(
+    const response = await axiosInstance.get<GetAllResponse>(
       "/surat-kelahiran",
       {
         params: {
@@ -46,15 +44,9 @@ export const getAllSuratKelahiran = async ({
   }
 };
 
-export const getSuratKelahiran = async ({
-  id,
-  token,
-}: {
-  id: string;
-  token: string;
-}) => {
+export const getSuratKelahiran = async ({ id }: { id: string }) => {
   try {
-    const response = await axiosInstance(token).get<SuratKelahiranDetailType>(
+    const response = await axiosInstance.get<SuratKelahiranDetailType>(
       `/surat-kelahiran/${id}`
     );
 
@@ -69,14 +61,12 @@ export const getSuratKelahiran = async ({
 };
 
 export const createSuratKelahiran = async ({
-  token,
   body,
 }: {
-  token: string;
   body: Partial<SuratKelahiranType>;
 }) => {
   try {
-    const response = await axiosInstance(token).post<SuratKelahiranType>(
+    const response = await axiosInstance.post<SuratKelahiranType>(
       `/surat-kelahiran`,
       body
     );
@@ -92,16 +82,14 @@ export const createSuratKelahiran = async ({
 };
 
 export const updateSuratKelahiran = async ({
-  token,
   id,
   body,
 }: {
-  token: string;
   id: string;
   body: Partial<SuratKelahiranType>;
 }) => {
   try {
-    const response = await axiosInstance(token).put<SuratKelahiranType>(
+    const response = await axiosInstance.put<SuratKelahiranType>(
       `/surat-kelahiran/${id}`,
       body
     );
@@ -116,15 +104,9 @@ export const updateSuratKelahiran = async ({
   }
 };
 
-export const deleteSuratKelahiran = async ({
-  token,
-  id,
-}: {
-  token: string;
-  id: string;
-}) => {
+export const deleteSuratKelahiran = async ({ id }: { id: string }) => {
   try {
-    const response = await axiosInstance(token).delete<SuratKelahiranType>(
+    const response = await axiosInstance.delete<SuratKelahiranType>(
       `/surat-kelahiran/${id}`
     );
 
@@ -138,15 +120,9 @@ export const deleteSuratKelahiran = async ({
   }
 };
 
-export const generateSuratKelahiran = async ({
-  token,
-  id,
-}: {
-  token: string;
-  id: string;
-}) => {
+export const generateSuratKelahiran = async ({ id }: { id: string }) => {
   try {
-    const response = await axiosInstance(token).get(
+    const response = await axiosInstance.get(
       `/surat-kelahiran/${id}/generate`,
       {
         responseType: "blob",

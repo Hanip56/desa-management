@@ -2,7 +2,6 @@
 
 import { useSearchParams } from "next/navigation";
 
-import { formatDateRange } from "@/lib/utils";
 import {
   HiDocumentArrowDown,
   HiDocumentCheck,
@@ -15,7 +14,8 @@ export const DataGrid = () => {
   const to = params.get("to") || undefined;
   const from = params.get("from") || undefined;
 
-  const dateRangeLabel = formatDateRange({ to, from });
+  // const dateRangeLabel = formatDateRange({ to, from });
+  const dateRangeLabel = "";
 
   //   if (isLoading) {
   //     return (
