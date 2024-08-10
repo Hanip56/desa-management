@@ -1,15 +1,15 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardHeader } from "@/components/ui/card";
-import { formatTanggal } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 import { CheckIcon, Download, XIcon } from "lucide-react";
 
 type Props = {
   email: string;
-  tanggal: string;
-  noSurat?: string;
-  tanggalPembuatan?: string;
-  alasanDitolak?: string;
+  tanggal: Date;
+  noSurat?: string | null;
+  tanggalPembuatan?: Date | null;
+  alasanDitolak?: string | null;
   status: "DIPROSES" | "DITERIMA" | "DITOLAK";
   handleTerima: () => void;
   handleTolak: () => Promise<void>;
@@ -62,7 +62,7 @@ const HeaderKonfirmasiPengajuan = ({
               </div>
               <div>
                 <span className="font-semibold">Tanggal Pembuatan :</span>{" "}
-                {tanggalPembuatan ? formatTanggal(tanggalPembuatan) : ""}
+                {tanggalPembuatan ? formatDate(tanggalPembuatan) : ""}
               </div>
             </>
           )}
@@ -71,7 +71,7 @@ const HeaderKonfirmasiPengajuan = ({
           </div>
           <div>
             <span className="font-semibold">Tanggal Pengajuan :</span>{" "}
-            {formatTanggal(tanggal)}
+            {formatDate(tanggal)}
           </div>
         </div>
         {status === "DIPROSES" && (

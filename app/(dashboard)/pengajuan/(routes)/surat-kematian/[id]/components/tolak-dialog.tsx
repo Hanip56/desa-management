@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import DatePicker from "@/components/ui/date-picker";
 import {
   Form,
   FormControl,
@@ -12,9 +11,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Modal from "@/components/ui/modal";
-import { updateSuratKelahiran } from "@/fetcher/surat-kelahiran-fetcher";
-import { dateToISO } from "@/lib/utils";
-import { SuratKelahiranWithUser } from "@/types";
+import { updateSuratKematian } from "@/fetcher/surat-kematian-fetcher";
+import { SuratKematianWithUser } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -26,45 +24,39 @@ import { z } from "zod";
 type Props = {
   open: boolean;
   handleClose: () => void;
-  initialData: SuratKelahiranWithUser;
+  initialData: SuratKematianWithUser;
 };
 
 const formSchema = z.object({
-  noSurat: z.string().min(1, {
-    message: "Kolom No surat harus diisi",
-  }),
-  tanggal: z.date({
-    message: "Kolom tanggal pembuatan harus diisi",
-  }),
+  alasanDitolak: z.string().optional(),
 });
 
-const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
-  const { data: session } = useSession();
+const TolakDialog = ({ open, handleClose, initialData }: Props) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      noSurat: "S-17/.../PEM/2024",
+      alasanDitolak: "",
     },
   });
 
-  const persetujuanMutation = useMutation({
-    mutationFn: updateSuratKelahiran,
+  const tolakMutation = useMutation({
+    mutationFn: updateSuratKematian,
     onSuccess: () => {
-      toast("Pengajuan berhasil disetujui.", {
+      toast("Pengajuan berhasil ditolak.", {
         className: "text-emerald-600 font-semibold",
       });
-      handleClose();
       form.reset();
+      handleClose();
       router.refresh();
 
       queryClient.invalidateQueries({
-        queryKey: ["surat-kelahirans"],
+        queryKey: ["surat-kematians"],
       });
     },
     onError: (error) => {
-      toast("Pengajuan gagal disetujui.", {
+      toast("Pengajuan gagal ditolak.", {
         className: "text-rose-600 font-semibold",
       });
       console.log(error);
@@ -72,24 +64,18 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const body = {
-      noSurat: values.noSurat,
-      tanggalPembuatan: dateToISO(values.tanggal),
-      status: "DITERIMA" as const,
-    };
-
-    persetujuanMutation.mutate({
+    tolakMutation.mutate({
       id: initialData.id,
-      body,
+      body: { pesanDitolak: values.alasanDitolak, status: "DITOLAK" },
     });
   };
 
-  const disabledCondition = persetujuanMutation.isPending;
+  const disabledCondition = tolakMutation.isPending;
 
   return (
     <Modal
-      title="Terima pengajuan"
-      description="Surat kelahiran"
+      title="Tolak pengajuan"
+      description="Surat kematian"
       isOpen={open}
       onClose={handleClose}
     >
@@ -100,14 +86,14 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
         >
           <FormField
             control={form.control}
-            name="noSurat"
+            name="alasanDitolak"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>No Surat</FormLabel>
+                <FormLabel>Alasan ditolak</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="S-17/.../PEM/2024"
+                    placeholder="Alasan pengajuan ditolak"
                     disabled={disabledCondition}
                   />
                 </FormControl>
@@ -115,20 +101,8 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="tanggal"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Tanggal Pembuatan</FormLabel>
-                <FormControl>
-                  <DatePicker value={field.value} onChange={field.onChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button disabled={disabledCondition} variant="confirm">
+
+          <Button disabled={disabledCondition} variant="destructive">
             Konfirmasi
           </Button>
         </form>
@@ -137,4 +111,4 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
   );
 };
 
-export default PersetujuanDialog;
+export default TolakDialog;

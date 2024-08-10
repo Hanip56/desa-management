@@ -1,14 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardHeader } from "@/components/ui/card";
-import { formatTanggal } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 import { Download } from "lucide-react";
 
 type Props = {
   status: "DITERIMA" | "DITOLAK";
-  alasanDitolak?: string;
-  noSurat?: string;
-  tanggalPembuatan?: string;
+  alasanDitolak?: string | null;
+  noSurat?: string | null;
+  tanggalPembuatan?: Date | null;
   handleUnduh: () => void;
 };
 
@@ -48,7 +48,7 @@ const HeaderHasilPengajuan = ({
               </div>
               <div>
                 <span className="font-semibold">Tanggal Pembuatan :</span>{" "}
-                {tanggalPembuatan ? formatTanggal(tanggalPembuatan) : ""}
+                {tanggalPembuatan ? formatDate(tanggalPembuatan) : ""}
               </div>
             </>
           )}

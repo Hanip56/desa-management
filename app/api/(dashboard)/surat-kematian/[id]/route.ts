@@ -24,7 +24,7 @@ export async function GET(
   }
 
   try {
-    const suratKelahiran = await prisma.suratKelahiran.findUnique({
+    const suratKematian = await prisma.suratKematian.findUnique({
       where: { id: params.id },
       include: {
         User: {
@@ -40,22 +40,22 @@ export async function GET(
       },
     });
 
-    if (!suratKelahiran) {
-      return new NextResponse("Surat kelahiran not found", { status: 400 });
+    if (!suratKematian) {
+      return new NextResponse("Surat kematian not found", { status: 400 });
     }
 
     return NextResponse.json({
-      ...suratKelahiran,
+      ...suratKematian,
       User: undefined,
-      user: suratKelahiran.User,
+      user: suratKematian.User,
     });
   } catch (error) {
-    console.log("[GET_ONE_SURAT-KELAHIRAN]", error);
+    console.log("[GET_ONE_SURAT-KEMATIAN]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
 
-// UPDATE Surat-kelahiran
+// UPDATE Surat-kematian
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -65,17 +65,17 @@ export async function PUT(
   if (!session) return new NextResponse("Unauthorized", { status: 401 });
 
   try {
-    const suratKelahiran = await prisma.suratKelahiran.findUnique({
+    const suratKematian = await prisma.suratKematian.findUnique({
       where: { id: params.id },
     });
 
-    if (!suratKelahiran) {
-      return new NextResponse("Surat kelahiran not found", { status: 404 });
+    if (!suratKematian) {
+      return new NextResponse("Surat kematian not found", { status: 404 });
     }
 
     // is it own or admin
     if (
-      suratKelahiran.userId !== session.user.id &&
+      suratKematian.userId !== session.user.id &&
       session.user.role === "USER"
     ) {
       return new NextResponse("Forbidden", { status: 403 });
@@ -90,19 +90,19 @@ export async function PUT(
       });
     }
 
-    const updatedSuratKelahiran = await prisma.suratKelahiran.update({
+    const updatedSuratKematian = await prisma.suratKematian.update({
       where: { id: params.id },
       data: body,
     });
 
-    return NextResponse.json(updatedSuratKelahiran);
+    return NextResponse.json(updatedSuratKematian);
   } catch (error) {
-    console.log("[UPDATE_SURAT-KELAHIRAN]", error);
+    console.log("[UPDATE_SURAT-KEMATIAN]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
 
-// DELETE Surat-kelahiran
+// DELETE Surat-kematian
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -112,38 +112,38 @@ export async function DELETE(
   if (!session) return new NextResponse("Unauthorized", { status: 401 });
 
   try {
-    const suratKelahiran = await prisma.suratKelahiran.findUnique({
+    const suratKematian = await prisma.suratKematian.findUnique({
       where: { id: params.id },
     });
 
-    if (!suratKelahiran) {
-      return new NextResponse("Surat kelahiran not found", { status: 404 });
+    if (!suratKematian) {
+      return new NextResponse("Surat kematian not found", { status: 404 });
     }
 
     // is it own or admin
     if (
-      suratKelahiran.userId !== session.user.id &&
+      suratKematian.userId !== session.user.id &&
       session.user.role === "USER"
     ) {
       return new NextResponse("Forbidden", { status: 403 });
     }
 
-    if (suratKelahiran.status === "DITERIMA" && session.user.role === "USER") {
+    if (suratKematian.status === "DITERIMA" && session.user.role === "USER") {
       return new NextResponse(
-        "You cannot delete surat kelahiran with status 'DITERMA'",
+        "You cannot delete surat kematian with status 'DITERMA'",
         { status: 400 }
       );
     }
 
-    const deletedSuratKelahiran = await prisma.suratKelahiran.delete({
+    const deletedSuratKematian = await prisma.suratKematian.delete({
       where: { id: params.id },
     });
 
     return NextResponse.json({
-      success: `Surat kelahiran with id:${deletedSuratKelahiran.id} has been deleted.`,
+      success: `Surat kematian with id:${deletedSuratKematian.id} has been deleted.`,
     });
   } catch (error) {
-    console.log("[DELETE_SURAT-KELAHIRAN]", error);
+    console.log("[DELETE_SURAT-KEMATIAN]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

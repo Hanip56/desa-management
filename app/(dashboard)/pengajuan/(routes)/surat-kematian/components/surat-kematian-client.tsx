@@ -4,23 +4,23 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from "lucide-react";
-import { columns, SuratKelahiranType } from "./columns";
+import { columns, SuratKematianType } from "./columns";
 import { DataTable } from "@/components/data-table";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { getAllSuratKelahiran } from "@/fetcher/surat-kelahiran-fetcher";
+import { getAllSuratKematian } from "@/fetcher/surat-kematian-fetcher";
 import CardSkeleton from "@/app/(dashboard)/components/card-skeleton";
 import { useNavigate } from "@/hooks/use-navigate";
 import CardError from "@/app/(dashboard)/components/card-error";
 
-export const SuratKelahiranClient = () => {
+export const SuratKematianClient = () => {
   const [page, handleNext, handlePrevious, search, handleSearch] =
     useNavigate();
 
   const query = useQuery({
-    queryKey: ["surat-kelahirans", { page, search }],
+    queryKey: ["surat-kematians", { page, search }],
     queryFn: () =>
-      getAllSuratKelahiran({
+      getAllSuratKematian({
         page,
         limit: 5,
         search,
@@ -31,7 +31,7 @@ export const SuratKelahiranClient = () => {
   if (query.isLoading || query.isPending) return <CardSkeleton />;
   if (query.isError) return <CardError error={query?.error?.message} />;
 
-  const data: SuratKelahiranType[] = query.data.data.map((surat) => ({
+  const data: SuratKematianType[] = query.data.data.map((surat) => ({
     id: surat.id,
     nama: surat.namaTerkait,
     alamat: surat.alamatTerkait,
@@ -46,7 +46,7 @@ export const SuratKelahiranClient = () => {
           <CardTitle className="text-xl">Daftar Pengajuan</CardTitle>
         </div>
         <Button asChild className="w-full md:w-fit">
-          <Link href="surat-kelahiran/formulir">
+          <Link href="surat-kematian/formulir">
             <Plus className="w-5 h-5 mr-2 " /> Buat pengajuan
           </Link>
         </Button>

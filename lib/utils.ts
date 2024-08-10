@@ -1,41 +1,45 @@
 import { type ClassValue, clsx } from "clsx";
-import { endOfDay, formatISO } from "date-fns";
+import { endOfDay, format, formatISO, parseISO } from "date-fns";
+import { id } from "date-fns/locale";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function formatDate(date: Date) {
+  return format(date, "d MMMM yyyy", { locale: id });
+}
+
 export function getGender(gender: "L" | "P") {
   return gender === "L" ? "Laki-laki" : "Perempuan";
+}
+
+export function dateTimeToISO(value: Date) {
+  const offset = value.getTimezoneOffset() * 60000;
+  return new Date(value.getTime() - offset).toISOString();
 }
 
 export function dateToISO(value: Date) {
   return formatISO(endOfDay(new Date(value)));
 }
 
-export function formatTanggal(isoDateString: string) {
-  const date = new Date(isoDateString);
+export function ISOtoDayAndDate(value: string) {
+  const date = parseISO(value);
 
-  const day = date.getDate();
-  const month = date.getMonth(); // Note: getMonth() returns 0-based month index
-  const year = date.getFullYear();
+  return format(date, "EEEE, d MMMM yyyy", { locale: id });
+}
 
-  const indonesianMonths = [
-    "Januari",
-    "Februari",
-    "Maret",
-    "April",
-    "Mei",
-    "Juni",
-    "Juli",
-    "Agustus",
-    "September",
-    "Oktober",
-    "November",
-    "Desember",
-  ];
+export function ISOtoTime(value: string) {
+  const date = parseISO(value);
 
-  const formattedDate = `${day} ${indonesianMonths[month]} ${year}`;
-  return formattedDate;
+  return format(date, "HH:mm:ss");
+}
+
+export function DateToDayAndDate(date: Date) {
+  return format(date, "EEEE, d MMMM yyyy", { locale: id });
+}
+
+export function DatetoTime(date: Date) {
+  return format(date, "HH:mm");
 }

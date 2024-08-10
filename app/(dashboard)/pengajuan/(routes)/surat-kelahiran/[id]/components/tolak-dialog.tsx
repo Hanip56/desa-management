@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Modal from "@/components/ui/modal";
 import { updateSuratKelahiran } from "@/fetcher/surat-kelahiran-fetcher";
-import { SuratKelahiranDetailType } from "@/schemas";
+import { SuratKelahiranWithUser } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -24,7 +24,7 @@ import { z } from "zod";
 type Props = {
   open: boolean;
   handleClose: () => void;
-  initialData: SuratKelahiranDetailType;
+  initialData: SuratKelahiranWithUser;
 };
 
 const formSchema = z.object({
@@ -67,7 +67,6 @@ const TolakDialog = ({ open, handleClose, initialData }: Props) => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     tolakMutation.mutate({
       id: initialData.id,
-      token: session?.accessToken ?? "",
       body: { pesanDitolak: values.alasanDitolak, status: "DITOLAK" },
     });
   };

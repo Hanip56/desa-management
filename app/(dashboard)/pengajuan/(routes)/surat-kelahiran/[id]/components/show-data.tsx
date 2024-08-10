@@ -1,9 +1,9 @@
 import SemiField from "@/components/semi-field";
-import { formatTanggal } from "@/lib/utils";
-import { SuratKelahiranDetailType } from "@/schemas";
+import { formatDate } from "@/lib/utils";
+import { SuratKelahiranWithUser } from "@/types";
 
 type Props = {
-  data: SuratKelahiranDetailType;
+  data: SuratKelahiranWithUser;
 };
 
 const ShowData = ({ data }: Props) => {
@@ -26,7 +26,7 @@ const ShowData = ({ data }: Props) => {
             <SemiField label="Alamat" value={data.alamatTerkait} />
             <SemiField
               label="Tempat tanggal lahir"
-              value={`${data.tempatLahirTerkait}, ${formatTanggal(
+              value={`${data.tempatLahirTerkait}, ${formatDate(
                 data.tanggalLahirTerkait
               )}`}
             />
@@ -44,7 +44,7 @@ const ShowData = ({ data }: Props) => {
             <SemiField label="Agama" value={data.agamaAyah} />
             <SemiField
               label="Tempat tanggal lahir"
-              value={`${data.tempatLahirAyah}, ${formatTanggal(
+              value={`${data.tempatLahirAyah}, ${formatDate(
                 data.tanggalLahirAyah
               )}`}
             />
@@ -62,7 +62,7 @@ const ShowData = ({ data }: Props) => {
             <SemiField label="Agama" value={data.agamaIbu} />
             <SemiField
               label="Tempat tanggal lahir"
-              value={`${data.tempatLahirIbu}, ${formatTanggal(
+              value={`${data.tempatLahirIbu}, ${formatDate(
                 data.tanggalLahirIbu
               )}`}
             />

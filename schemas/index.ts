@@ -2,7 +2,7 @@ import { date, z } from "zod";
 
 // FYI: Schema for form, type for anything else
 
-const genderEnum = ["L", "P"] as const;
+export const genderEnum = ["L", "P"] as const;
 
 export type UserType = {
   id: string;

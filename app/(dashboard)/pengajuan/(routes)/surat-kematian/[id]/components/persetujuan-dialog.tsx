@@ -12,9 +12,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Modal from "@/components/ui/modal";
-import { updateSuratKelahiran } from "@/fetcher/surat-kelahiran-fetcher";
+import { updateSuratKematian } from "@/fetcher/surat-kematian-fetcher";
 import { dateToISO } from "@/lib/utils";
-import { SuratKelahiranWithUser } from "@/types";
+import { SuratKematianWithUser } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -26,7 +26,7 @@ import { z } from "zod";
 type Props = {
   open: boolean;
   handleClose: () => void;
-  initialData: SuratKelahiranWithUser;
+  initialData: SuratKematianWithUser;
 };
 
 const formSchema = z.object({
@@ -50,7 +50,7 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
   });
 
   const persetujuanMutation = useMutation({
-    mutationFn: updateSuratKelahiran,
+    mutationFn: updateSuratKematian,
     onSuccess: () => {
       toast("Pengajuan berhasil disetujui.", {
         className: "text-emerald-600 font-semibold",
@@ -60,7 +60,7 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
       router.refresh();
 
       queryClient.invalidateQueries({
-        queryKey: ["surat-kelahirans"],
+        queryKey: ["surat-kematians"],
       });
     },
     onError: (error) => {
@@ -89,7 +89,7 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
   return (
     <Modal
       title="Terima pengajuan"
-      description="Surat kelahiran"
+      description="Surat kematian"
       isOpen={open}
       onClose={handleClose}
     >

@@ -1,8 +1,8 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-import { formatTanggal, getGender } from "@/lib/utils";
+import { formatDate, getGender } from "@/lib/utils";
 import { SuratKelahiran } from "@prisma/client";
 
-export const generateSk = async (
+export const generateSuratKelahiran = async (
   data: SuratKelahiran,
   dataCb: (chunk: Uint8Array) => void,
   endCb: () => void
@@ -79,8 +79,8 @@ export const generateSk = async (
   });
 
   page.drawText(
-    `Tempat/tgl lahir   : ${data.tempatLahirTerkait}, ${formatTanggal(
-      data.tanggalLahirTerkait.toString()
+    `Tempat/tgl lahir   : ${data.tempatLahirTerkait}, ${formatDate(
+      data.tanggalLahirTerkait
     )}`,
     {
       x: 65,
@@ -129,8 +129,8 @@ export const generateSk = async (
   });
 
   page.drawText(
-    `Tempat/tgl lahir   : ${data.tempatLahirAyah}, ${formatTanggal(
-      data.tanggalLahirAyah.toString()
+    `Tempat/tgl lahir   : ${data.tempatLahirAyah}, ${formatDate(
+      data.tanggalLahirAyah
     )}`,
     {
       x: 65,
@@ -180,8 +180,8 @@ export const generateSk = async (
   });
 
   page.drawText(
-    `Tempat/tgl lahir   : ${data.tempatLahirIbu}, ${formatTanggal(
-      data.tanggalLahirIbu.toString()
+    `Tempat/tgl lahir   : ${data.tempatLahirIbu}, ${formatDate(
+      data.tanggalLahirIbu
     )}`,
     {
       x: 65,
@@ -249,9 +249,9 @@ export const generateSk = async (
     color: rgb(1, 1, 1),
   });
 
-  const tanggal = `Margaasih, ${formatTanggal(
-    (data.tanggalPembuatan ?? "-").toString()
-  )}`;
+  const tanggal = `Margaasih, ${
+    data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
+  }`;
   const tanggalWidth = font.widthOfTextAtSize(tanggal, 13);
 
   page.drawText(tanggal, {

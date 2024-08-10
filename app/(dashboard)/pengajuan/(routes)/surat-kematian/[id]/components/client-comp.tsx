@@ -2,7 +2,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import UpsertForm from "./upsert-form";
-import { SuratKelahiranDetailType } from "@/schemas";
 import { useConfirm } from "@/hooks/use-confirm";
 import PersetujuanDialog from "./persetujuan-dialog";
 import { useState } from "react";
@@ -10,19 +9,18 @@ import HeaderKonfirmasiPengajuan from "@/app/(dashboard)/components/header-konfi
 import ShowData from "./show-data";
 import HeaderHasilPengajuan from "@/app/(dashboard)/components/header-hasil-pengajuan";
 import { useSession } from "next-auth/react";
-import { format } from "date-fns";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  generateSuratKelahiran,
-  updateSuratKelahiran,
-} from "@/fetcher/surat-kelahiran-fetcher";
+  generateSuratKematian,
+  updateSuratKematian,
+} from "@/fetcher/surat-kematian-fetcher";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import TolakDialog from "./tolak-dialog";
-import { SuratKelahiranWithUser } from "@/types";
+import { SuratKematianWithUser } from "@/types";
 
 type Props = {
-  initialData?: SuratKelahiranWithUser;
+  initialData?: SuratKematianWithUser;
 };
 
 const ClientComp = ({ initialData }: Props) => {
@@ -37,7 +35,7 @@ const ClientComp = ({ initialData }: Props) => {
   );
 
   const batalMutation = useMutation({
-    mutationFn: updateSuratKelahiran,
+    mutationFn: updateSuratKematian,
     onSuccess: () => {
       toast("Pengajuan berhasil dibatalkan.", {
         className: "text-emerald-600 font-semibold",
@@ -45,7 +43,7 @@ const ClientComp = ({ initialData }: Props) => {
       router.refresh();
 
       queryClient.invalidateQueries({
-        queryKey: ["surat-kelahirans"],
+        queryKey: ["surat-kematians"],
       });
     },
     onError: (error) => {
@@ -68,7 +66,7 @@ const ClientComp = ({ initialData }: Props) => {
     if (!initialData) return;
 
     try {
-      await generateSuratKelahiran({
+      await generateSuratKematian({
         id: initialData?.id,
       });
     } catch (error) {
