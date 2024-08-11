@@ -4,11 +4,8 @@ import {
   DatetoTime,
   formatDate,
   getGender,
-  ISOtoDayAndDate,
-  ISOtoTime,
 } from "@/lib/utils";
 import { SuratKematian } from "@prisma/client";
-import { format } from "date-fns";
 
 export const generateSuratKematian = async (
   data: SuratKematian,

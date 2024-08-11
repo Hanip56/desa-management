@@ -39,8 +39,8 @@ const NavMenu = () => {
           href: "/pengajuan/surat-kelahiran",
         },
         {
-          label: "Surat belum nikah",
-          href: "/pengajuan/surat-belum-nikah",
+          label: "SK belum nikah",
+          href: "/pengajuan/sk-belum-menikah",
         },
         {
           label: "Keterangan penghasilan orang tua",

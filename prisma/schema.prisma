@@ -24,6 +24,13 @@ enum Gender {
   P
 }
 
+enum StatusPerkawinan {
+  BELUM_KAWIN
+  KAWIN
+  CERAI_HIDUP
+  CERAI_MATI
+}
+
 enum Status {
   DIPROSES
   DITERIMA
@@ -31,14 +38,17 @@ enum Status {
 }
 
 model User {
-  id              String           @id @default(uuid())
-  username        String
-  email           String           @unique
-  password        String
-  role            UserRole         @default(USER)
-  refreshToken    String?
-  suratKelahirans SuratKelahiran[]
-  suratKematians  SuratKematian[]
+  id                    String                  @id @default(uuid())
+  username              String
+  email                 String                  @unique
+  password              String
+  role                  UserRole                @default(USER)
+  refreshToken          String?
+  suratKelahirans       SuratKelahiran[]
+  suratKematians        SuratKematian[]
+  skBelumMenikahs       SkBelumMenikah[]
+  skIjinKeramaian       SkIjinKeramaian[]
+  skPenghasilanOrangTua SkPenghasilanOrangTua[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -75,7 +85,7 @@ model SuratKelahiran {
 }
 
 model SuratKematian {
-  id                      String    @id @default(uuid())
+  id                      String   @id @default(uuid())
   namaPemohon             String
   jenisKelaminPemohon     Gender
   noNikPemohon            String
@@ -88,12 +98,90 @@ model SuratKematian {
   tanggal                 DateTime
   penyebab                String
   tempat                  String
-  status                  Status    @default(DIPROSES)
-  pesanDitolak            String?
-  noSurat                 String?
-  tanggalPembuatan        DateTime?
-  User                    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId                  String
+  status                  Status   @default(DIPROSES)
+
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkBelumMenikah {
+  id               String           @id @default(uuid())
+  namaLengkap      String
+  nik              String
+  tanggalLahir     DateTime
+  jenisKelamin     Gender
+  agama            String
+  pekerjaan        String
+  statusPerkawinan StatusPerkawinan
+  kewarganegaraan  String
+  alamat           String
+
+  namaKua          String?
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkIjinKeramaian {
+  id             String   @id @default(uuid())
+  nama           String
+  nik            String
+  tempatLahir    String
+  tanggalLahir   DateTime
+  alamat         String
+  waktuDanMaksud String
+  Acara          String
+
+  namaBhabinkamtibmas       String?
+  jabatanNrpBhabinkamtibmas String?
+  namaBabinsa               String?
+  jabatanNrpBabinsa         String?
+  status                    Status    @default(DIPROSES)
+  pesanDitolak              String?
+  noSurat                   String?
+  tanggalPembuatan          DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkPenghasilanOrangTua {
+  id               String           @id @default(uuid())
+  namaLengkap      String
+  nik              String
+  tanggalLahir     String
+  jenisKelamin     Gender
+  agama            String
+  pekerjaan        String
+  statusPerkawinan StatusPerkawinan
+  kewarganegaraan  String
+  alamat           String
+  penghasilan      Int
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

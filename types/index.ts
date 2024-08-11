@@ -1,4 +1,4 @@
-import { SuratKelahiran, SuratKematian } from "@prisma/client";
+import { SkBelumMenikah, SuratKelahiran, SuratKematian } from "@prisma/client";
 
 export type UserType = {
   id: string;
@@ -14,5 +14,9 @@ export type SuratKelahiranWithUser = SuratKelahiran & {
 };
 
 export type SuratKematianWithUser = SuratKematian & {
+  user: UserType;
+};
+
+export type SkBelumMenikahWithUser = SkBelumMenikah & {
   user: UserType;
 };
