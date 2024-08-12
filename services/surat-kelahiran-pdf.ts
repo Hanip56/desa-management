@@ -1,4 +1,4 @@
-import { formatTanggal, getGender } from "@/lib/utils";
+import { formatDate, getGender } from "@/lib/utils";
 import { SuratKelahiran } from "@prisma/client";
 import PDFDocument from "pdfkit";
 
@@ -57,8 +57,8 @@ export const generateSuratKelahiranPdf = (
     lineGap: 2,
   });
   doc.text(
-    `Tempat/tgl lahir   : ${data.tempatLahirTerkait}, ${formatTanggal(
-      data.tanggalLahirTerkait.toString()
+    `Tempat/tgl lahir   : ${data.tempatLahirTerkait}, ${formatDate(
+      data.tanggalLahirTerkait
     )}`,
     {
       width: 480,
@@ -87,8 +87,8 @@ export const generateSuratKelahiranPdf = (
     lineGap: 2,
   });
   doc.text(
-    `Tempat/tgl lahir   : ${data.tempatLahirAyah}, ${formatTanggal(
-      data.tanggalLahirAyah.toString()
+    `Tempat/tgl lahir   : ${data.tempatLahirAyah}, ${formatDate(
+      data.tanggalLahirAyah
     )}`,
     {
       width: 480,
@@ -115,8 +115,8 @@ export const generateSuratKelahiranPdf = (
     lineGap: 2,
   });
   doc.text(
-    `Tempat/tgl lahir   : ${data.tempatLahirIbu}, ${formatTanggal(
-      data.tanggalLahirIbu.toString()
+    `Tempat/tgl lahir   : ${data.tempatLahirIbu}, ${formatDate(
+      data.tanggalLahirIbu
     )}`,
     {
       width: 480,
@@ -146,7 +146,9 @@ export const generateSuratKelahiranPdf = (
   doc.moveDown(3);
 
   doc.text(
-    `Margaasih, ${formatTanggal((data.tanggalPembuatan ?? "-").toString())}`,
+    `Margaasih, ${
+      data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
+    }`,
     doc.page.width / 2,
     doc.page.height - doc.page.height / 3.2,
     {

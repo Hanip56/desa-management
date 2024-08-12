@@ -17,7 +17,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Clock } from "lucide-react";
-import { enUS, Locale } from "date-fns/locale";
+import { enUS, id, Locale } from "date-fns/locale";
 
 import {
   Select,
@@ -683,7 +683,7 @@ type DateTimePickerRef = {
 const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
   (
     {
-      locale = enUS,
+      locale = id,
       value,
       onChange,
       hourCycle = 24,
@@ -691,7 +691,7 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
       disabled = false,
       displayFormat,
       granularity = "second",
-      placeholder = "Pick a date",
+      placeholder = "Pilih tanggal",
       ...props
     },
     ref

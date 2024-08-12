@@ -137,14 +137,15 @@ model SkBelumMenikah {
 }
 
 model SkIjinKeramaian {
-  id             String   @id @default(uuid())
-  nama           String
-  nik            String
-  tempatLahir    String
-  tanggalLahir   DateTime
-  alamat         String
-  waktuDanMaksud String
-  Acara          String
+  id           String   @id @default(uuid())
+  nama         String
+  nik          String
+  tempatLahir  String
+  tanggalLahir DateTime
+  alamat       String
+  waktu        DateTime
+  maksud       String
+  acara        String
 
   namaBhabinkamtibmas       String?
   jabatanNrpBhabinkamtibmas String?

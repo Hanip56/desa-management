@@ -47,8 +47,8 @@ const NavMenu = () => {
           href: "/pengajuan/keterangan-penghasilan-orang-tua",
         },
         {
-          label: "Keterangan ijin keramaian",
-          href: "/pengajuan/keterangan-ijin-keramaian",
+          label: "SK ijin keramaian",
+          href: "/pengajuan/sk-ijin-keramaian",
         },
         {
           label: "Surat kematian",

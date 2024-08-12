@@ -1,4 +1,4 @@
-import { PDFDocument, PDFFont, PDFPage, rgb } from "pdf-lib";
+import { PDFDocument, PDFFont, PDFPage, rgb, StandardFonts } from "pdf-lib";
 import path from "path";
 import fs from "fs";
 
@@ -14,16 +14,20 @@ type GenerateUtils = {
   page: PDFPage;
   marginX: number;
   font: PDFFont;
+  bold: PDFFont;
   startLine: number;
   gap: number;
+  fontSize?: number;
 };
 
 export const generateUtils = ({
   font,
+  bold,
   gap,
   marginX,
   page,
   startLine,
+  fontSize = 13,
 }: GenerateUtils) => {
   const { width, height } = page.getSize();
 
@@ -31,24 +35,28 @@ export const generateUtils = ({
     page.drawText(content, {
       x: x ?? marginX,
       y: startLine - gap * indexY,
-      size: 13,
+      size: fontSize,
       font: font,
       maxWidth: width - 2 * marginX,
-      lineHeight: 15,
     });
   };
 
   const pJustify = (
     content: string,
     indexY: number = 0,
-    indent: boolean = false
+    indent: boolean | number = false
   ) => {
     const words = content.split(" ");
     const wordsWidth = words.reduce(
-      (acc, cur) => acc + font.widthOfTextAtSize(cur, 13),
+      (acc, cur) => acc + font.widthOfTextAtSize(cur, fontSize),
       0
     );
-    const indentGap = indent ? 30 : 0;
+    const indentGap =
+      typeof indent === "number"
+        ? indent
+        : typeof indent === "boolean"
+        ? 30
+        : 0;
 
     const lineWidth = width - 2 * marginX - indentGap;
 
@@ -59,19 +67,20 @@ export const generateUtils = ({
     words.forEach((word) => {
       p(word, indexY, indexX);
 
-      indexX += font.widthOfTextAtSize(word, 13) + spaceBetweenWord;
+      indexX += font.widthOfTextAtSize(word, fontSize) + spaceBetweenWord;
     });
   };
 
   const ttd = (
     y: number,
     direction: "left" | "center" | "right",
-    line1: string,
-    line2: string,
-    line3: string
+    line1?: string,
+    line2?: string,
+    line3?: string,
+    line4?: string
   ) => {
     const boxWidth = 250;
-    const boxHeight = 150;
+    const boxHeight = 140;
     const boxX =
       direction === "left"
         ? marginX
@@ -88,33 +97,61 @@ export const generateUtils = ({
       color: rgb(1, 1, 1),
     });
 
-    const text1 = line1;
-    const text1Width = font.widthOfTextAtSize(text1, 13);
+    if (line1) {
+      const text1 = line1;
+      const text1Width = font.widthOfTextAtSize(text1, fontSize);
 
-    page.drawText(text1, {
-      x: boxX + boxWidth / 2 - text1Width / 2,
-      y: boxY + boxHeight - 20,
-      size: 13,
-      font: font,
-    });
+      page.drawText(text1, {
+        x: boxX + boxWidth / 2 - text1Width / 2,
+        y: boxY + boxHeight - 20,
+        size: fontSize,
+        font: font,
+      });
+    }
 
-    const text2 = line2;
-    const text2Width = font.widthOfTextAtSize(text2, 13);
-    page.drawText(text2, {
-      x: boxX + boxWidth / 2 - text2Width / 2,
-      y: boxY + boxHeight - 40,
-      size: 13,
-      font: font,
-    });
+    if (line2) {
+      const text2 = line2;
+      const text2Width = font.widthOfTextAtSize(text2, fontSize);
+      page.drawText(text2, {
+        x: boxX + boxWidth / 2 - text2Width / 2,
+        y: boxY + boxHeight - 40,
+        size: fontSize,
+        font: font,
+      });
+    }
 
-    const text3 = line3;
-    const text3Width = font.widthOfTextAtSize(text3, 13);
-    page.drawText(text3, {
-      x: boxX + boxWidth / 2 - text3Width / 2,
-      y: boxY + boxHeight - 120,
-      size: 13,
-      font: font,
-    });
+    if (line3) {
+      const text3 = line3;
+      const text3Width = bold.widthOfTextAtSize(text3, fontSize - 1);
+      page.drawText(text3, {
+        x: boxX + boxWidth / 2 - text3Width / 2,
+        y: boxY + boxHeight - 105,
+        size: fontSize - 1,
+        font: bold,
+      });
+      // underline
+      page.drawLine({
+        start: {
+          x: boxX + boxWidth / 2 - text3Width / 2,
+          y: boxY + boxHeight - 108,
+        },
+        end: {
+          x: boxX + boxWidth / 2 - text3Width / 2 + text3Width,
+          y: boxY + boxHeight - 108,
+        },
+      });
+    }
+
+    if (line4) {
+      const text4 = line4;
+      const text4Width = bold.widthOfTextAtSize(text4, fontSize - 1);
+      page.drawText(text4, {
+        x: boxX + boxWidth / 2 - text4Width / 2,
+        y: boxY + boxHeight - 120,
+        size: fontSize - 1,
+        font: bold,
+      });
+    }
   };
 
   return { p, pJustify, ttd };

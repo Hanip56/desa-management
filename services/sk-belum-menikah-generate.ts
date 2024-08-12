@@ -64,6 +64,7 @@ export const generateSkBelumMenikah = async (
   const { p, pJustify, ttd } = generateUtils({
     startLine,
     font,
+    bold,
     gap,
     marginX,
     page,

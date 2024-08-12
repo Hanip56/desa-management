@@ -1,0 +1,118 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import CellAction from "./cell-action";
+
+export type SkIjinKeramaianType = {
+  id: string;
+  nama: string;
+  alamat: string;
+  acara: string;
+  status: "DIPROSES" | "DITERIMA" | "DITOLAK";
+};
+
+export const columns: ColumnDef<SkIjinKeramaianType>[] = [
+  {
+    id: "id",
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="w-full"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          ID
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="text-center">{row.original.id.slice(0, 5) + "..."}</div>
+    ),
+  },
+  {
+    accessorKey: "nama",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="w-full justify-start"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Nama
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "alamat",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="w-full justify-start"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Alamat
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "acara",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="w-full justify-start"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Acara
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="w-full"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="flex items-center justify-center">
+        <Badge
+          className={cn(
+            row.original.status === "DIPROSES" &&
+              "bg-yellow-600 hover:bg-yellow-600",
+            row.original.status === "DITERIMA" &&
+              "bg-emerald-600 hover:bg-emerald-600",
+            row.original.status === "DITOLAK" && "bg-rose-700 hover:bg-rose-700"
+          )}
+        >
+          {row.original.status}
+        </Badge>
+      </div>
+    ),
+  },
+  {
+    id: "actions",
+    header: "",
+    cell: ({ row }) => <CellAction data={row.original} />,
+  },
+];

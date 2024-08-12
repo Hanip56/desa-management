@@ -1,0 +1,66 @@
+import { auth } from "@/auth";
+import prisma from "@/db/prisma";
+import { generateSkIjinKeramaian } from "@/services/sk-ijin-keramaian-generate";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const session = await auth();
+
+    if (!session) return new NextResponse("Unauthorized", { status: 401 });
+
+    const skIjinKeramaian = await prisma.skIjinKeramaian.findUnique({
+      where: { id: params.id },
+    });
+
+    if (!skIjinKeramaian) {
+      return new NextResponse("Surat keterangan ijin keramaian not found", {
+        status: 404,
+      });
+    }
+
+    if (
+      session.user.id !== skIjinKeramaian.userId &&
+      session.user.role === "USER"
+    ) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
+
+    // Check status surat-kematian
+    if (skIjinKeramaian.status !== "DITERIMA") {
+      return new NextResponse(
+        "Surat keterangan ijin keramaian status must be 'DITERIMA'",
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const headers = new Headers({
+      "Content-Type": "application/pdf",
+      "content-disposition":
+        "attachment;filename=surat_keterangan_ijin_keramaian.pdf",
+    });
+
+    const { readable, writable } = new TransformStream();
+
+    const writer = writable.getWriter();
+
+    generateSkIjinKeramaian(
+      skIjinKeramaian,
+      (chunk) => writer.write(chunk),
+      () => writer.close()
+    );
+
+    return new NextResponse(readable, {
+      headers,
+      status: 200,
+    });
+  } catch (error) {
+    console.log("[GENERATE_SURAT-KEMATIAN]", error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}

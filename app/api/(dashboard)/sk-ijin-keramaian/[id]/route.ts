@@ -11,6 +11,10 @@ const disabledUpdateField = [
   "pesanDitolak",
   "noSurat",
   "tanggalPembuatan",
+  "namaBhabinkamtibmas",
+  "jabatanNrpBhabinkamtibmas",
+  "namaBabinsa",
+  "jabatanNrpBabinsa",
 ];
 
 export async function GET(
@@ -24,7 +28,7 @@ export async function GET(
   }
 
   try {
-    const skBelumMenikah = await prisma.skBelumMenikah.findUnique({
+    const skIjinKeramaian = await prisma.skIjinKeramaian.findUnique({
       where: { id: params.id },
       include: {
         User: {
@@ -40,24 +44,24 @@ export async function GET(
       },
     });
 
-    if (!skBelumMenikah) {
-      return new NextResponse("Surat keterangan belum menikah not found", {
+    if (!skIjinKeramaian) {
+      return new NextResponse("Surat keterangan ijin keramaian not found", {
         status: 400,
       });
     }
 
     return NextResponse.json({
-      ...skBelumMenikah,
+      ...skIjinKeramaian,
       User: undefined,
-      user: skBelumMenikah.User,
+      user: skIjinKeramaian.User,
     });
   } catch (error) {
-    console.log("[GET_ONE_SK-BELUM-MENIKAH]", error);
+    console.log("[GET_ONE_SK-IJIN-KERAMAIAN]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
 
-// UPDATE sk-belum-menikah
+// UPDATE sk-ijin-keramaian
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -67,19 +71,19 @@ export async function PUT(
   if (!session) return new NextResponse("Unauthorized", { status: 401 });
 
   try {
-    const skBelumMenikah = await prisma.skBelumMenikah.findUnique({
+    const skIjinKeramaian = await prisma.skIjinKeramaian.findUnique({
       where: { id: params.id },
     });
 
-    if (!skBelumMenikah) {
-      return new NextResponse("Surat keterangan belum menikah not found", {
+    if (!skIjinKeramaian) {
+      return new NextResponse("Surat keterangan ijin keramaian not found", {
         status: 404,
       });
     }
 
     // is it own or admin
     if (
-      skBelumMenikah.userId !== session.user.id &&
+      skIjinKeramaian.userId !== session.user.id &&
       session.user.role === "USER"
     ) {
       return new NextResponse("Forbidden", { status: 403 });
@@ -94,19 +98,19 @@ export async function PUT(
       });
     }
 
-    const updatedSkBelumMenikah = await prisma.skBelumMenikah.update({
+    const updatedSkIjinKeramaian = await prisma.skIjinKeramaian.update({
       where: { id: params.id },
       data: body,
     });
 
-    return NextResponse.json(updatedSkBelumMenikah);
+    return NextResponse.json(updatedSkIjinKeramaian);
   } catch (error) {
-    console.log("[UPDATE_SK-BELUM-MENIKAH]", error);
+    console.log("[UPDATE_SK-IJIN-KERAMAIAN]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
 
-// DELETE sk-belum-menikah
+// DELETE sk-ijin-keramaian
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -116,40 +120,40 @@ export async function DELETE(
   if (!session) return new NextResponse("Unauthorized", { status: 401 });
 
   try {
-    const skBelumMenikah = await prisma.skBelumMenikah.findUnique({
+    const skIjinKeramaian = await prisma.skIjinKeramaian.findUnique({
       where: { id: params.id },
     });
 
-    if (!skBelumMenikah) {
-      return new NextResponse("Surat keterangan belum menikah not found", {
+    if (!skIjinKeramaian) {
+      return new NextResponse("Surat keterangan ijin keramaian not found", {
         status: 404,
       });
     }
 
     // is it own or admin
     if (
-      skBelumMenikah.userId !== session.user.id &&
+      skIjinKeramaian.userId !== session.user.id &&
       session.user.role === "USER"
     ) {
       return new NextResponse("Forbidden", { status: 403 });
     }
 
-    if (skBelumMenikah.status === "DITERIMA" && session.user.role === "USER") {
+    if (skIjinKeramaian.status === "DITERIMA" && session.user.role === "USER") {
       return new NextResponse(
-        "You cannot delete sk-belum-nikah with status 'DITERMA'",
+        "You cannot delete sk-ijin-keramaian with status 'DITERMA'",
         { status: 400 }
       );
     }
 
-    const deletedSkBelumMenikah = await prisma.skBelumMenikah.delete({
+    const deletedSkIjinKeramaian = await prisma.skIjinKeramaian.delete({
       where: { id: params.id },
     });
 
     return NextResponse.json({
-      success: `Surat keterangan belum menikah with id:${deletedSkBelumMenikah.id} has been deleted.`,
+      success: `Surat keterangan ijin keramaian with id:${deletedSkIjinKeramaian.id} has been deleted.`,
     });
   } catch (error) {
-    console.log("[DELETE_SK-BELUM-MENIKAH]", error);
+    console.log("[DELETE_SK-IJIN-KERAMAIAN]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
