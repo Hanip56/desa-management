@@ -43,3 +43,12 @@ export function DateToDayAndDate(date: Date) {
 export function DatetoTime(date: Date) {
   return format(date, "HH:mm");
 }
+
+export function formatRupiah(amount: number) {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+}

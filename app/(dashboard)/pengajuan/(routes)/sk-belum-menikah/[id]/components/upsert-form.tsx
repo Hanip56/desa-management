@@ -161,6 +161,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       {...field}
                       placeholder="NIK"
                       type="number"
+                      min={0}
                     />
                   </FormControl>
                   <FormMessage />

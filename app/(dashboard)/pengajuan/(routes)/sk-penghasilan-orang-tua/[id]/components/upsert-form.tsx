@@ -10,56 +10,64 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { skIjinKeramaianSchema } from "@/schemas/sk-ijin-keramaian";
+import { skPenghasilanOrangTuaSchema } from "@/schemas/sk-penghasilan-orang-tua";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import SelectGender from "@/components/select-gender";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  createSkIjinKeramaian,
-  updateSkIjinKeramaian,
-} from "@/fetcher/sk-ijin-keramaian-fetcher";
+  createSkPenghasilanOrangTua,
+  updateSkPenghasilanOrangTua,
+} from "@/fetcher/sk-penghasilan-orang-tua-fetcher";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { dateTimeToISO } from "@/lib/utils";
-import { SkIjinKeramaianWithUser } from "@/types";
+import { SkPenghasilanOrangTuaWithUser } from "@/types";
 import DatePicker from "@/components/ui/date-picker";
-import { DateTimePicker } from "@/components/ui/date-time-picker";
-import { id } from "date-fns/locale";
+import {
+  Select,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+} from "@/components/ui/select";
 
 type Props = {
-  initialData?: SkIjinKeramaianWithUser | null;
+  initialData?: SkPenghasilanOrangTuaWithUser | null;
 };
 
 const UpsertForm = ({ initialData }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof skIjinKeramaianSchema>>({
-    resolver: zodResolver(skIjinKeramaianSchema),
+  const form = useForm<z.infer<typeof skPenghasilanOrangTuaSchema>>({
+    resolver: zodResolver(skPenghasilanOrangTuaSchema),
     defaultValues: {
-      nama: initialData?.nama ?? "",
+      namaLengkap: initialData?.namaLengkap ?? "",
       nik: initialData?.nik ?? "",
-      tempatLahir: initialData?.tempatLahir ?? "",
       tanggalLahir: initialData?.tanggalLahir ?? undefined,
+      jenisKelamin: initialData?.jenisKelamin ?? undefined,
+      agama: initialData?.agama ?? "",
+      pekerjaan: initialData?.pekerjaan ?? "",
+      statusPerkawinan: initialData?.statusPerkawinan ?? undefined,
+      kewarganegaraan: initialData?.kewarganegaraan ?? "",
       alamat: initialData?.alamat ?? "",
-      waktu: initialData?.waktu ?? undefined,
-      maksud: initialData?.maksud ?? "",
-      acara: initialData?.acara ?? "",
+      penghasilan: initialData?.penghasilan ?? 0,
     },
   });
 
   const createMutation = useMutation({
-    mutationFn: createSkIjinKeramaian,
+    mutationFn: createSkPenghasilanOrangTua,
     onSuccess: (data) => {
       toast("Data berhasil diajukan.", {
         className: "text-emerald-600 font-semibold",
       });
       form.reset();
-      router.push("/pengajuan/sk-ijin-keramaian");
+      router.push("/pengajuan/sk-penghasilan-orang-tua");
 
       queryClient.invalidateQueries({
-        queryKey: ["sk-ijin-keramaians"],
+        queryKey: ["sk-penghasilan-orang-tuas"],
         exact: true,
       });
     },
@@ -72,17 +80,17 @@ const UpsertForm = ({ initialData }: Props) => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: updateSkIjinKeramaian,
+    mutationFn: updateSkPenghasilanOrangTua,
     onSuccess: (data) => {
       toast("Data berhasil di ubah.", {
         className: "text-emerald-600 font-semibold",
       });
       form.reset();
-      router.push("/pengajuan/sk-ijin-keramaian");
+      router.push("/pengajuan/sk-penghasilan-orang-tua");
       router.refresh();
 
       queryClient.invalidateQueries({
-        queryKey: ["sk-ijin-keramaians"],
+        queryKey: ["sk-penghasilan-orang-tuas"],
         exact: true,
       });
     },
@@ -94,7 +102,9 @@ const UpsertForm = ({ initialData }: Props) => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof skIjinKeramaianSchema>) => {
+  const onSubmit = async (
+    values: z.infer<typeof skPenghasilanOrangTuaSchema>
+  ) => {
     if (initialData) {
       updateMutation.mutate({
         body: {
@@ -127,15 +137,15 @@ const UpsertForm = ({ initialData }: Props) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-x-6 md:gap-y-4">
             <FormField
               control={form.control}
-              name="nama"
+              name="namaLengkap"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nama</FormLabel>
+                  <FormLabel>Nama lengkap</FormLabel>
                   <FormControl>
                     <Input
                       disabled={disabledCondition}
                       {...field}
-                      placeholder="Nama"
+                      placeholder="Nama lengkap"
                     />
                   </FormControl>
                   <FormMessage />
@@ -163,15 +173,44 @@ const UpsertForm = ({ initialData }: Props) => {
             />
             <FormField
               control={form.control}
-              name="tempatLahir"
+              name="tanggalLahir"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tempat lahir</FormLabel>
+                  <FormLabel>Tanggal Lahir</FormLabel>
+                  <FormControl>
+                    <DatePicker value={field.value} onChange={field.onChange} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="jenisKelamin"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Jenis kelamin</FormLabel>
+                  <FormControl>
+                    <SelectGender
+                      onChange={field.onChange}
+                      disabled={disabledCondition}
+                      value={field.value}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="agama"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Agama</FormLabel>
                   <FormControl>
                     <Input
                       disabled={disabledCondition}
                       {...field}
-                      placeholder="Tempat lahir"
+                      placeholder="Agama"
                     />
                   </FormControl>
                   <FormMessage />
@@ -180,12 +219,60 @@ const UpsertForm = ({ initialData }: Props) => {
             />
             <FormField
               control={form.control}
-              name="tanggalLahir"
+              name="pekerjaan"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tanggal Lahir</FormLabel>
+                  <FormLabel>Pekerjaan</FormLabel>
                   <FormControl>
-                    <DatePicker value={field.value} onChange={field.onChange} />
+                    <Input
+                      disabled={disabledCondition}
+                      {...field}
+                      placeholder="Pekerjaan"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="statusPerkawinan"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Status perkawinan</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      disabled={disabledCondition}
+                      value={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pilih status perkawinan" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="KAWIN">Kawin</SelectItem>
+                        <SelectItem value="BELUM_KAWIN">Belum Kawin</SelectItem>
+                        <SelectItem value="CERAI_HIDUP">Cerai Hidup</SelectItem>
+                        <SelectItem value="CERAI_MATI">Cerai Mati</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="kewarganegaraan"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Kewarganegaraan</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={disabledCondition}
+                      {...field}
+                      placeholder="Kewarganegaraan"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -210,50 +297,18 @@ const UpsertForm = ({ initialData }: Props) => {
             />
             <FormField
               control={form.control}
-              name="waktu"
+              name="penghasilan"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Waktu</FormLabel>
-                  <FormControl>
-                    <DateTimePicker
-                      value={field.value}
-                      onChange={field.onChange}
-                      disabled={disabledCondition}
-                      locale={id}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="maksud"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Maksud</FormLabel>
+                  <FormLabel>Penghasilan (Rp. per bulan)</FormLabel>
                   <FormControl>
                     <Input
                       disabled={disabledCondition}
                       {...field}
-                      placeholder="Maksud"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="acara"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Acara</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={disabledCondition}
-                      {...field}
-                      placeholder="Acara"
+                      onChange={(e) => field.onChange(+e.target.value)}
+                      placeholder="Penghasilan"
+                      type="number"
+                      min={0}
                     />
                   </FormControl>
                   <FormMessage />

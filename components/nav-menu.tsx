@@ -43,8 +43,8 @@ const NavMenu = () => {
           href: "/pengajuan/sk-belum-menikah",
         },
         {
-          label: "Keterangan penghasilan orang tua",
-          href: "/pengajuan/keterangan-penghasilan-orang-tua",
+          label: "SK penghasilan orang tua",
+          href: "/pengajuan/sk-penghasilan-orang-tua",
         },
         {
           label: "SK ijin keramaian",

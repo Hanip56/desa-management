@@ -1,6 +1,7 @@
 import {
   SkBelumMenikah,
   SkIjinKeramaian,
+  SkPenghasilanOrangTua,
   SuratKelahiran,
   SuratKematian,
 } from "@prisma/client";
@@ -27,5 +28,9 @@ export type SkBelumMenikahWithUser = SkBelumMenikah & {
 };
 
 export type SkIjinKeramaianWithUser = SkIjinKeramaian & {
+  user: UserType;
+};
+
+export type SkPenghasilanOrangTuaWithUser = SkPenghasilanOrangTua & {
   user: UserType;
 };

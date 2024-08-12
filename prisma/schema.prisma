@@ -167,7 +167,7 @@ model SkPenghasilanOrangTua {
   id               String           @id @default(uuid())
   namaLengkap      String
   nik              String
-  tanggalLahir     String
+  tanggalLahir     DateTime
   jenisKelamin     Gender
   agama            String
   pekerjaan        String

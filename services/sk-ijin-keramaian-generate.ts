@@ -1,10 +1,5 @@
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import {
-  DateToDayAndDate,
-  DatetoTime,
-  formatDate,
-  getGender,
-} from "@/lib/utils";
+import { DateToDayAndDate, DatetoTime, formatDate } from "@/lib/utils";
 import { SkIjinKeramaian } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
 import fs from "fs";
