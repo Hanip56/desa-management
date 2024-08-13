@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { CardHeader } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
 import { Download } from "lucide-react";
+import StatusBadge from "./status-badge";
 
 type Props = {
   status: "DITERIMA" | "DITOLAK";
@@ -26,11 +27,9 @@ const HeaderHasilPengajuan = ({
           <div className="flex items-center gap-2">
             <span className="font-semibold">Status :</span>
             {status === "DITERIMA" ? (
-              <Badge className="bg-emerald-600 hover:bg-emerald-600">
-                Diterima
-              </Badge>
+              <StatusBadge status="DITERIMA" />
             ) : (
-              <Badge className="bg-rose-700 hover:bg-rose-700">Ditolak</Badge>
+              <StatusBadge status="DITOLAK" />
             )}
           </div>
           {alasanDitolak && (

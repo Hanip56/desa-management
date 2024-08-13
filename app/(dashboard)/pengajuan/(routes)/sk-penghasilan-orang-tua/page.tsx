@@ -4,7 +4,7 @@ import { SkPenghasilanOrangTuaClient } from "./components/sk-penghasilan-orang-t
 const SkPenghasilanOrangTuaPage = () => {
   return (
     <main>
-      <Header title="Pengajuan SK Penghasilan Orang Tua" withBreadcrumb />
+      <Header title={`Pengajuan SK Penghasilan Orang Tua`} withBreadcrumb />
 
       <SkPenghasilanOrangTuaClient />
     </main>

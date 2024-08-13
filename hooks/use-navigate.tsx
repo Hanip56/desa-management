@@ -4,18 +4,22 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
 import { useCallback, useEffect, useState } from "react";
 import { useDebounce } from "./use-debounce";
+import { StatusType } from "@/types";
 
 export const useNavigate = (): [
   number,
   () => void,
   () => void,
   string,
-  (e: React.ChangeEvent<HTMLInputElement>) => void
+  (e: React.ChangeEvent<HTMLInputElement>) => void,
+  string, // status
+  (status?: StatusType) => void // handleFilterStatus
 ] => {
   const params = qs.parse(useSearchParams().toString());
   const router = useRouter();
   const pathname = usePathname();
   const page = params?.page ? Number(params.page) : 1;
+  const status = params?.status ? params.status.toString() : "";
   const [search, setSearch] = useState(params?.search?.toString() ?? "");
   const debouncedSearch = useDebounce(search);
 
@@ -51,6 +55,13 @@ export const useNavigate = (): [
     });
   };
 
+  const handleFilterStatus = (status?: StatusType) => {
+    handleNavigate({
+      status: status ?? "",
+      page: 1,
+    });
+  };
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
@@ -63,5 +74,13 @@ export const useNavigate = (): [
     });
   }, [debouncedSearch]);
 
-  return [page, handleNext, handlePrevious, search, handleSearch];
+  return [
+    page,
+    handleNext,
+    handlePrevious,
+    search,
+    handleSearch,
+    status,
+    handleFilterStatus,
+  ];
 };

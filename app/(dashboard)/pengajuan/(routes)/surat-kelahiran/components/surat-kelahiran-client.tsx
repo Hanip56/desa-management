@@ -14,16 +14,24 @@ import { useNavigate } from "@/hooks/use-navigate";
 import CardError from "@/app/(dashboard)/components/card-error";
 
 export const SuratKelahiranClient = () => {
-  const [page, handleNext, handlePrevious, search, handleSearch] =
-    useNavigate();
+  const [
+    page,
+    handleNext,
+    handlePrevious,
+    search,
+    handleSearch,
+    status,
+    handleFilterStatus,
+  ] = useNavigate();
 
   const query = useQuery({
-    queryKey: ["surat-kelahirans", { page, search }],
+    queryKey: ["surat-kelahirans", { page, search, status }],
     queryFn: () =>
       getAllSuratKelahiran({
         page,
-        limit: 5,
+        limit: 8,
         search,
+        status,
       }),
     placeholderData: (prev) => prev,
   });
@@ -37,6 +45,7 @@ export const SuratKelahiranClient = () => {
     alamat: surat.alamatTerkait,
     jenisKelamin: surat.jenisKelaminTerkait,
     status: surat.status,
+    updatedAt: surat.updatedAt,
   }));
 
   return (
@@ -53,7 +62,7 @@ export const SuratKelahiranClient = () => {
       </CardHeader>
       <CardContent>
         <DataTable
-          columns={columns}
+          columns={columns()}
           data={data}
           filterKey="nama"
           onDelete={() => {}}
@@ -65,6 +74,7 @@ export const SuratKelahiranClient = () => {
           handlePrevious={handlePrevious}
           search={search}
           handleSearch={handleSearch}
+          handleFilterStatus={handleFilterStatus}
         />
       </CardContent>
     </Card>

@@ -7,7 +7,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDate(date: Date) {
+export function formatDate(date: Date | string) {
+  let value = date;
+
+  if (typeof value === "string") {
+    value = new Date(date);
+  }
+
   return format(date, "d MMMM yyyy", { locale: id });
 }
 

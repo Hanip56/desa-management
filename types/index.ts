@@ -15,6 +15,8 @@ export type UserType = {
   updatedAt: Date;
 };
 
+export type StatusType = "DIPROSES" | "DITERIMA" | "DITOLAK";
+
 export type SuratKelahiranWithUser = SuratKelahiran & {
   user: UserType;
 };

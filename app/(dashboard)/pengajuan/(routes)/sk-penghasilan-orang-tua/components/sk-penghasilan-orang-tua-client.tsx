@@ -22,7 +22,7 @@ export const SkPenghasilanOrangTuaClient = () => {
     queryFn: () =>
       getAllSkPenghasilanOrangTua({
         page,
-        limit: 5,
+        limit: 8,
         search,
       }),
     placeholderData: (prev) => prev,

@@ -39,29 +39,29 @@ const NavMenu = () => {
           href: "/pengajuan/surat-kelahiran",
         },
         {
-          label: "SK belum nikah",
-          href: "/pengajuan/sk-belum-menikah",
+          label: "Surat kematian",
+          href: "/pengajuan/surat-kematian",
         },
         {
-          label: "SK penghasilan orang tua",
-          href: "/pengajuan/sk-penghasilan-orang-tua",
+          label: "SK belum nikah",
+          href: "/pengajuan/sk-belum-menikah",
         },
         {
           label: "SK ijin keramaian",
           href: "/pengajuan/sk-ijin-keramaian",
         },
         {
-          label: "Surat kematian",
-          href: "/pengajuan/surat-kematian",
+          label: "SK penghasilan orang tua",
+          href: "/pengajuan/sk-penghasilan-orang-tua",
         },
-        {
-          label: "Pendaftaran pindah WNI",
-          href: "/pengajuan/pendaftaran-pindah-wni",
-        },
-        {
-          label: "Keterangan tidak mampu",
-          href: "/pengajuan/keterangan-tidak-mampu",
-        },
+        // {
+        //   label: "Pendaftaran pindah WNI",
+        //   href: "/pengajuan/pendaftaran-pindah-wni",
+        // },
+        // {
+        //   label: "Keterangan tidak mampu",
+        //   href: "/pengajuan/keterangan-tidak-mampu",
+        // },
       ],
     },
     {

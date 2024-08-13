@@ -14,13 +14,21 @@ export async function GET(req: NextRequest) {
     const page = Number(req.nextUrl.searchParams.get("page")) || 1;
     const limit = Number(req.nextUrl.searchParams.get("limit")) || 5;
     const search = req.nextUrl.searchParams.get("search") || "";
+    const status = req.nextUrl.searchParams.get("status") || "";
 
-    const filter =
+    let filter: any =
       session.user.role === "USER"
         ? {
             userId: session.user.id,
           }
         : {};
+
+    if (status) {
+      filter = {
+        ...filter,
+        status: status as string,
+      };
+    }
 
     let total_items = await prisma.suratKelahiran.count({
       where: {

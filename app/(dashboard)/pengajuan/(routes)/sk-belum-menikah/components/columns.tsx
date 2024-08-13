@@ -6,6 +6,7 @@ import { ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import CellAction from "./cell-action";
+import StatusBadge from "@/app/(dashboard)/components/status-badge";
 
 export type SkBelumMenikahType = {
   id: string;
@@ -99,17 +100,7 @@ export const columns: ColumnDef<SkBelumMenikahType>[] = [
     },
     cell: ({ row }) => (
       <div className="flex items-center justify-center">
-        <Badge
-          className={cn(
-            row.original.status === "DIPROSES" &&
-              "bg-yellow-600 hover:bg-yellow-600",
-            row.original.status === "DITERIMA" &&
-              "bg-emerald-600 hover:bg-emerald-600",
-            row.original.status === "DITOLAK" && "bg-rose-700 hover:bg-rose-700"
-          )}
-        >
-          {row.original.status}
-        </Badge>
+        <StatusBadge status={row.original.status} />
       </div>
     ),
   },

@@ -22,7 +22,7 @@ export const SkIjinKeramaianClient = () => {
     queryFn: () =>
       getAllSkIjinKeramaian({
         page,
-        limit: 5,
+        limit: 8,
         search,
       }),
     placeholderData: (prev) => prev,

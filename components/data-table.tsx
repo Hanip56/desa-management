@@ -22,7 +22,16 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft, ChevronRight, Trash } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { useSearchParams } from "next/navigation";
+import { StatusType } from "@/types";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -38,6 +47,7 @@ interface DataTableProps<TData, TValue> {
   handlePrevious: () => void;
   search: string;
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFilterStatus?: (status?: StatusType) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -54,12 +64,16 @@ export function DataTable<TData, TValue>({
   handlePrevious,
   search,
   handleSearch,
+  handleFilterStatus,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
   const [rowSelection, setRowSelection] = React.useState({});
+  // status
+  const params = useSearchParams();
+  const status = params.get("status");
 
   const table = useReactTable({
     data,
@@ -83,14 +97,36 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-end  py-4">
         <Input
           placeholder={`Filter ${filterKey}...`}
           value={search}
           onChange={handleSearch}
-          className="max-w-sm"
+          className="sm:max-w-sm"
         />
-        {table.getFilteredSelectedRowModel().rows.length > 0 && (
+        {!!handleFilterStatus && (
+          <div className="w-full sm:w-[150px]">
+            <Select
+              defaultValue={status ?? ""}
+              onValueChange={(value) =>
+                handleFilterStatus(
+                  value === "-" ? undefined : (value as StatusType)
+                )
+              }
+            >
+              <SelectTrigger className="w-full text-sm">
+                <SelectValue placeholder="Filter status" />
+              </SelectTrigger>
+              <SelectContent className="text-sm">
+                <SelectItem value="-">SEMUA</SelectItem>
+                <SelectItem value="DIPROSES">DIPROSES</SelectItem>
+                <SelectItem value="DITERIMA">DITERIMA</SelectItem>
+                <SelectItem value="DITOLAK">DITOLAK</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+        {/* {table.getFilteredSelectedRowModel().rows.length > 0 && (
           <Button
             size="sm"
             variant="outline"
@@ -100,7 +136,7 @@ export function DataTable<TData, TValue>({
             <Trash className="size-4 mr-2" />
             Hapus ({table.getFilteredSelectedRowModel().rows.length})
           </Button>
-        )}
+        )} */}
       </div>
       <div className="rounded-md border">
         <Table>
@@ -153,10 +189,10 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        {/* <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} dari{" "}
           {table.getFilteredRowModel().rows.length} baris terpilih.
-        </div>
+        </div> */}
         <Button
           variant="outline"
           size="sm"
@@ -165,6 +201,7 @@ export function DataTable<TData, TValue>({
         >
           <ChevronLeft className="size-4" />
         </Button>
+        <div className="text-sm text-muted-foreground px-3">{page}</div>
         <Button
           variant="outline"
           size="sm"

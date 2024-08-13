@@ -18,7 +18,9 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <div className={cn("text-white py-8", className)}>
-      <h1 className="text-3xl md:text-4xl font-medium  mb-3">{title}</h1>
+      <h1 className="text-3xl md:text-4xl font-medium  mb-3 leading-10 whitespace-pre-line">
+        {title}
+      </h1>
       {withBreadcrumb && (
         <div className={breadcrumbClassName}>
           <BreadcrumbNav />
