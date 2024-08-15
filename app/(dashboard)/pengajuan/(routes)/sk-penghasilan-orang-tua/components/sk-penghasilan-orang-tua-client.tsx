@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from "lucide-react";
-import { columns, SkPenghasilanOrangTuaType } from "./columns";
+import { columns, ColumnsType } from "./columns";
 import { DataTable } from "@/components/data-table";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -14,16 +14,30 @@ import { useNavigate } from "@/hooks/use-navigate";
 import CardError from "@/app/(dashboard)/components/card-error";
 
 export const SkPenghasilanOrangTuaClient = () => {
-  const [page, handleNext, handlePrevious, search, handleSearch] =
-    useNavigate();
+  const [
+    page,
+    handleNext,
+    handlePrevious,
+    search,
+    handleSearch,
+    status,
+    handleFilterStatus,
+    updatedAt,
+    toggleSortDate,
+  ] = useNavigate();
 
   const query = useQuery({
-    queryKey: ["sk-penghasilan-orang-tuas", { page, search }],
+    queryKey: [
+      "sk-penghasilan-orang-tuas",
+      { page, search, status, updatedAt },
+    ],
     queryFn: () =>
       getAllSkPenghasilanOrangTua({
         page,
         limit: 8,
         search,
+        status,
+        updatedAt,
       }),
     placeholderData: (prev) => prev,
   });
@@ -31,12 +45,13 @@ export const SkPenghasilanOrangTuaClient = () => {
   if (query.isLoading || query.isPending) return <CardSkeleton />;
   if (query.isError) return <CardError error={query?.error?.message} />;
 
-  const data: SkPenghasilanOrangTuaType[] = query.data.data.map((surat) => ({
+  const data: ColumnsType[] = query.data.data.map((surat) => ({
     id: surat.id,
     nama: surat.namaLengkap,
     alamat: surat.alamat,
     jenisKelamin: surat.jenisKelamin,
     status: surat.status,
+    updatedAt: surat.updatedAt,
   }));
 
   return (
@@ -53,7 +68,7 @@ export const SkPenghasilanOrangTuaClient = () => {
       </CardHeader>
       <CardContent>
         <DataTable
-          columns={columns}
+          columns={columns(toggleSortDate)}
           data={data}
           filterKey="nama"
           onDelete={() => {}}
@@ -65,6 +80,7 @@ export const SkPenghasilanOrangTuaClient = () => {
           handlePrevious={handlePrevious}
           search={search}
           handleSearch={handleSearch}
+          handleFilterStatus={handleFilterStatus}
         />
       </CardContent>
     </Card>

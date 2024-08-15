@@ -14,13 +14,30 @@ export async function GET(req: NextRequest) {
     const page = Number(req.nextUrl.searchParams.get("page")) || 1;
     const limit = Number(req.nextUrl.searchParams.get("limit")) || 5;
     const search = req.nextUrl.searchParams.get("search") || "";
+    const status = req.nextUrl.searchParams.get("status") || "";
+    const updatedAt = req.nextUrl.searchParams.get("updatedAt") || "desc";
 
-    const filter =
+    let orderBy: Record<string, string> = {};
+
+    if (typeof updatedAt === "string") {
+      orderBy = {
+        updatedAt,
+      };
+    }
+
+    let filter: any =
       session.user.role === "USER"
         ? {
             userId: session.user.id,
           }
         : {};
+
+    if (status) {
+      filter = {
+        ...filter,
+        status: status as string,
+      };
+    }
 
     let total_items = await prisma.skPenghasilanOrangTua.count({
       where: {
@@ -36,9 +53,7 @@ export async function GET(req: NextRequest) {
       },
       take: limit,
       skip: (page - 1) * limit,
-      orderBy: {
-        updatedAt: "desc",
-      },
+      orderBy,
     });
 
     const total_pages = Math.ceil(total_items / limit);

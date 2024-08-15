@@ -52,11 +52,7 @@ export const generateUtils = ({
       0
     );
     const indentGap =
-      typeof indent === "number"
-        ? indent
-        : typeof indent === "boolean"
-        ? 30
-        : 0;
+      typeof indent === "number" ? indent : indent === true ? 30 : 0;
 
     const lineWidth = width - 2 * marginX - indentGap;
 

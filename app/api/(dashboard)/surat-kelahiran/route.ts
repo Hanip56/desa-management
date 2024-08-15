@@ -15,6 +15,9 @@ export async function GET(req: NextRequest) {
     const limit = Number(req.nextUrl.searchParams.get("limit")) || 5;
     const search = req.nextUrl.searchParams.get("search") || "";
     const status = req.nextUrl.searchParams.get("status") || "";
+    const updatedAt = req.nextUrl.searchParams.get("updatedAt") || "desc";
+
+    let orderBy: Record<string, string> = {};
 
     let filter: any =
       session.user.role === "USER"
@@ -27,6 +30,12 @@ export async function GET(req: NextRequest) {
       filter = {
         ...filter,
         status: status as string,
+      };
+    }
+
+    if (typeof updatedAt === "string") {
+      orderBy = {
+        updatedAt,
       };
     }
 
@@ -44,9 +53,7 @@ export async function GET(req: NextRequest) {
       },
       take: limit,
       skip: (page - 1) * limit,
-      orderBy: {
-        updatedAt: "desc",
-      },
+      orderBy,
     });
 
     const total_pages = Math.ceil(total_items / limit);

@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from "lucide-react";
-import { columns, SuratKematianType } from "./columns";
+import { columns, ColumnsType } from "./columns";
 import { DataTable } from "@/components/data-table";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -14,16 +14,27 @@ import { useNavigate } from "@/hooks/use-navigate";
 import CardError from "@/app/(dashboard)/components/card-error";
 
 export const SuratKematianClient = () => {
-  const [page, handleNext, handlePrevious, search, handleSearch] =
-    useNavigate();
+  const [
+    page,
+    handleNext,
+    handlePrevious,
+    search,
+    handleSearch,
+    status,
+    handleFilterStatus,
+    updatedAt,
+    toggleSortDate,
+  ] = useNavigate();
 
   const query = useQuery({
-    queryKey: ["surat-kematians", { page, search }],
+    queryKey: ["surat-kematians", { page, search, status, updatedAt }],
     queryFn: () =>
       getAllSuratKematian({
         page,
         limit: 8,
         search,
+        status,
+        updatedAt,
       }),
     placeholderData: (prev) => prev,
   });
@@ -31,12 +42,13 @@ export const SuratKematianClient = () => {
   if (query.isLoading || query.isPending) return <CardSkeleton />;
   if (query.isError) return <CardError error={query?.error?.message} />;
 
-  const data: SuratKematianType[] = query.data.data.map((surat) => ({
+  const data: ColumnsType[] = query.data.data.map((surat) => ({
     id: surat.id,
     nama: surat.namaTerkait,
     alamat: surat.alamatTerkait,
     jenisKelamin: surat.jenisKelaminTerkait,
     status: surat.status,
+    updatedAt: surat.updatedAt,
   }));
 
   return (
@@ -53,7 +65,7 @@ export const SuratKematianClient = () => {
       </CardHeader>
       <CardContent>
         <DataTable
-          columns={columns}
+          columns={columns(toggleSortDate)}
           data={data}
           filterKey="nama"
           onDelete={() => {}}
@@ -65,6 +77,7 @@ export const SuratKematianClient = () => {
           handlePrevious={handlePrevious}
           search={search}
           handleSearch={handleSearch}
+          handleFilterStatus={handleFilterStatus}
         />
       </CardContent>
     </Card>

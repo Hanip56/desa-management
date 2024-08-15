@@ -8,6 +8,7 @@ type GetAllParams = {
   limit?: number;
   search?: string;
   status?: string;
+  updatedAt?: string;
 };
 
 type GetAllResponse = {
@@ -23,6 +24,7 @@ export const getAllSuratKelahiran = async ({
   limit = 1,
   search,
   status,
+  updatedAt,
 }: GetAllParams) => {
   try {
     const response = await axiosInstance.get<GetAllResponse>(
@@ -33,6 +35,7 @@ export const getAllSuratKelahiran = async ({
           limit,
           search,
           status,
+          updatedAt,
         },
       }
     );

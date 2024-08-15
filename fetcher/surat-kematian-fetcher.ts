@@ -12,6 +12,8 @@ type GetAllParams = {
   page?: number;
   limit?: number;
   search?: string;
+  status?: string;
+  updatedAt?: string;
 };
 
 type GetAllResponse = {
@@ -26,6 +28,8 @@ export const getAllSuratKematian = async ({
   page = 1,
   limit = 1,
   search,
+  status,
+  updatedAt,
 }: GetAllParams) => {
   try {
     const response = await axiosInstance.get<GetAllResponse>(
@@ -35,6 +39,8 @@ export const getAllSuratKematian = async ({
           page,
           limit,
           search,
+          status,
+          updatedAt,
         },
       }
     );

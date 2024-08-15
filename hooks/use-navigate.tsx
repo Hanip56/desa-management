@@ -13,12 +13,15 @@ export const useNavigate = (): [
   string,
   (e: React.ChangeEvent<HTMLInputElement>) => void,
   string, // status
-  (status?: StatusType) => void // handleFilterStatus
+  (status?: StatusType) => void, // handleFilterStatus
+  string, // updatedAt
+  () => void // handle sort date
 ] => {
   const params = qs.parse(useSearchParams().toString());
   const router = useRouter();
   const pathname = usePathname();
   const page = params?.page ? Number(params.page) : 1;
+  const updatedAt = params?.updatedAt ? params.updatedAt.toString() : "";
   const status = params?.status ? params.status.toString() : "";
   const [search, setSearch] = useState(params?.search?.toString() ?? "");
   const debouncedSearch = useDebounce(search);
@@ -66,6 +69,17 @@ export const useNavigate = (): [
     setSearch(e.target.value);
   };
 
+  const toggleSortDate = () => {
+    handleNavigate({
+      updatedAt:
+        !updatedAt || updatedAt === "desc"
+          ? "asc"
+          : updatedAt === "asc"
+          ? "desc"
+          : "",
+    });
+  };
+
   // handle Search
   useEffect(() => {
     handleNavigate({
@@ -82,5 +96,7 @@ export const useNavigate = (): [
     handleSearch,
     status,
     handleFilterStatus,
+    updatedAt,
+    toggleSortDate,
   ];
 };

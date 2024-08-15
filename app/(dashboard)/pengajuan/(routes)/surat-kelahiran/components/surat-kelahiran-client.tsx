@@ -22,16 +22,19 @@ export const SuratKelahiranClient = () => {
     handleSearch,
     status,
     handleFilterStatus,
+    updatedAt,
+    toggleSortDate,
   ] = useNavigate();
 
   const query = useQuery({
-    queryKey: ["surat-kelahirans", { page, search, status }],
+    queryKey: ["surat-kelahirans", { page, search, status, updatedAt }],
     queryFn: () =>
       getAllSuratKelahiran({
         page,
         limit: 8,
         search,
         status,
+        updatedAt,
       }),
     placeholderData: (prev) => prev,
   });
@@ -62,7 +65,7 @@ export const SuratKelahiranClient = () => {
       </CardHeader>
       <CardContent>
         <DataTable
-          columns={columns()}
+          columns={columns(toggleSortDate)}
           data={data}
           filterKey="nama"
           onDelete={() => {}}

@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from "lucide-react";
-import { columns, SkIjinKeramaianType } from "./columns";
+import { columns, ColumnsType } from "./columns";
 import { DataTable } from "@/components/data-table";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -14,16 +14,27 @@ import { useNavigate } from "@/hooks/use-navigate";
 import CardError from "@/app/(dashboard)/components/card-error";
 
 export const SkIjinKeramaianClient = () => {
-  const [page, handleNext, handlePrevious, search, handleSearch] =
-    useNavigate();
+  const [
+    page,
+    handleNext,
+    handlePrevious,
+    search,
+    handleSearch,
+    status,
+    handleFilterStatus,
+    updatedAt,
+    toggleSortDate,
+  ] = useNavigate();
 
   const query = useQuery({
-    queryKey: ["sk-ijin-keramaians", { page, search }],
+    queryKey: ["sk-ijin-keramaians", { page, search, status, updatedAt }],
     queryFn: () =>
       getAllSkIjinKeramaian({
         page,
         limit: 8,
         search,
+        status,
+        updatedAt,
       }),
     placeholderData: (prev) => prev,
   });
@@ -31,12 +42,13 @@ export const SkIjinKeramaianClient = () => {
   if (query.isLoading || query.isPending) return <CardSkeleton />;
   if (query.isError) return <CardError error={query?.error?.message} />;
 
-  const data: SkIjinKeramaianType[] = query.data.data.map((surat) => ({
+  const data: ColumnsType[] = query.data.data.map((surat) => ({
     id: surat.id,
     nama: surat.nama,
     alamat: surat.alamat,
     acara: surat.acara,
     status: surat.status,
+    updatedAt: surat.updatedAt,
   }));
 
   return (
@@ -53,7 +65,7 @@ export const SkIjinKeramaianClient = () => {
       </CardHeader>
       <CardContent>
         <DataTable
-          columns={columns}
+          columns={columns(toggleSortDate)}
           data={data}
           filterKey="nama"
           onDelete={() => {}}
@@ -65,6 +77,7 @@ export const SkIjinKeramaianClient = () => {
           handlePrevious={handlePrevious}
           search={search}
           handleSearch={handleSearch}
+          handleFilterStatus={handleFilterStatus}
         />
       </CardContent>
     </Card>

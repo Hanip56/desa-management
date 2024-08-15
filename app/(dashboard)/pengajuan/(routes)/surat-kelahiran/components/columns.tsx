@@ -18,7 +18,7 @@ export type SuratKelahiranType = {
   updatedAt: string;
 };
 
-export const columns = () => {
+export const columns = (toggleSortDate: () => void) => {
   const columns: ColumnDef<SuratKelahiranType>[] = [
     {
       id: "id",
@@ -31,7 +31,14 @@ export const columns = () => {
     },
     {
       accessorKey: "updatedAt",
-      header: "Terakhir diperbarui",
+      header: ({ column }) => {
+        return (
+          <Button variant="ghost" className="w-full" onClick={toggleSortDate}>
+            Terakhir diperbarui
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
       cell: ({ row }) => {
         return <>{formatDate(row.original.updatedAt)}</>;
       },
