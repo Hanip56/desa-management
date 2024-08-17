@@ -1,17 +1,13 @@
-import Header from "./components/header";
-import { getCurrentUser } from "@/lib/auth";
-import { DataGrid } from "./components/data-grid";
-import LatestPengajuan from "./components/latest-pengajuan";
-import PengajuanChart from "./components/pengajuan-chart";
+import { Skeleton } from "@/components/ui/skeleton";
+import { DataCardLoading } from "./data-card";
+import { DataGrid } from "./data-grid";
+import LatestPengajuan, { LatestPengajuanSkeleton } from "./latest-pengajuan";
+import PengajuanChart from "./pengajuan-chart";
 import prisma from "@/db/prisma";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Suspense } from "react";
-import MainDashboard, {
-  MainDashboardSkeleton,
-} from "./components/main-dashboard";
 
-export default async function Home() {
-  const user = await getCurrentUser();
-
+export default async function MainDashboard() {
   const suratKelahiranMasuk = await prisma.suratKelahiran.count();
   const suratKematianMasuk = await prisma.suratKematian.count();
   const skBelumMenikahMasuk = await prisma.skBelumMenikah.count();
@@ -73,17 +69,53 @@ export default async function Home() {
     skIjinKeramaianDitolak;
 
   return (
-    <main>
-      <Header
-        title={`Selamat Datang, ${user?.username
-          .charAt(0)
-          .toUpperCase()}${user?.username.slice(1)}`}
-        subtitle="Aplikasi pengelolaan desa Margaasih"
-      />
+    <>
+      <div className="mt-8">
+        <DataGrid
+          data1={jumlahSuratMasuk}
+          data2={jumlahSuratDiterima}
+          data3={jumlahSuratDitolak}
+        />
+      </div>
 
-      <Suspense fallback={<MainDashboardSkeleton />}>
-        <MainDashboard />
-      </Suspense>
-    </main>
+      <div className="w-full flex items-start flex-col md:flex-row gap-4">
+        <div className="w-full flex-1 h-full">
+          <Suspense fallback={<LatestPengajuanSkeleton />}>
+            <LatestPengajuan />
+          </Suspense>
+        </div>
+        <div className="w-full md:w-80 h-full">
+          <PengajuanChart
+            suratKelahiranCount={suratKelahiranMasuk}
+            skBelumMenikahCount={skBelumMenikahMasuk}
+            skIjinKeramaianCount={skIjinKeramaianMasuk}
+            skPenghasilanOrangTuaCount={skPenghasilanOrangTuaMasuk}
+            suratKematianCount={suratKematianMasuk}
+          />
+        </div>
+      </div>
+    </>
   );
 }
+
+export const MainDashboardSkeleton = () => (
+  <div className="mt-8">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8">
+      <DataCardLoading />
+      <DataCardLoading />
+      <DataCardLoading />
+    </div>
+    <div className="w-full flex items-start flex-col md:flex-row gap-4">
+      <LatestPengajuanSkeleton />
+      <div className="w-full md:w-80">
+        <Card className="w-full flex flex-col h-[22rem]">
+          <CardHeader className="items-center">
+            <Skeleton className="h-10 w-[80%] max-w-60 mb-4" />
+            <Skeleton className="h-4 w-[60%] max-w-40" />
+          </CardHeader>
+          <CardContent className="flex-1 pb-0 h-full"></CardContent>
+        </Card>
+      </div>
+    </div>
+  </div>
+);

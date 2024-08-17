@@ -47,31 +47,16 @@ interface DataCardProps extends BoxVariants, iconVariants {
   icon: IconType;
   title: string;
   value?: number;
-  dateRange: string;
-  percentageChange?: number;
 }
 
 export const DataCard = ({
   icon: Icon,
   title,
-  dateRange,
   value = 0,
-  percentageChange = 0,
   variant,
 }: DataCardProps) => {
   return (
     <Card className="border-none drop-shadow-md">
-      {/* <CardHeader className="flex flex-row items-center justify-between gap-x-4">
-        <div className="space-y-2">
-          <CardTitle className="text-2xl line-clamp-1">{title}</CardTitle>
-          <CardDescription className="line-clamp-1">
-            {dateRange}
-          </CardDescription>
-        </div>
-        <div className={cn(boxVariant({ variant }))}>
-          <Icon className={cn(iconVariant({ variant }))} />
-        </div>
-      </CardHeader> */}
       <CardHeader className="pb-2">
         <CardTitle className="text-base flex items-center justify-between">
           {title}
@@ -82,15 +67,8 @@ export const DataCard = ({
         <h3 className="font-bold text-2xl pb-1 break-all">
           +<CountUp preserveValue start={0} end={value} />
         </h3>
-        <p
-          className={cn(
-            "text-muted-foreground text-sm line-clamp-1",
-            percentageChange > 0 && "text-emerald-500",
-            percentageChange < 0 && "text-rose-500"
-          )}
-        >
-          {/* {formatPercentage(percentageChange)} from last period */}
-          diambil dari bulan ini
+        <p className={"text-muted-foreground text-sm line-clamp-1"}>
+          diperoleh dari bulan ini
         </p>
       </CardContent>
     </Card>
@@ -99,16 +77,13 @@ export const DataCard = ({
 
 export const DataCardLoading = () => {
   return (
-    <Card className="border-none drop-shadow-sm h-[192px]">
-      <CardHeader className="flex flex-row items-center justify-between gap-x-4">
-        <div className="space-y-2">
-          <Skeleton className="h-6 w-24" />
-          <Skeleton className="h-4 w-40" />
-        </div>
-        <Skeleton className="size-12" />
+    <Card className="border-none drop-shadow-sm">
+      <CardHeader className="flex flex-row items-center justify-between gap-x-4 pb-4">
+        <Skeleton className="h-4 w-24" />
+        <Skeleton className="size-4" />
       </CardHeader>
       <CardContent>
-        <Skeleton className="shrink-0 h-10 w-24 mb-2" />
+        <Skeleton className="shrink-0 h-6 w-24 mb-2" />
         <Skeleton className="shrink-0 h-4 w-40" />
       </CardContent>
     </Card>

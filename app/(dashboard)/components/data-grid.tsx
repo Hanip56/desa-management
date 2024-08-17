@@ -1,57 +1,38 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-
 import {
   HiDocumentArrowDown,
   HiDocumentCheck,
   HiDocumentMinus,
 } from "react-icons/hi2";
-import { DataCard, DataCardLoading } from "./data-card";
+import { DataCard } from "./data-card";
 
-export const DataGrid = () => {
-  const params = useSearchParams();
-  const to = params.get("to") || undefined;
-  const from = params.get("from") || undefined;
+type Props = {
+  data1: number;
+  data2: number;
+  data3: number;
+};
 
-  // const dateRangeLabel = formatDateRange({ to, from });
-  const dateRangeLabel = "";
-
-  //   if (isLoading) {
-  //     return (
-  //       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8">
-  //         <DataCardLoading />
-  //         <DataCardLoading />
-  //         <DataCardLoading />
-  //       </div>
-  //     );
-  //   }
-
+export const DataGrid = ({ data1, data2, data3 }: Props) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8">
       <DataCard
         title="Pengajuan"
-        value={246}
-        percentageChange={20}
+        value={data1}
         icon={HiDocumentArrowDown}
         variant="warning"
-        dateRange={dateRangeLabel}
       />
       <DataCard
         title="Penyetujuan"
-        value={114}
-        percentageChange={20}
+        value={data2}
         icon={HiDocumentCheck}
         variant="success"
-        dateRange={dateRangeLabel}
       />
       <DataCard
         title="Penolakan"
-        value={56}
-        percentageChange={20}
+        value={data3}
         icon={HiDocumentMinus}
         variant="danger"
-        dateRange={dateRangeLabel}
       />
     </div>
   );
