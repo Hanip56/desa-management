@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
 import { useCallback } from "react";
 
-export const useNavigate = (): ((
+export const usePushQuery = (): ((
   q: Record<string, string | number>
 ) => void) => {
   const params = qs.parse(useSearchParams().toString());

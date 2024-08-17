@@ -7,14 +7,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ScanSearch, MoreHorizontal, Trash, Edit } from "lucide-react";
+import { MoreHorizontal, Trash } from "lucide-react";
 import { ColumnsType } from "./columns";
-import { useRouter } from "next/navigation";
 import { useConfirm } from "@/hooks/use-confirm";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteSkIjinKeramaian } from "@/fetcher/sk-ijin-keramaian-fetcher";
+import { deleteSuratKematian } from "@/fetcher/surat-kematian-fetcher";
 import { toast } from "sonner";
 
 type CellActionProps = {
@@ -22,8 +19,6 @@ type CellActionProps = {
 };
 
 const CellAction: React.FC<CellActionProps> = ({ data }) => {
-  const { data: session } = useSession();
-  const router = useRouter();
   const queryClient = useQueryClient();
   const [ConfirmationDialog, confirm] = useConfirm(
     "Apa anda yakin?",
@@ -31,14 +26,14 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
   );
 
   const deleteMutation = useMutation({
-    mutationFn: deleteSkIjinKeramaian,
+    mutationFn: deleteSuratKematian,
     onSuccess: (data) => {
       toast("Data berhasil dibatalkan.", {
         className: "text-emerald-600 font-semibold",
       });
 
       queryClient.invalidateQueries({
-        queryKey: ["sk-ijin-keramaians"],
+        queryKey: ["surat-kematians"],
       });
     },
     onError: (error) => {
@@ -70,29 +65,9 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          {(session?.user.role === "ADMIN" || data.status !== "DIPROSES") && (
-            <DropdownMenuItem asChild>
-              <Link
-                href={`sk-ijin-keramaian/${data.id}`}
-                className="flex items-center"
-              >
-                <ScanSearch className="mr-2 size-4" /> Lihat Detail
-              </Link>
-            </DropdownMenuItem>
-          )}
-          {session?.user.role === "USER" && data.status === "DIPROSES" && (
-            <>
-              <DropdownMenuItem
-                onClick={() => router.push(`sk-ijin-keramaian/${data.id}`)}
-              >
-                <Edit className="mr-2 size-4" /> Edit
-              </DropdownMenuItem>
-
-              <DropdownMenuItem onClick={handleDelete}>
-                <Trash className="mr-2 size-4" /> Batal
-              </DropdownMenuItem>
-            </>
-          )}
+          <DropdownMenuItem onClick={handleDelete}>
+            <Trash className="mr-2 size-4" /> Hapus
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

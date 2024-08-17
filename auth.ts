@@ -28,11 +28,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const { email, password } = credentials;
 
-        const pwHash = await bcrypt.hash(password, 10);
         user = await prisma.user.findUnique({ where: { email } });
 
         if (!user) {
           throw new Error("User not found.");
+        }
+
+        const isMatchPassword = await bcrypt.compare(password, user.password);
+
+        if (!isMatchPassword) {
+          throw new Error("Invalid credentials");
         }
 
         return user;
@@ -40,7 +45,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ user, token }) {
+    async jwt({ user, token, trigger, session }) {
+      if (trigger === "update" && session) {
+        if (session?.username) {
+          token.user.username = session.username;
+        }
+        if (session?.email) {
+          token.user.email = session.email;
+        }
+
+        return token;
+      }
+
       if (user) {
         token.user = {
           createdAt: user.createdAt,

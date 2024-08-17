@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ScanSearch, MoreHorizontal, Trash, Edit } from "lucide-react";
-import { SuratKematianType } from "./columns";
+import { ColumnsType } from "./columns";
 import { useRouter } from "next/navigation";
 import { useConfirm } from "@/hooks/use-confirm";
 import Link from "next/link";
@@ -18,7 +18,7 @@ import { deleteSuratKematian } from "@/fetcher/surat-kematian-fetcher";
 import { toast } from "sonner";
 
 type CellActionProps = {
-  data: SuratKematianType;
+  data: ColumnsType;
 };
 
 const CellAction: React.FC<CellActionProps> = ({ data }) => {

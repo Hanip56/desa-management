@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ScanSearch, MoreHorizontal, Trash, Edit } from "lucide-react";
-import { SkPenghasilanOrangTuaType } from "./columns";
+import { ColumnsType } from "./columns";
 import { useRouter } from "next/navigation";
 import { useConfirm } from "@/hooks/use-confirm";
 import Link from "next/link";
@@ -18,7 +18,7 @@ import { deleteSkPenghasilanOrangTua } from "@/fetcher/sk-penghasilan-orang-tua-
 import { toast } from "sonner";
 
 type CellActionProps = {
-  data: SkPenghasilanOrangTuaType;
+  data: ColumnsType;
 };
 
 const CellAction: React.FC<CellActionProps> = ({ data }) => {

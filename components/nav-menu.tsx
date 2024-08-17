@@ -13,6 +13,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import MobileNavMenu from "./mobile-nav-menu";
+import { useSession } from "next-auth/react";
 
 export type Route = {
   label: string;
@@ -24,6 +25,7 @@ export type Route = {
 };
 
 const NavMenu = () => {
+  const { data: session } = useSession();
   const pathname = usePathname();
 
   const routes: Route[] = [
@@ -68,15 +70,20 @@ const NavMenu = () => {
       label: "Profil",
       href: "/profil",
     },
-    {
-      label: "Pengguna",
-      href: "/pengguna",
-    },
-    {
-      label: "Pengaturan",
-      href: "/pengaturan",
-    },
   ];
+
+  if (session?.user.role !== "USER") {
+    routes.push(
+      {
+        label: "Pengguna",
+        href: "/pengguna",
+      },
+      {
+        label: "Pengaturan",
+        href: "/pengaturan",
+      }
+    );
+  }
 
   return (
     <>

@@ -4,8 +4,12 @@ import FileSaver from "file-saver";
 import { SuratKematian } from "@prisma/client";
 import { SuratKematianWithUser } from "@/types";
 
-type SuratKematianForDB = Omit<SuratKematian, "tanggal"> & {
+type SuratKematianForDB = Omit<
+  SuratKematian,
+  "tanggal" | "tanggalPembuatan"
+> & {
   tanggal: string;
+  tanggalPembuatan: string;
 };
 
 type GetAllParams = {
