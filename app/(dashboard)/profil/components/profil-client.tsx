@@ -37,6 +37,7 @@ const ProfilClient = () => {
               value={session?.user.username ?? ""}
             />
             <ListSetting label="Email" value={session?.user.email ?? ""} />
+            <ListSetting label="Role" value={session?.user.role ?? ""} />
             <ListSetting
               label="Password"
               value="******"

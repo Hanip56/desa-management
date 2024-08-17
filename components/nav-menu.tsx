@@ -18,9 +18,11 @@ import { useSession } from "next-auth/react";
 export type Route = {
   label: string;
   href?: string;
+  notif?: boolean;
   sub?: {
     label: string;
     href: string;
+    notif?: boolean;
   }[];
 };
 
@@ -35,6 +37,7 @@ const NavMenu = () => {
     },
     {
       label: "Pengajuan",
+      // notif: true,
       sub: [
         {
           label: "Surat kelahiran",
@@ -112,7 +115,12 @@ const NavMenu = () => {
             ) : (
               <NavigationMenuItem key={route.label}>
                 <NavigationMenuTrigger className="bg-transparent text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/5 focus:bg-primary-foreground/20 focus:text-primary-foreground">
-                  {route.label}
+                  <div className="relative">
+                    {route.notif && (
+                      <div className="absolute w-[6px] h-[6px] rounded-full bg-red-500 top-0 -right-[5px]" />
+                    )}
+                    {route.label}
+                  </div>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   {route.sub?.map((route) => (
@@ -132,7 +140,12 @@ const NavMenu = () => {
                           ),
                         })}
                       >
-                        {route.label}
+                        <div className="relative">
+                          {route.notif && (
+                            <div className="absolute w-[6px] h-[6px] rounded-full bg-red-500 top-0 -right-[5px]" />
+                          )}
+                          {route.label}
+                        </div>
                       </NavigationMenuLink>
                     </Link>
                   ))}

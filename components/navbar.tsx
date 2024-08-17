@@ -1,4 +1,3 @@
-import Image from "next/image";
 import NavMenu from "./nav-menu";
 import Logo from "./logo";
 import LogoutBtn from "./logout-btn";

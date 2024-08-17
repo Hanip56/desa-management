@@ -24,7 +24,7 @@ export const generateSuratKematian = async (
   const bold = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
 
   //   config
-  const startLine = height - 120;
+  const startLine = height - 110;
   const gap = 10;
   const indent = 30;
   const p = (content: string, indexY: number = 0, x?: number) => {

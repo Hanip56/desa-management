@@ -57,11 +57,11 @@ const PenggunaClient = () => {
         <div className="text-center md:text-start">
           <CardTitle className="text-xl">Daftar Pengguna</CardTitle>
         </div>
-        <Button asChild className="w-full md:w-fit">
+        {/* <Button asChild className="w-full md:w-fit">
           <Link href="surat-kematian/formulir">
             <Plus className="w-5 h-5 mr-2 " /> Buat pengguna
           </Link>
-        </Button>
+        </Button> */}
       </CardHeader>
       <CardContent>
         <DataTable
