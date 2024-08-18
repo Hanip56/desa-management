@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus } from "lucide-react";
+import { Plus, Printer } from "lucide-react";
 import { columns, ColumnsType } from "./columns";
 import { DataTable } from "@/components/data-table";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import { getAllSkPenghasilanOrangTua } from "@/fetcher/sk-penghasilan-orang-tua-
 import CardSkeleton from "@/app/(dashboard)/components/card-skeleton";
 import { useNavigate } from "@/hooks/use-navigate";
 import CardError from "@/app/(dashboard)/components/card-error";
+import { useReactToPrint } from "react-to-print";
 
 export const SkPenghasilanOrangTuaClient = () => {
   const [
@@ -25,6 +26,12 @@ export const SkPenghasilanOrangTuaClient = () => {
     updatedAt,
     toggleSortDate,
   ] = useNavigate();
+
+  const printableRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => printableRef.current,
+    bodyClass: "p-6",
+  });
 
   const query = useQuery({
     queryKey: [
@@ -60,14 +67,23 @@ export const SkPenghasilanOrangTuaClient = () => {
         <div className="text-center md:text-start">
           <CardTitle className="text-xl">Daftar Pengajuan</CardTitle>
         </div>
-        <Button asChild className="w-full md:w-fit">
-          <Link href="sk-penghasilan-orang-tua/formulir">
-            <Plus className="w-5 h-5 mr-2 " /> Buat pengajuan
-          </Link>
-        </Button>
+        <div className="flex gap-2 items-center">
+          <Button
+            onClick={handlePrint}
+            className="bg-sky-500 hover:bg-sky-500/80"
+          >
+            <Printer className="w-5 h-5" />
+          </Button>
+          <Button asChild className="w-full md:w-fit">
+            <Link href="sk-penghasilan-orang-tua/formulir">
+              <Plus className="w-5 h-5 mr-2 " /> Buat pengajuan
+            </Link>
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         <DataTable
+          ref={printableRef}
           columns={columns(toggleSortDate)}
           data={data}
           filterKey="nama"
