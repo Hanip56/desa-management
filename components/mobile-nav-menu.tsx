@@ -19,6 +19,7 @@ import {
 } from "./ui/accordion";
 import { useEffect, useState } from "react";
 import Logo from "./logo";
+import MobileLogoutBtn from "./mobile-logout-btn";
 
 const LinkItem = ({
   href,
@@ -64,12 +65,12 @@ const MobileNavMenu = ({ routes }: { routes: Route[] }) => {
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="p-0 w-[80%] h-full sm:w-80 text-white overflow-y-auto"
+        className="p-0 w-[80%] h-full sm:w-80 text-white overflow-y-auto flex flex-col gap-0 overflow-x-hidden"
       >
         <div className="py-8 px-4 bg-emerald-700 text-white">
           <Logo />
         </div>
-        <nav className="my-6 px-3">
+        <nav className="py-2 px-3 flex-1 overflow-y-auto shadow-sm">
           {routes.map((route) => {
             return route.href ? (
               <Link href={route.href ?? ""} key={route.href}>
@@ -108,6 +109,7 @@ const MobileNavMenu = ({ routes }: { routes: Route[] }) => {
             );
           })}
         </nav>
+        <MobileLogoutBtn />
       </SheetContent>
     </Sheet>
   );
