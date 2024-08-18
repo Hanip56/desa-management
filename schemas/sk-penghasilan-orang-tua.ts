@@ -36,7 +36,7 @@ export const skPenghasilanOrangTuaSchema = z.object({
   alamat: z.string().min(1, {
     message: "Kolom Alamat harus diisi",
   }),
-  penghasilan: z.number().min(1, {
+  penghasilan: z.number({
     message: "Kolom Penghasilan harus diisi",
   }),
 });

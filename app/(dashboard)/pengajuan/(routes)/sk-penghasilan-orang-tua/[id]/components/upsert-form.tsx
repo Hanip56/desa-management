@@ -53,7 +53,7 @@ const UpsertForm = ({ initialData }: Props) => {
       statusPerkawinan: initialData?.statusPerkawinan ?? undefined,
       kewarganegaraan: initialData?.kewarganegaraan ?? "",
       alamat: initialData?.alamat ?? "",
-      penghasilan: initialData?.penghasilan ?? 0,
+      penghasilan: initialData?.penghasilan ?? undefined,
     },
   });
 
@@ -305,7 +305,7 @@ const UpsertForm = ({ initialData }: Props) => {
                     <Input
                       disabled={disabledCondition}
                       {...field}
-                      onChange={(e) => field.onChange(+e.target.value)}
+                      onChange={(e) => field.onChange(parseInt(e.target.value))}
                       placeholder="Penghasilan"
                       type="number"
                       min={0}
