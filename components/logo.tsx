@@ -1,9 +1,10 @@
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 
 const Logo = () => {
   return (
-    <div className="flex items-center gap-2">
+    <Link href="/" className="flex items-center gap-2">
       <Image
         src="/logo-desa.png"
         alt="Logo Desa"
@@ -17,7 +18,7 @@ const Logo = () => {
           KABUPATEN BANDUNG
         </small>
       </div>
-    </div>
+    </Link>
   );
 };
 
