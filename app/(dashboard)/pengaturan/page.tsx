@@ -12,7 +12,10 @@ const Pengaturan = async () => {
 
   return (
     <main>
-      <Header title="Pengaturan" subtitle="lorem ipsum dolor sit amet" />
+      <Header
+        title="Pengaturan"
+        subtitle="Aplikasi pengelolaan desa Margaasih"
+      />
 
       <PengaturanClient />
     </main>

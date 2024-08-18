@@ -41,8 +41,6 @@ const PenggunaClient = () => {
   if (query.isLoading || query.isPending) return <CardSkeleton />;
   if (query.isError) return <CardError error={query?.error?.message} />;
 
-  console.log({ data: query.data });
-
   const data: ColumnsType[] = query.data.data.map((user) => ({
     id: user.id,
     username: user.username,

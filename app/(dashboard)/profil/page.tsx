@@ -4,7 +4,7 @@ import ProfilClient from "./components/profil-client";
 const Profil = async () => {
   return (
     <main>
-      <Header title="Profil" subtitle="lorem ipsum dolor sit amet" />
+      <Header title="Profil" subtitle="Aplikasi pengelolaan desa Margaasih" />
 
       <ProfilClient />
     </main>

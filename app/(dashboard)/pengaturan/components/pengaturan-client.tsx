@@ -8,9 +8,9 @@ const PengaturanClient = () => {
     <Card className="mt-8 rounded-2xl">
       <CardHeader className="flex flex-col md:flex-row items-center md:justify-between gap-y-2">
         <CardTitle className="text-xl">Informasi desa</CardTitle>
-        <Button className="w-full sm:w-fit ml-auto" variant="secondary">
+        {/* <Button className="w-full sm:w-fit ml-auto" variant="secondary">
           Edit
-        </Button>
+        </Button> */}
       </CardHeader>
       <CardContent>
         <ul>
