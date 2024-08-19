@@ -22,6 +22,15 @@ export async function GET(
       });
     }
 
+    const setting = await prisma.setting.findFirst();
+
+    let tte8: Uint8Array | undefined = undefined;
+
+    if (setting?.tte) {
+      const bufferTte = Buffer.from(setting?.tte);
+      tte8 = new Uint8Array(bufferTte);
+    }
+
     if (
       session.user.id !== skIjinKeramaian.userId &&
       session.user.role === "USER"
@@ -52,7 +61,9 @@ export async function GET(
     generateSkIjinKeramaian(
       skIjinKeramaian,
       (chunk) => writer.write(chunk),
-      () => writer.close()
+      () => writer.close(),
+      setting?.namaKepalaDesa,
+      tte8
     );
 
     return new NextResponse(readable, {

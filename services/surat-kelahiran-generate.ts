@@ -1,12 +1,14 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { formatDate, getGender } from "@/lib/utils";
-import { SuratKelahiran } from "@prisma/client";
+import { Setting, SuratKelahiran } from "@prisma/client";
 import { generateUtils } from "./utils";
 
 export const generateSuratKelahiran = async (
   data: SuratKelahiran,
   dataCb: (chunk: Uint8Array) => void,
-  endCb: () => void
+  endCb: () => void,
+  namaKepalaDesa?: string,
+  tte?: Uint8Array
 ) => {
   // Create a new PDF document
   const pdfDoc = await PDFDocument.create();
@@ -55,6 +57,7 @@ export const generateSuratKelahiran = async (
   const gap = 10;
   const indent = 30;
   const { p, pJustify, ttd } = generateUtils({
+    pdfDoc,
     startLine,
     font,
     bold,
@@ -62,6 +65,7 @@ export const generateSuratKelahiran = async (
     marginX,
     page,
     fontSize: 13,
+    tte,
   });
 
   p(
@@ -122,49 +126,17 @@ export const generateSuratKelahiran = async (
 
   p("dipergunakan sebagaimana mestinya.", 40);
 
-  // ttd
-  const boxWidth = 200;
-  const boxHeight = 150;
-  const boxX = width - 50 - boxWidth;
-  const boxY = height - boxHeight - 645;
-
-  page.drawRectangle({
-    x: boxX,
-    y: boxY,
-    height: boxHeight,
-    width: boxWidth,
-    color: rgb(1, 1, 1),
-  });
-
-  const tanggal = `Margaasih, ${
-    data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
-  }`;
-  const tanggalWidth = font.widthOfTextAtSize(tanggal, 14);
-
-  page.drawText(tanggal, {
-    x: boxX + boxWidth / 2 - tanggalWidth / 2,
-    y: boxY + boxHeight - 20,
-    size: 14,
-    font: font,
-  });
-
-  const kades = "Kepala Desa Margaasih";
-  const kadesWidth = font.widthOfTextAtSize(kades, 14);
-  page.drawText(kades, {
-    x: boxX + boxWidth / 2 - kadesWidth / 2,
-    y: boxY + boxHeight - 40,
-    size: 14,
-    font: font,
-  });
-
-  const tte = "tte";
-  const tteWidth = font.widthOfTextAtSize(tte, 14);
-  page.drawText(tte, {
-    x: boxX + boxWidth / 2 - tteWidth / 2,
-    y: boxY + boxHeight - 120,
-    size: 14,
-    font: font,
-  });
+  ttd(
+    635,
+    "right",
+    `Margaasih, ${
+      data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
+    }`,
+    "Kepala Desa Margaasih",
+    namaKepalaDesa ?? "-",
+    "",
+    true
+  );
 
   // Draw bounding rectangle
   page.drawRectangle({

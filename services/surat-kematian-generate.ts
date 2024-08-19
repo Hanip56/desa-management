@@ -6,11 +6,14 @@ import {
   getGender,
 } from "@/lib/utils";
 import { SuratKematian } from "@prisma/client";
+import { generateUtils } from "./utils";
 
 export const generateSuratKematian = async (
   data: SuratKematian,
   dataCb: (chunk: Uint8Array) => void,
-  endCb: () => void
+  endCb: () => void,
+  namaKepalaDesa?: string,
+  tte?: Uint8Array
 ) => {
   // Create a new PDF document
   const pdfDoc = await PDFDocument.create();
@@ -27,16 +30,6 @@ export const generateSuratKematian = async (
   const startLine = height - 110;
   const gap = 10;
   const indent = 30;
-  const p = (content: string, indexY: number = 0, x?: number) => {
-    page.drawText(content, {
-      x: x ?? 65,
-      y: startLine - gap * indexY,
-      size: 13,
-      font: font,
-      maxWidth: 480,
-      lineHeight: 15,
-    });
-  };
 
   const fontSize = 16;
   const title = "SURAT KEMATIAN";
@@ -44,6 +37,7 @@ export const generateSuratKematian = async (
 
   const titleX = width / 2 - titleWidth / 2;
   const titleY = height - 50;
+  const marginX = 65;
 
   // Title
   page.drawText(title, {
@@ -66,6 +60,18 @@ export const generateSuratKematian = async (
     y: height - 70,
     size: fontSize,
     font: font,
+  });
+
+  const { p, pJustify, ttd } = generateUtils({
+    pdfDoc,
+    startLine,
+    font,
+    bold,
+    gap,
+    marginX,
+    page,
+    fontSize: 13,
+    tte,
   });
 
   //   Content
@@ -97,87 +103,27 @@ export const generateSuratKematian = async (
   p("dipergunakan sebagaimana mestinya.", 45);
 
   // ttd right
-  const boxWidth = 250;
-  const boxHeight = 150;
-  const boxX = width - 50 - boxWidth;
-  const boxY = height - boxHeight - 635;
-
-  page.drawRectangle({
-    x: boxX,
-    y: boxY,
-    height: boxHeight,
-    width: boxWidth,
-    color: rgb(1, 1, 1),
-  });
-
-  const tanggal = `Margaasih, ${
-    data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
-  }`;
-  const tanggalWidth = font.widthOfTextAtSize(tanggal, 13);
-
-  page.drawText(tanggal, {
-    x: boxX + boxWidth / 2 - tanggalWidth / 2,
-    y: boxY + boxHeight - 20,
-    size: 13,
-    font: font,
-  });
-
-  const kades = "Kepala Desa Margaasih";
-  const kadesWidth = font.widthOfTextAtSize(kades, 13);
-  page.drawText(kades, {
-    x: boxX + boxWidth / 2 - kadesWidth / 2,
-    y: boxY + boxHeight - 40,
-    size: 13,
-    font: font,
-  });
-
-  const tte = data.namaPemohon;
-  const tteWidth = font.widthOfTextAtSize(tte, 13);
-  page.drawText(tte, {
-    x: boxX + boxWidth / 2 - tteWidth / 2,
-    y: boxY + boxHeight - 120,
-    size: 13,
-    font: font,
-  });
+  ttd(
+    635,
+    "right",
+    `Margaasih, ${
+      data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
+    }`,
+    "Pelapor",
+    data.namaPemohon ?? "-",
+    ""
+  );
 
   // ttd left
-  const boxLeftX = 50;
-
-  page.drawRectangle({
-    x: boxLeftX,
-    y: boxY,
-    height: boxHeight,
-    width: boxWidth,
-    color: rgb(1, 1, 1),
-  });
-
-  const tteLeft1 = `Mengetahui`;
-  const tteLeft1Width = font.widthOfTextAtSize(tteLeft1, 13);
-
-  page.drawText(tteLeft1, {
-    x: boxLeftX + boxWidth / 2 - tteLeft1Width / 2,
-    y: boxY + boxHeight - 20,
-    size: 13,
-    font: font,
-  });
-
-  const tteLeft2 = "Kepala Desa Margaasih";
-  const tteLeft2Width = font.widthOfTextAtSize(tteLeft2, 13);
-  page.drawText(tteLeft2, {
-    x: boxLeftX + boxWidth / 2 - tteLeft2Width / 2,
-    y: boxY + boxHeight - 40,
-    size: 13,
-    font: font,
-  });
-
-  const tteLeft3 = "tte";
-  const tteLeft3Width = font.widthOfTextAtSize(tteLeft3, 13);
-  page.drawText(tteLeft3, {
-    x: boxLeftX + boxWidth / 2 - tteLeft3Width / 2,
-    y: boxY + boxHeight - 120,
-    size: 13,
-    font: font,
-  });
+  ttd(
+    635,
+    "left",
+    "Mengetahui",
+    "Kepala Desa Margaasih",
+    namaKepalaDesa ?? "-",
+    "",
+    true
+  );
 
   // Draw bounding rectangle
   page.drawRectangle({

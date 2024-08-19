@@ -1,20 +1,14 @@
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import {
-  DateToDayAndDate,
-  DatetoTime,
-  formatDate,
-  formatRupiah,
-  getGender,
-} from "@/lib/utils";
+import { formatDate, formatRupiah, getGender } from "@/lib/utils";
 import { SkPenghasilanOrangTua } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
-import fs from "fs";
-import path from "path";
 
 export const generateSkPenghasilanOrangTua = async (
   data: SkPenghasilanOrangTua,
   dataCb: (chunk: Uint8Array) => void,
-  endCb: () => void
+  endCb: () => void,
+  namaKepalaDesa?: string,
+  tte?: Uint8Array
 ) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([595, 842]); // A4 size (595x842 points)
@@ -71,6 +65,7 @@ export const generateSkPenghasilanOrangTua = async (
   const startLine = height - 166;
   const gap = 10;
   const { p, pJustify, ttd } = generateUtils({
+    pdfDoc,
     startLine,
     font,
     bold,
@@ -78,6 +73,7 @@ export const generateSkPenghasilanOrangTua = async (
     marginX,
     page,
     fontSize: 13,
+    tte,
   });
 
   pJustify(
@@ -138,7 +134,9 @@ export const generateSkPenghasilanOrangTua = async (
       data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
     }`,
     "Kepala Desa Margaasih",
-    "YAYAN SURYANA"
+    namaKepalaDesa ?? "",
+    "",
+    true
   );
 
   // Save the document and get the PDF bytes

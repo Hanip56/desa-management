@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { endOfDay, format, formatISO, parseISO } from "date-fns";
 import { id } from "date-fns/locale";
 import { twMerge } from "tailwind-merge";
+import { createCanvas, loadImage } from "canvas";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -57,4 +58,66 @@ export function formatRupiah(amount: number) {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(amount);
+}
+
+export function ByteaToFile(buffer: Buffer) {
+  // Convert the BYTEA data to a Buffer (Node.js) or Uint8Array (Browser)
+  const fileBuffer = Buffer.from(buffer); // In Node.js
+  // const fileBuffer = new Uint8Array(byteaData); // In Browser
+
+  // Create a Blob from the buffer (works in both Node.js and browser environments)
+  const fileBlob = new Blob([fileBuffer], { type: "image/png" });
+
+  // Create a File object from the Blob
+  const file = new File([fileBlob], "qr", { type: "image/png" });
+
+  return file;
+}
+
+export const base64ToFile = (
+  base64String: string,
+  fileName: string,
+  fileType: string
+): File => {
+  // Check if the Base64 string contains a data URL prefix and remove it
+  const base64Data = base64String.replace(
+    /^data:[a-zA-Z]*\/[a-zA-Z]*;base64,/,
+    ""
+  );
+
+  // Decode Base64 string to binary data
+  const binaryString = atob(base64Data);
+  const len = binaryString.length;
+  const bytes = new Uint8Array(len);
+
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+
+  // Create a Blob from the binary data
+  const blob = new Blob([bytes], { type: fileType });
+
+  // Create a File object from the Blob
+  const file = new File([blob], fileName, { type: fileType });
+
+  return file;
+};
+
+export async function resizeImageBuffer(
+  buffer: Buffer,
+  width: number,
+  height: number
+): Promise<Buffer> {
+  // Load the image from the buffer
+  const image = await loadImage(buffer);
+
+  // Create a canvas with the desired dimensions
+  const canvas = createCanvas(width, height);
+  const ctx = canvas.getContext("2d");
+
+  // Draw the image onto the canvas, resizing it
+  ctx.drawImage(image, 0, 0, width, height);
+
+  // Get the resized image as a buffer in PNG format
+  return canvas.toBuffer("image/png");
 }

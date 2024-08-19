@@ -20,6 +20,8 @@ export async function GET(
       return new NextResponse("Surat Kelahiran not found", { status: 404 });
     }
 
+    const setting = await prisma.setting.findFirst();
+
     if (
       session.user.id !== suratKelahiran.userId &&
       session.user.role === "USER"
@@ -43,10 +45,19 @@ export async function GET(
 
     const writer = writable.getWriter();
 
+    let tte8: Uint8Array | undefined = undefined;
+
+    if (setting?.tte) {
+      const bufferTte = Buffer.from(setting?.tte);
+      tte8 = new Uint8Array(bufferTte);
+    }
+
     generateSuratKelahiran(
       suratKelahiran,
       (chunk) => writer.write(chunk),
-      () => writer.close()
+      () => writer.close(),
+      setting?.namaKepalaDesa,
+      tte8
     );
 
     return new NextResponse(readable, {

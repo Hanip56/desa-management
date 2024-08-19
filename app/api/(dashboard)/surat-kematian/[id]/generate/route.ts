@@ -16,6 +16,15 @@ export async function GET(
       where: { id: params.id },
     });
 
+    const setting = await prisma.setting.findFirst();
+
+    let tte8: Uint8Array | undefined = undefined;
+
+    if (setting?.tte) {
+      const bufferTte = Buffer.from(setting?.tte);
+      tte8 = new Uint8Array(bufferTte);
+    }
+
     if (!suratKematian) {
       return new NextResponse("Surat Kematian not found", { status: 404 });
     }
@@ -46,7 +55,9 @@ export async function GET(
     generateSuratKematian(
       suratKematian,
       (chunk) => writer.write(chunk),
-      () => writer.close()
+      () => writer.close(),
+      setting?.namaKepalaDesa,
+      tte8
     );
 
     return new NextResponse(readable, {

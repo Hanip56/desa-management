@@ -6,7 +6,9 @@ import { generateKopSurat, generateUtils } from "./utils";
 export const generateSkBelumMenikah = async (
   data: SkBelumMenikah,
   dataCb: (chunk: Uint8Array) => void,
-  endCb: () => void
+  endCb: () => void,
+  namaKepalaDesa?: string,
+  tte?: Uint8Array
 ) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([595, 842]); // A4 size (595x842 points)
@@ -62,12 +64,14 @@ export const generateSkBelumMenikah = async (
   const startLine = height - 166;
   const gap = 10;
   const { p, pJustify, ttd } = generateUtils({
+    pdfDoc,
     startLine,
     font,
     bold,
     gap,
     marginX,
     page,
+    tte,
   });
 
   pJustify(
@@ -128,7 +132,9 @@ export const generateSkBelumMenikah = async (
     "right",
     data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-",
     "Kepala Desa Margaasih",
-    "YAYAN SURYANA"
+    namaKepalaDesa ?? "",
+    "",
+    true
   );
 
   // ttd left

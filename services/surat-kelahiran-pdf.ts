@@ -169,7 +169,7 @@ export const generateSuratKelahiranPdf = (
   doc.moveDown(4);
 
   doc.text(
-    "tte",
+    "Yayan Suryana",
     doc.page.width / 2,
     doc.page.height - doc.page.height / 3.2 + 90,
     {

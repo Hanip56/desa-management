@@ -8,7 +8,9 @@ import path from "path";
 export const generateSkIjinKeramaian = async (
   data: SkIjinKeramaian,
   dataCb: (chunk: Uint8Array) => void,
-  endCb: () => void
+  endCb: () => void,
+  namaKepalaDesa?: string,
+  tte?: Uint8Array
 ) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([595, 842]); // A4 size (595x842 points)
@@ -64,6 +66,7 @@ export const generateSkIjinKeramaian = async (
   const startLine = height - 166;
   const gap = 8;
   const { p, pJustify, ttd } = generateUtils({
+    pdfDoc,
     startLine,
     font,
     bold,
@@ -71,6 +74,7 @@ export const generateSkIjinKeramaian = async (
     marginX,
     page,
     fontSize: 12,
+    tte,
   });
   const listImageBytes = fs.readFileSync(
     path.join(process.cwd(), "public", "four-square.png")
@@ -175,7 +179,9 @@ export const generateSkIjinKeramaian = async (
       data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
     }`,
     "Kepala Desa Margaasih",
-    "YAYAN SURYANA"
+    namaKepalaDesa ?? "",
+    "",
+    true
   );
 
   const mengetahuiText = "MENGETAHUI :";

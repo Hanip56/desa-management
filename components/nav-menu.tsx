@@ -94,7 +94,7 @@ const NavMenu = () => {
       <MobileNavMenu routes={routes} />
       {/* navbar */}
       <NavigationMenu className="hidden md:block">
-        <NavigationMenuList className="space-x-2">
+        <NavigationMenuList className="space-x-1">
           {routes.map((route) =>
             route.href ? (
               <NavigationMenuItem key={route.label}>

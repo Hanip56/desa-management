@@ -31,6 +31,8 @@
     "@types/pdfkit": "^0.13.4",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
+    "blob-polyfill": "^9.0.20240710",
+    "canvas": "^2.11.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",

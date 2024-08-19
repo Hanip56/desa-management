@@ -1,4 +1,4 @@
-import { PDFDocument, PDFFont, PDFPage, rgb, StandardFonts } from "pdf-lib";
+import { PDFDocument, PDFFont, PDFPage, rgb } from "pdf-lib";
 import path from "path";
 import fs from "fs";
 
@@ -11,6 +11,7 @@ type GenerateKopSuratProps = {
 };
 
 type GenerateUtils = {
+  pdfDoc: PDFDocument;
   page: PDFPage;
   marginX: number;
   font: PDFFont;
@@ -18,9 +19,11 @@ type GenerateUtils = {
   startLine: number;
   gap: number;
   fontSize?: number;
+  tte?: Uint8Array | null;
 };
 
 export const generateUtils = ({
+  pdfDoc,
   font,
   bold,
   gap,
@@ -28,6 +31,7 @@ export const generateUtils = ({
   page,
   startLine,
   fontSize = 13,
+  tte,
 }: GenerateUtils) => {
   const { width, height } = page.getSize();
 
@@ -73,7 +77,8 @@ export const generateUtils = ({
     line1?: string,
     line2?: string,
     line3?: string,
-    line4?: string
+    line4?: string,
+    withTtd?: boolean
   ) => {
     const boxWidth = 250;
     const boxHeight = 140;
@@ -121,7 +126,7 @@ export const generateUtils = ({
       const text3Width = bold.widthOfTextAtSize(text3, fontSize - 1);
       page.drawText(text3, {
         x: boxX + boxWidth / 2 - text3Width / 2,
-        y: boxY + boxHeight - 105,
+        y: boxY + boxHeight - 115,
         size: fontSize - 1,
         font: bold,
       });
@@ -129,11 +134,11 @@ export const generateUtils = ({
       page.drawLine({
         start: {
           x: boxX + boxWidth / 2 - text3Width / 2,
-          y: boxY + boxHeight - 108,
+          y: boxY + boxHeight - 118,
         },
         end: {
           x: boxX + boxWidth / 2 - text3Width / 2 + text3Width,
-          y: boxY + boxHeight - 108,
+          y: boxY + boxHeight - 118,
         },
       });
     }
@@ -143,10 +148,32 @@ export const generateUtils = ({
       const text4Width = bold.widthOfTextAtSize(text4, fontSize - 1);
       page.drawText(text4, {
         x: boxX + boxWidth / 2 - text4Width / 2,
-        y: boxY + boxHeight - 120,
+        y: boxY + boxHeight - 130,
         size: fontSize - 1,
         font: bold,
       });
+    }
+
+    if (withTtd) {
+      const createTtdImage = async () => {
+        if (!tte) return;
+        // const destPath = path.join(process.cwd(), "public", "qrDB.png");
+        // fs.writeFileSync(destPath, tte);
+
+        // const imagePath = path.join(process.cwd(), "public", "ttd-qr.png");
+        // const imageBytes = fs.readFileSync(imagePath);
+        const ttdImage = await pdfDoc.embedPng(tte);
+        const ttdSize = 52;
+
+        page.drawImage(ttdImage, {
+          x: boxX + boxWidth / 2 - ttdSize / 2,
+          y: boxY + boxHeight - 100,
+          width: ttdSize,
+          height: ttdSize,
+        });
+      };
+
+      createTtdImage();
     }
   };
 
