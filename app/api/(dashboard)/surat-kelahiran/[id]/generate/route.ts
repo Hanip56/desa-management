@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import { generateSuratKelahiran } from "@/services/surat-kelahiran-generate";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,10 +7,6 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await auth();
-
-    if (!session) return new NextResponse("Unauthorized", { status: 401 });
-
     const suratKelahiran = await prisma.suratKelahiran.findUnique({
       where: { id: params.id },
     });
@@ -21,13 +16,6 @@ export async function GET(
     }
 
     const setting = await prisma.setting.findFirst();
-
-    if (
-      session.user.id !== suratKelahiran.userId &&
-      session.user.role === "USER"
-    ) {
-      return new NextResponse("Forbidden", { status: 403 });
-    }
 
     // Check status surat-kelahiran
     if (suratKelahiran.status !== "DITERIMA") {

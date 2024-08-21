@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import { generateSkBelumMenikah } from "@/services/sk-belum-menikah-generate";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,10 +7,6 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await auth();
-
-    if (!session) return new NextResponse("Unauthorized", { status: 401 });
-
     const skBelumMenikah = await prisma.skBelumMenikah.findUnique({
       where: { id: params.id },
     });
@@ -29,13 +24,6 @@ export async function GET(
     if (setting?.tte) {
       const bufferTte = Buffer.from(setting?.tte);
       tte8 = new Uint8Array(bufferTte);
-    }
-
-    if (
-      session.user.id !== skBelumMenikah.userId &&
-      session.user.role === "USER"
-    ) {
-      return new NextResponse("Forbidden", { status: 403 });
     }
 
     // Check status surat-kematian

@@ -1,5 +1,10 @@
 import { auth } from "@/auth";
-import { apiAuthPrefix, authRoutes, DEFAULT_LOGIN_REDIRECT } from "./routes";
+import {
+  apiAuthPrefix,
+  authRoutes,
+  DEFAULT_LOGIN_REDIRECT,
+  generateRouteAffix,
+} from "./routes";
 
 export default auth((req) => {
   const { nextUrl } = req;
@@ -7,6 +12,11 @@ export default auth((req) => {
 
   const isAuthRoutes = authRoutes.includes(nextUrl.pathname);
   const isApiRoutes = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isGenerateRoutes = nextUrl.pathname.endsWith(generateRouteAffix);
+
+  if (isGenerateRoutes) {
+    return;
+  }
 
   if (isApiRoutes) {
     return;

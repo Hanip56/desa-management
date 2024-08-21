@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import { generateSuratKematian } from "@/services/surat-kematian-generate";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,10 +7,6 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await auth();
-
-    if (!session) return new NextResponse("Unauthorized", { status: 401 });
-
     const suratKematian = await prisma.suratKematian.findUnique({
       where: { id: params.id },
     });
@@ -27,13 +22,6 @@ export async function GET(
 
     if (!suratKematian) {
       return new NextResponse("Surat Kematian not found", { status: 404 });
-    }
-
-    if (
-      session.user.id !== suratKematian.userId &&
-      session.user.role === "USER"
-    ) {
-      return new NextResponse("Forbidden", { status: 403 });
     }
 
     // Check status surat-kematian

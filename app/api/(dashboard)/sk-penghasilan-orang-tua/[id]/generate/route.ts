@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import { generateSkPenghasilanOrangTua } from "@/services/sk-penghasilan-orang-tua-generate";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,10 +7,6 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await auth();
-
-    if (!session) return new NextResponse("Unauthorized", { status: 401 });
-
     const skPenghasilanOrangTua = await prisma.skPenghasilanOrangTua.findUnique(
       {
         where: { id: params.id },
@@ -34,13 +29,6 @@ export async function GET(
     if (setting?.tte) {
       const bufferTte = Buffer.from(setting?.tte);
       tte8 = new Uint8Array(bufferTte);
-    }
-
-    if (
-      session.user.id !== skPenghasilanOrangTua.userId &&
-      session.user.role === "USER"
-    ) {
-      return new NextResponse("Forbidden", { status: 403 });
     }
 
     // Check status surat-kematian

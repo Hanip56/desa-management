@@ -10,7 +10,6 @@
  * These routes will redirect logged in users to '/'
  * @type {string[]}
  */
-
 export const authRoutes = ["/masuk", "/daftar"];
 export const apiAuthPrefix = "/api/auth";
 
@@ -24,3 +23,5 @@ export const apiAuthPrefix = "/api/auth";
  * The default redirect path after loggin in
  */
 export const DEFAULT_LOGIN_REDIRECT = "/";
+
+export const generateRouteAffix = "/generate";
