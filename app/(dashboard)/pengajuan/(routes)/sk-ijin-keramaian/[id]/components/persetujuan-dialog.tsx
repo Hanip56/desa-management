@@ -17,7 +17,6 @@ import { dateToISO } from "@/lib/utils";
 import { SkIjinKeramaianWithUser } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -30,23 +29,11 @@ type Props = {
 };
 
 const formSchema = z.object({
-  namaBhabinkamtibmas: z.string().min(1, {
-    message: "Kolom Nama Bhabinkamtibmas harus diisi",
-  }),
-  jabatanNrpBhabinkamtibmas: z.string().min(1, {
-    message: "Kolom Jabatan/NRP Bhabinkamtibmas harus diisi",
-  }),
-  namaBabinsa: z.string().min(1, {
-    message: "Kolom Nama Babinsa harus diisi",
-  }),
-  jabatanNrpBabinsa: z.string().min(1, {
-    message: "Kolom Jabatan/NRP Babinsa harus diisi",
-  }),
   noSurat: z.string().min(1, {
     message: "Kolom No surat harus diisi",
   }),
   tanggal: z.date({
-    message: "Kolom tanggal pembuatan harus diisi",
+    message: "Kolom Tanggal pembuatan harus diisi",
   }),
 });
 
@@ -57,10 +44,6 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       noSurat: "S-12/.../PEM/2024",
-      namaBhabinkamtibmas: "",
-      jabatanNrpBhabinkamtibmas: "",
-      namaBabinsa: "",
-      jabatanNrpBabinsa: "",
       tanggal: undefined,
     },
   });
@@ -116,74 +99,6 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
           className="flex flex-col gap-4"
         >
           <div className="max-h-96 overflow-y-auto px-2 flex flex-col gap-4">
-            <FormField
-              control={form.control}
-              name="namaBhabinkamtibmas"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nama Bhabinkamtibmas</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Nama Bhabinkamtibmas"
-                      disabled={disabledCondition}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="jabatanNrpBhabinkamtibmas"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Jabatan/NRP Bhabinkamtibmas</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Jabatan/NRP Bhabinkamtibmas"
-                      disabled={disabledCondition}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="namaBabinsa"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nama Babinsa</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Nama Babinsa"
-                      disabled={disabledCondition}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="jabatanNrpBabinsa"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Jabatan/NRP Babinsa</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Jabatan/NRP Babinsa"
-                      disabled={disabledCondition}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name="noSurat"

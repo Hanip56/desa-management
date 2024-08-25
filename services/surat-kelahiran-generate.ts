@@ -1,5 +1,5 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-import { formatDate, getGender } from "@/lib/utils";
+import { formatDate, getAlamat, getGender } from "@/lib/utils";
 import { Setting, SuratKelahiran } from "@prisma/client";
 import { generateUtils } from "./utils";
 
@@ -84,7 +84,14 @@ export const generateSuratKelahiran = async (
     7
   );
 
-  p(`Alamat                 : ${data.alamatTerkait}`, 9);
+  p(
+    `Alamat                 : ${getAlamat(
+      data.kampungTerkait,
+      data.rtTerkait,
+      data.rwTerkait
+    )}`,
+    9
+  );
 
   p("Adalah benar Anak dari :", 12);
 
@@ -101,7 +108,14 @@ export const generateSuratKelahiran = async (
 
   p(`Agama                 : ${data.agamaAyah}`, 21);
 
-  p(`Alamat                 : ${data.alamatAyah}`, 23);
+  p(
+    `Alamat                 : ${getAlamat(
+      data.kampungAyah,
+      data.rtAyah,
+      data.rwAyah
+    )}`,
+    23
+  );
 
   p(`Nama                   : ${data.namaIbu}`, 26);
 
@@ -116,7 +130,14 @@ export const generateSuratKelahiran = async (
 
   p(`Agama                 : ${data.agamaIbu}`, 32);
 
-  p(`Alamat                 : ${data.alamatIbu}`, 34);
+  p(
+    `Alamat                 : ${getAlamat(
+      data.kampungIbu,
+      data.rtIbu,
+      data.rwIbu
+    )}`,
+    34
+  );
 
   pJustify(
     "Demikian Surat Keterangan Kelahiran ini kami buat dengan sebenarnya untuk",

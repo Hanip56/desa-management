@@ -45,8 +45,14 @@ export const suratKelahiranSchema = z.object({
   tanggalLahirTerkait: z.date({
     message: "Kolom tanggal lahir harus diisi",
   }),
-  alamatTerkait: z.string().min(1, {
-    message: "Kolom alamat harus diisi",
+  kampungTerkait: z.string().min(1, {
+    message: "Kolom kampung harus diisi",
+  }),
+  rtTerkait: z.string().min(1, {
+    message: "Kolom rt harus diisi",
+  }),
+  rwTerkait: z.string().min(1, {
+    message: "Kolom rw harus diisi",
   }),
   namaAyah: z.string().min(1, {
     message: "Kolom nama harus diisi",
@@ -59,10 +65,16 @@ export const suratKelahiranSchema = z.object({
     message: "Kolom tanggal lahir harus diisi",
   }),
   agamaAyah: z.string().min(1, {
-    message: "Kolom alamat harus diisi",
-  }),
-  alamatAyah: z.string().min(1, {
     message: "Kolom agama harus diisi",
+  }),
+  kampungAyah: z.string().min(1, {
+    message: "Kolom kampung harus diisi",
+  }),
+  rtAyah: z.string().min(1, {
+    message: "Kolom rt harus diisi",
+  }),
+  rwAyah: z.string().min(1, {
+    message: "Kolom rw harus diisi",
   }),
   namaIbu: z.string().min(1, {
     message: "Kolom nama harus diisi",
@@ -77,8 +89,14 @@ export const suratKelahiranSchema = z.object({
   agamaIbu: z.string().min(1, {
     message: "Kolom agama harus diisi",
   }),
-  alamatIbu: z.string().min(1, {
-    message: "Kolom alamat harus diisi",
+  kampungIbu: z.string().min(1, {
+    message: "Kolom kampung harus diisi",
+  }),
+  rtIbu: z.string().min(1, {
+    message: "Kolom rt harus diisi",
+  }),
+  rwIbu: z.string().min(1, {
+    message: "Kolom rw harus diisi",
   }),
   status: z.enum(["DIPROSES", "DITERIMA", "DITOLAK"]).default("DIPROSES"),
   pesanDitolak: z.string().optional(),

@@ -1,5 +1,10 @@
 import SemiField from "@/components/semi-field";
-import { DateToDayAndDate, DatetoTime, formatDate } from "@/lib/utils";
+import {
+  DateToDayAndDate,
+  DatetoTime,
+  formatDate,
+  getAlamat,
+} from "@/lib/utils";
 import { SkIjinKeramaianWithUser } from "@/types";
 
 type Props = {
@@ -22,7 +27,10 @@ const ShowData = ({ data }: Props) => {
               label="Tanggal Lahir"
               value={formatDate(data.tanggalLahir)}
             />
-            <SemiField label="Alamat" value={data.alamat} />
+            <SemiField
+              label="Alamat"
+              value={getAlamat(data.kampung, data.rt, data.rw)}
+            />
             <SemiField
               label="Waktu"
               value={`${DateToDayAndDate(data.waktu)}, ${DatetoTime(

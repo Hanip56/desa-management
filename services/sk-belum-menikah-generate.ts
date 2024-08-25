@@ -1,5 +1,5 @@
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import { formatDate, getGender } from "@/lib/utils";
+import { formatDate, getAlamat, getGender } from "@/lib/utils";
 import { SkBelumMenikah } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
 
@@ -100,7 +100,14 @@ export const generateSkBelumMenikah = async (
     20
   );
   p(`Kewarganegaraan                   : ${data.kewarganegaraan}`, 22);
-  p(`alamat                                     : ${data.alamat}`, 24);
+  p(
+    `alamat                                     : ${getAlamat(
+      data.kampung,
+      data.rt,
+      data.rw
+    )}`,
+    24
+  );
 
   pJustify(
     "Orang tersebut diatas Benar penduduk warga Desa kami, dan menurut keterangan dari",

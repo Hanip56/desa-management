@@ -7,8 +7,6 @@ import CellAction from "./cell-action";
 import StatusBadge from "@/app/(dashboard)/components/status-badge";
 import { formatDate } from "@/lib/utils";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type SuratKelahiranType = {
   id: string;
   nama: string;

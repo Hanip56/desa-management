@@ -44,7 +44,7 @@ const chartConfig = {
     color: "hsl(var(--chart-1))",
   },
   skBelumMenikah: {
-    label: "Sk belum nikah",
+    label: "Sk belum menikah",
     color: "hsl(var(--chart-3))",
   },
   skIjinKeramaian: {

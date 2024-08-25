@@ -25,15 +25,14 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import DatePicker from "@/components/ui/date-picker";
 import { endOfDay, formatISO } from "date-fns";
-import DatePickerCustom from "@/components/ui/date-picker-custom";
 import { SuratKelahiranWithUser } from "@/types";
+import { Badge } from "@/components/ui/badge";
 
 type Props = {
   initialData?: SuratKelahiranWithUser | null;
 };
 
 const UpsertForm = ({ initialData }: Props) => {
-  const { data: session } = useSession();
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -41,7 +40,9 @@ const UpsertForm = ({ initialData }: Props) => {
     resolver: zodResolver(suratKelahiranSchema),
     defaultValues: {
       namaTerkait: initialData?.namaTerkait ?? "",
-      alamatTerkait: initialData?.alamatTerkait ?? "",
+      kampungTerkait: initialData?.kampungTerkait ?? "",
+      rtTerkait: initialData?.rtTerkait ?? "",
+      rwTerkait: initialData?.rwTerkait ?? "",
       tempatLahirTerkait: initialData?.tempatLahirTerkait ?? "",
       tanggalLahirTerkait: initialData?.tanggalLahirTerkait
         ? new Date(initialData.tanggalLahirTerkait)
@@ -49,14 +50,18 @@ const UpsertForm = ({ initialData }: Props) => {
       jenisKelaminTerkait: initialData?.jenisKelaminTerkait ?? undefined,
       namaAyah: initialData?.namaAyah ?? "",
       jenisKelaminAyah: initialData?.jenisKelaminAyah ?? undefined,
-      alamatAyah: initialData?.alamatAyah ?? "",
+      kampungAyah: initialData?.kampungAyah ?? "",
+      rtAyah: initialData?.rtAyah ?? "",
+      rwAyah: initialData?.rwAyah ?? "",
       tempatLahirAyah: initialData?.tempatLahirAyah ?? "",
       tanggalLahirAyah: initialData?.tanggalLahirAyah
         ? new Date(initialData.tanggalLahirAyah)
         : undefined,
       agamaAyah: initialData?.agamaAyah ?? "",
       namaIbu: initialData?.namaIbu ?? "",
-      alamatIbu: initialData?.alamatIbu ?? "",
+      kampungIbu: initialData?.kampungIbu ?? "",
+      rtIbu: initialData?.rtIbu ?? "",
+      rwIbu: initialData?.rwIbu ?? "",
       tempatLahirIbu: initialData?.tempatLahirIbu ?? "",
       tanggalLahirIbu: initialData?.tanggalLahirIbu
         ? new Date(initialData.tanggalLahirIbu)
@@ -166,23 +171,6 @@ const UpsertForm = ({ initialData }: Props) => {
             />
             <FormField
               control={form.control}
-              name="alamatTerkait"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Alamat</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={disabledCondition}
-                      {...field}
-                      placeholder="Alamat"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="jenisKelaminTerkait"
               render={({ field }) => (
                 <FormItem>
@@ -227,6 +215,65 @@ const UpsertForm = ({ initialData }: Props) => {
                 </FormItem>
               )}
             />
+            <div className="flex flex-col gap-1">
+              <FormField
+                control={form.control}
+                name="kampungTerkait"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Alamat</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={disabledCondition}
+                        {...field}
+                        placeholder="Kampung"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex gap-2 [&>*]:flex-1">
+                <FormField
+                  control={form.control}
+                  name="rtTerkait"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only">RT</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={disabledCondition}
+                          {...field}
+                          placeholder="RT"
+                          type="number"
+                          min={0}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="rwTerkait"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only">RW</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={disabledCondition}
+                          {...field}
+                          placeholder="RW"
+                          type="number"
+                          min={0}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
           </div>
         </div>
         {/* keterangan ayah */}
@@ -243,23 +290,6 @@ const UpsertForm = ({ initialData }: Props) => {
                     <Input
                       {...field}
                       placeholder="Nama"
-                      disabled={disabledCondition}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="alamatAyah"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Alamat</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Alamat"
                       disabled={disabledCondition}
                     />
                   </FormControl>
@@ -330,6 +360,66 @@ const UpsertForm = ({ initialData }: Props) => {
                 </FormItem>
               )}
             />
+            {/* alamat ayah */}
+            <div className="flex flex-col gap-1">
+              <FormField
+                control={form.control}
+                name="kampungAyah"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Alamat</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={disabledCondition}
+                        {...field}
+                        placeholder="Kampung"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex gap-2 [&>*]:flex-1">
+                <FormField
+                  control={form.control}
+                  name="rtAyah"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only">RT</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={disabledCondition}
+                          {...field}
+                          placeholder="RT"
+                          type="number"
+                          min={0}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="rwAyah"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only">RW</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={disabledCondition}
+                          {...field}
+                          placeholder="RW"
+                          type="number"
+                          min={0}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
           </div>
         </div>
         {/* keterangan ibu */}
@@ -346,23 +436,6 @@ const UpsertForm = ({ initialData }: Props) => {
                     <Input
                       {...field}
                       placeholder="Nama"
-                      disabled={disabledCondition}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="alamatIbu"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Alamat</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Alamat"
                       disabled={disabledCondition}
                     />
                   </FormControl>
@@ -433,6 +506,65 @@ const UpsertForm = ({ initialData }: Props) => {
                 </FormItem>
               )}
             />
+            <div className="flex flex-col gap-1">
+              <FormField
+                control={form.control}
+                name="kampungIbu"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Alamat</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={disabledCondition}
+                        {...field}
+                        placeholder="Kampung"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex gap-2 [&>*]:flex-1">
+                <FormField
+                  control={form.control}
+                  name="rtIbu"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only">RT</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={disabledCondition}
+                          {...field}
+                          placeholder="RT"
+                          type="number"
+                          min={0}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="rwIbu"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only">RW</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={disabledCondition}
+                          {...field}
+                          placeholder="RW"
+                          type="number"
+                          min={0}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
           </div>
         </div>
 

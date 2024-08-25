@@ -85,7 +85,9 @@ export async function POST(req: NextRequest) {
       nik,
       tempatLahir,
       tanggalLahir,
-      alamat,
+      kampung,
+      rt,
+      rw,
       waktu,
       maksud,
       acara,
@@ -96,7 +98,9 @@ export async function POST(req: NextRequest) {
       !nik ||
       !tempatLahir ||
       !tanggalLahir ||
-      !alamat ||
+      !kampung ||
+      !rt ||
+      !rw ||
       !maksud ||
       !waktu ||
       !acara
@@ -110,7 +114,9 @@ export async function POST(req: NextRequest) {
         nik,
         tempatLahir,
         tanggalLahir,
-        alamat,
+        kampung,
+        rt,
+        rw,
         waktu,
         maksud,
         acara,

@@ -22,6 +22,10 @@ export function getGender(gender: "L" | "P") {
   return gender === "L" ? "Laki-laki" : "Perempuan";
 }
 
+export function getAlamat(kampung: string, rt: string, rw: string) {
+  return `Kp. ${kampung} RT ${rt} RW ${rw}`;
+}
+
 export function dateTimeToISO(value: Date) {
   const offset = value.getTimezoneOffset() * 60000;
   return new Date(value.getTime() - offset).toISOString();

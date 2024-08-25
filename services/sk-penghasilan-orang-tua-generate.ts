@@ -1,5 +1,5 @@
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import { formatDate, formatRupiah, getGender } from "@/lib/utils";
+import { formatDate, formatRupiah, getAlamat, getGender } from "@/lib/utils";
 import { SkPenghasilanOrangTua } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
 
@@ -104,7 +104,14 @@ export const generateSkPenghasilanOrangTua = async (
     20
   );
   p(`Kewarganegaraan                     : ${data.kewarganegaraan}`, 22);
-  p(`Alamat                                      : ${data.alamat}`, 24);
+  p(
+    `Alamat                                      : ${getAlamat(
+      data.kampung,
+      data.rt,
+      data.rw
+    )}`,
+    24
+  );
 
   pJustify(
     "Menurut keterangan RT/RW setempat dan data yang ada, benar bahwa yang",

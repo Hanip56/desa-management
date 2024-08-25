@@ -1,5 +1,5 @@
 import SemiField from "@/components/semi-field";
-import { formatDate } from "@/lib/utils";
+import { formatDate, getAlamat } from "@/lib/utils";
 import { SuratKelahiranWithUser } from "@/types";
 
 type Props = {
@@ -23,7 +23,14 @@ const ShowData = ({ data }: Props) => {
                 data.jenisKelaminTerkait === "L" ? "Laki-laki" : "Perempuan"
               }
             />
-            <SemiField label="Alamat" value={data.alamatTerkait} />
+            <SemiField
+              label="Alamat"
+              value={getAlamat(
+                data.kampungTerkait,
+                data.rtTerkait,
+                data.rwTerkait
+              )}
+            />
             <SemiField
               label="Tempat tanggal lahir"
               value={`${data.tempatLahirTerkait}, ${formatDate(
@@ -40,7 +47,10 @@ const ShowData = ({ data }: Props) => {
               label="Jenis Kelamin"
               value={data.jenisKelaminAyah === "L" ? "Laki-laki" : "Perempuan"}
             />
-            <SemiField label="Alamat" value={data.alamatAyah} />
+            <SemiField
+              label="Alamat"
+              value={getAlamat(data.kampungAyah, data.rtAyah, data.rwAyah)}
+            />
             <SemiField label="Agama" value={data.agamaAyah} />
             <SemiField
               label="Tempat tanggal lahir"
@@ -58,7 +68,10 @@ const ShowData = ({ data }: Props) => {
               label="Jenis Kelamin"
               value={data.jenisKelaminIbu === "L" ? "Laki-laki" : "Perempuan"}
             />
-            <SemiField label="Alamat" value={data.alamatIbu} />
+            <SemiField
+              label="Alamat"
+              value={getAlamat(data.kampungIbu, data.rtIbu, data.rwIbu)}
+            />
             <SemiField label="Agama" value={data.agamaIbu} />
             <SemiField
               label="Tempat tanggal lahir"

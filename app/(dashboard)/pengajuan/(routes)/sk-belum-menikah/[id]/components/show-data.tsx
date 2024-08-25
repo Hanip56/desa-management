@@ -1,5 +1,10 @@
 import SemiField from "@/components/semi-field";
-import { DateToDayAndDate, DatetoTime, formatDate } from "@/lib/utils";
+import {
+  DateToDayAndDate,
+  DatetoTime,
+  formatDate,
+  getAlamat,
+} from "@/lib/utils";
 import { SkBelumMenikahWithUser } from "@/types";
 
 type Props = {
@@ -32,7 +37,10 @@ const ShowData = ({ data }: Props) => {
               value={data.statusPerkawinan.replace("_", " ")}
             />
             <SemiField label="Kewarganegaraan" value={data.kewarganegaraan} />
-            <SemiField label="Alamat" value={data.alamat} />
+            <SemiField
+              label="Alamat"
+              value={getAlamat(data.kampung, data.rt, data.rw)}
+            />
           </div>
         </div>
       </div>

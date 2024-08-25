@@ -3,6 +3,7 @@ import {
   DateToDayAndDate,
   DatetoTime,
   formatDate,
+  getAlamat,
   getGender,
 } from "@/lib/utils";
 import { SuratKematian } from "@prisma/client";
@@ -79,14 +80,28 @@ export const generateSuratKematian = async (
   p(`Nama                         : ${data.namaPemohon}`, 3);
   p(`Jenis Kelamin            : ${getGender(data.jenisKelaminPemohon)}`, 5);
   p(`No. NIK                     : ${data.noNikPemohon}`, 7);
-  p(`Alamat                       : ${data.alamatPemohon}`, 9);
+  p(
+    `Alamat                       : ${getAlamat(
+      data.kampungPemohon,
+      data.rtPemohon,
+      data.rwPemohon
+    )}`,
+    9
+  );
   p(`Hubungan Keluarga   : ${data.hubunganKeluargaPemohon}`, 11);
 
   p("Menerangkan bahwa yang bernama :", 15);
   p(`Nama                         : ${data.namaTerkait}`, 18);
   p(`Jenis Kelamin            : ${getGender(data.jenisKelaminTerkait)}`, 20);
   p(`No. NIK                     : ${data.noNikTerkait}`, 22);
-  p(`Alamat                       : ${data.alamatTerkait}`, 24);
+  p(
+    `Alamat                       : ${getAlamat(
+      data.kampungTerkait,
+      data.rtTerkait,
+      data.rwTerkait
+    )}`,
+    24
+  );
 
   p("Telah meninggal dunia pada :", 28);
   p(`Hari/Tanggal              : ${DateToDayAndDate(data.tanggal)}`, 31);

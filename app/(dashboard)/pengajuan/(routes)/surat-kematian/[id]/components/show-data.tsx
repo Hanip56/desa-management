@@ -1,5 +1,5 @@
 import SemiField from "@/components/semi-field";
-import { DateToDayAndDate, DatetoTime } from "@/lib/utils";
+import { DateToDayAndDate, DatetoTime, getAlamat } from "@/lib/utils";
 import { SuratKematianWithUser } from "@/types";
 
 type Props = {
@@ -24,7 +24,14 @@ const ShowData = ({ data }: Props) => {
               }
             />
             <SemiField label="No. NIK" value={data.noNikPemohon} />
-            <SemiField label="Alamat" value={data.alamatPemohon} />
+            <SemiField
+              label="Alamat"
+              value={getAlamat(
+                data.kampungPemohon,
+                data.rtPemohon,
+                data.rwPemohon
+              )}
+            />
             <SemiField
               label="Hubungan Keluarga"
               value={data.hubunganKeluargaPemohon}
@@ -44,7 +51,14 @@ const ShowData = ({ data }: Props) => {
               }
             />
             <SemiField label="No. NIK" value={data.noNikTerkait} />
-            <SemiField label="Alamat" value={data.alamatPemohon} />
+            <SemiField
+              label="Alamat"
+              value={getAlamat(
+                data.kampungTerkait,
+                data.rtTerkait,
+                data.rwTerkait
+              )}
+            />
           </div>
         </div>
         <div>

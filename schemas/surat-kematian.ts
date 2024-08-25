@@ -9,8 +9,14 @@ export const suratKematianSchema = z.object({
   noNikPemohon: z.string().min(1, {
     message: "Kolom No. NIK harus diisi",
   }),
-  alamatPemohon: z.string().min(1, {
-    message: "Kolom alamat harus diisi",
+  kampungPemohon: z.string().min(1, {
+    message: "Kolom kampung harus diisi",
+  }),
+  rtPemohon: z.string().min(1, {
+    message: "Kolom rt harus diisi",
+  }),
+  rwPemohon: z.string().min(1, {
+    message: "Kolom rw harus diisi",
   }),
   hubunganKeluargaPemohon: z.string().min(1, {
     message: "Kolom Hubungan keluarga harus diisi",
@@ -22,8 +28,14 @@ export const suratKematianSchema = z.object({
   noNikTerkait: z.string().min(1, {
     message: "Kolom No. NIK harus diisi",
   }),
-  alamatTerkait: z.string().min(1, {
-    message: "Kolom alamat harus diisi",
+  kampungTerkait: z.string().min(1, {
+    message: "Kolom kampung harus diisi",
+  }),
+  rtTerkait: z.string().min(1, {
+    message: "Kolom rt harus diisi",
+  }),
+  rwTerkait: z.string().min(1, {
+    message: "Kolom rw harus diisi",
   }),
   tanggal: z.date({
     message: "Kolom tanggal harus diisi",

@@ -33,8 +33,14 @@ export const skPenghasilanOrangTuaSchema = z.object({
   kewarganegaraan: z.string().min(1, {
     message: "Kolom Kewarganegaraan harus diisi",
   }),
-  alamat: z.string().min(1, {
-    message: "Kolom Alamat harus diisi",
+  kampung: z.string().min(1, {
+    message: "Kolom Kampung harus diisi",
+  }),
+  rt: z.string().min(1, {
+    message: "Kolom RT harus diisi",
+  }),
+  rw: z.string().min(1, {
+    message: "Kolom RW harus diisi",
   }),
   penghasilan: z.number({
     message: "Kolom Penghasilan harus diisi",

@@ -4,6 +4,7 @@ import {
   DatetoTime,
   formatDate,
   formatRupiah,
+  getAlamat,
 } from "@/lib/utils";
 import { SkPenghasilanOrangTuaWithUser } from "@/types";
 
@@ -37,7 +38,10 @@ const ShowData = ({ data }: Props) => {
               value={data.statusPerkawinan.replace("_", " ")}
             />
             <SemiField label="Kewarganegaraan" value={data.kewarganegaraan} />
-            <SemiField label="Alamat" value={data.alamat} />
+            <SemiField
+              label="Alamat"
+              value={getAlamat(data.kampung, data.rt, data.rw)}
+            />
             <SemiField
               label="Penghasilan"
               value={formatRupiah(data.penghasilan)}

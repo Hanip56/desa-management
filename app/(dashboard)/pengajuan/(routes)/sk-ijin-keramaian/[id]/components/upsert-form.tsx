@@ -42,7 +42,9 @@ const UpsertForm = ({ initialData }: Props) => {
       nik: initialData?.nik ?? "",
       tempatLahir: initialData?.tempatLahir ?? "",
       tanggalLahir: initialData?.tanggalLahir ?? undefined,
-      alamat: initialData?.alamat ?? "",
+      kampung: initialData?.kampung ?? "",
+      rt: initialData?.rt ?? "",
+      rw: initialData?.rw ?? "",
       waktu: initialData?.waktu ?? undefined,
       maksud: initialData?.maksud ?? "",
       acara: initialData?.acara ?? "",
@@ -193,23 +195,6 @@ const UpsertForm = ({ initialData }: Props) => {
             />
             <FormField
               control={form.control}
-              name="alamat"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Alamat</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={disabledCondition}
-                      {...field}
-                      placeholder="Alamat"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="waktu"
               render={({ field }) => (
                 <FormItem>
@@ -260,6 +245,65 @@ const UpsertForm = ({ initialData }: Props) => {
                 </FormItem>
               )}
             />
+            <div className="flex flex-col gap-1">
+              <FormField
+                control={form.control}
+                name="kampung"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Alamat</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={disabledCondition}
+                        {...field}
+                        placeholder="Kampung"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex gap-2 [&>*]:flex-1">
+                <FormField
+                  control={form.control}
+                  name="rt"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only">RT</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={disabledCondition}
+                          {...field}
+                          placeholder="RT"
+                          type="number"
+                          min={0}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="rw"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only">RW</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={disabledCondition}
+                          {...field}
+                          placeholder="RW"
+                          type="number"
+                          min={0}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <Button disabled={disabledCondition} type="submit" size="lg">

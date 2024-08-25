@@ -1,5 +1,10 @@
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import { DateToDayAndDate, DatetoTime, formatDate } from "@/lib/utils";
+import {
+  DateToDayAndDate,
+  DatetoTime,
+  formatDate,
+  getAlamat,
+} from "@/lib/utils";
 import { SkIjinKeramaian } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
 import fs from "fs";
@@ -96,7 +101,14 @@ export const generateSkIjinKeramaian = async (
     )}`,
     12
   );
-  p(`Alamat                         : ${data.alamat}`, 14);
+  p(
+    `Alamat                         : ${getAlamat(
+      data.kampung,
+      data.rt,
+      data.rw
+    )}`,
+    14
+  );
   p(
     `Waktu dan Maksud     : ${DateToDayAndDate(data.waktu)}, ${data.maksud}`,
     16
