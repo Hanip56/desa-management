@@ -38,12 +38,15 @@ enum Status {
 }
 
 model User {
-  id                    String                  @id @default(uuid())
-  username              String
-  email                 String                  @unique
-  password              String
-  role                  UserRole                @default(USER)
-  refreshToken          String?
+  id           String   @id @default(uuid())
+  username     String
+  nomorWa      String   @unique
+  password     String
+  role         UserRole @default(USER)
+  ktpUrl       String?
+  kkUrl        String?
+  refreshToken String?
+
   suratKelahirans       SuratKelahiran[]
   suratKematians        SuratKematian[]
   skBelumMenikahs       SkBelumMenikah[]
@@ -59,6 +62,16 @@ model Setting {
   namaKepalaDesa String
   tte            Bytes?
 
+  namaBabinsa    String
+  pangkatBabinsa String
+  nrpBabinsa     String
+  jabatanBabinsa String
+
+  namaBhabinkamtibmas    String
+  pangkatBhabinkamtibmas String
+  nrpBhabinkamtibmas     String
+  jabatanBhabinkamtibmas String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -69,17 +82,23 @@ model SuratKelahiran {
   jenisKelaminTerkait Gender
   tempatLahirTerkait  String
   tanggalLahirTerkait DateTime
-  alamatTerkait       String
+  kampungTerkait      String
+  rtTerkait           String
+  rwTerkait           String
   namaAyah            String
   jenisKelaminAyah    Gender
   agamaAyah           String
-  alamatAyah          String
+  kampungAyah         String
+  rtAyah              String
+  rwAyah              String
   tempatLahirAyah     String
   tanggalLahirAyah    DateTime
   namaIbu             String
   jenisKelaminIbu     Gender
   agamaIbu            String
-  alamatIbu           String
+  kampungIbu          String
+  rtIbu               String
+  rwIbu               String
   tempatLahirIbu      String
   tanggalLahirIbu     DateTime
   status              Status    @default(DIPROSES)
@@ -98,12 +117,16 @@ model SuratKematian {
   namaPemohon             String
   jenisKelaminPemohon     Gender
   noNikPemohon            String
-  alamatPemohon           String
+  kampungPemohon          String
+  rtPemohon               String
+  rwPemohon               String
   hubunganKeluargaPemohon String
   namaTerkait             String
   jenisKelaminTerkait     Gender
   noNikTerkait            String
-  alamatTerkait           String
+  kampungTerkait          String
+  rtTerkait               String
+  rwTerkait               String
   tanggal                 DateTime
   penyebab                String
   tempat                  String
@@ -130,7 +153,9 @@ model SkBelumMenikah {
   pekerjaan        String
   statusPerkawinan StatusPerkawinan
   kewarganegaraan  String
-  alamat           String
+  kampung          String
+  rt               String
+  rw               String
 
   namaKua          String?
   status           Status    @default(DIPROSES)
@@ -151,7 +176,9 @@ model SkIjinKeramaian {
   nik          String
   tempatLahir  String
   tanggalLahir DateTime
-  alamat       String
+  kampung      String
+  rt           String
+  rw           String
   waktu        DateTime
   maksud       String
   acara        String
@@ -182,7 +209,9 @@ model SkPenghasilanOrangTua {
   pekerjaan        String
   statusPerkawinan StatusPerkawinan
   kewarganegaraan  String
-  alamat           String
+  kampung          String
+  rt               String
+  rw               String
   penghasilan      Int
 
   status           Status    @default(DIPROSES)

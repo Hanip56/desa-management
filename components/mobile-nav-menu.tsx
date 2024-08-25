@@ -2,8 +2,8 @@
 
 import {
   Sheet,
-  SheetClose,
   SheetContent,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
@@ -67,6 +67,7 @@ const MobileNavMenu = ({ routes }: { routes: Route[] }) => {
         side="left"
         className="p-0 w-[80%] h-full sm:w-80 text-white overflow-y-auto flex flex-col gap-0 overflow-x-hidden"
       >
+        <SheetTitle className="sr-only">Mobile nav menu</SheetTitle>
         <div className="py-8 px-4 bg-emerald-700 text-white">
           <Logo />
         </div>

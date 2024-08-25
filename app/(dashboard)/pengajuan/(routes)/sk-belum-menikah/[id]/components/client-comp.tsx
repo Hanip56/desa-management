@@ -109,7 +109,7 @@ const ClientComp = ({ initialData }: Props) => {
         {/* for admin  When status is not 'diproses' */}
         {session?.user.role !== "USER" && initialData && (
           <HeaderKonfirmasiPengajuan
-            email={initialData.user.email}
+            nomorWa={initialData.user.nomorWa}
             tanggal={initialData.updatedAt}
             noSurat={initialData?.noSurat}
             tanggalPembuatan={initialData?.tanggalPembuatan}

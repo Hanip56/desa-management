@@ -4,19 +4,23 @@ import bcrypt from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
-    const { username, email, password } = await req.json();
+    const { username, nomorWa, password } = await req.json();
 
-    if (!username || !email || !password) {
+    if (!username || !nomorWa || !password) {
       return new NextResponse(
-        "Required field is missing; *username *email *password",
+        "Required field is missing; *username *nomorWa *password",
         { status: 400 }
       );
     }
 
-    const userExist = await prisma.user.findUnique({ where: { email } });
+    console.log({ nomorWa });
+
+    const userExist = await prisma.user.findUnique({
+      where: { nomorWa: nomorWa },
+    });
 
     if (userExist) {
-      return new NextResponse("Email already in use", { status: 400 });
+      return new NextResponse("Nomor WA sudah digunakan", { status: 400 });
     }
 
     const hashPass = await bcrypt.hash(password, 10);
@@ -24,7 +28,7 @@ export async function POST(req: Request) {
     const user = await prisma.user.create({
       data: {
         username,
-        email,
+        nomorWa,
         password: hashPass,
       },
     });

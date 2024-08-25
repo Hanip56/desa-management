@@ -7,9 +7,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
       credentials: {
-        email: {
-          label: "Email",
-          type: "email",
+        nomorWa: {
+          label: "Nomor WA",
+          type: "number",
         },
         password: {
           label: "Password",
@@ -19,25 +19,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async (credentials) => {
         let user = null;
 
-        if (
-          typeof credentials.email !== "string" ||
-          typeof credentials.password !== "string"
-        ) {
+        const { nomorWa, password } = credentials;
+
+        if (typeof nomorWa !== "string" || typeof password !== "string") {
           throw new Error("Required field is missing");
         }
 
-        const { email, password } = credentials;
-
-        user = await prisma.user.findUnique({ where: { email } });
+        user = await prisma.user.findUnique({ where: { nomorWa } });
 
         if (!user) {
-          throw new Error("User not found.");
+          throw new Error("User tidak ditemukan.");
         }
 
         const isMatchPassword = await bcrypt.compare(password, user.password);
 
         if (!isMatchPassword) {
-          throw new Error("Invalid credentials");
+          throw new Error("Credentials tidak valid");
         }
 
         return user;
@@ -50,8 +47,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (session?.username) {
           token.user.username = session.username;
         }
-        if (session?.email) {
-          token.user.email = session.email;
+        if (session?.nomorWa) {
+          token.user.nomorWa = session.nomorWa;
         }
 
         return token;
@@ -64,7 +61,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           updatedAt: user.updatedAt,
           username: user.username,
           id: user.id || "",
-          email: user.email || "",
+          nomorWa: user.nomorWa || "",
         };
       }
 

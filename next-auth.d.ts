@@ -3,7 +3,7 @@ import NextAuth, { type DefaultSession } from "next-auth";
 export type ExtendedUser = DefaultSession["user"] & {
   id: string;
   username: string;
-  email: string;
+  nomorWa: string;
   role: "USER" | "ADMIN" | "SUPERADMIN";
   createdAt: Date;
   updatedAt: Date;
@@ -18,7 +18,7 @@ declare module "next-auth" {
   interface User {
     id: string;
     username: string;
-    email: string;
+    nomorWa: string;
     role: "USER" | "ADMIN" | "SUPERADMIN";
     createdAt: Date;
     updatedAt: Date;
@@ -32,7 +32,7 @@ declare module "next-auth/jwt" {
     user: {
       id: string;
       username: string;
-      email: string;
+      nomorWa: string;
       role: "USER" | "ADMIN" | "SUPERADMIN";
       createdAt: Date;
       updatedAt: Date;

@@ -44,7 +44,7 @@ const PenggunaClient = () => {
   const data: ColumnsType[] = query.data.data.map((user) => ({
     id: user.id,
     username: user.username,
-    email: user.email,
+    nomorWa: user.nomorWa,
     updatedAt: user.updatedAt,
     role: user.role,
   }));

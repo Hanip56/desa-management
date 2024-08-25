@@ -45,7 +45,7 @@ export const getAllUsers = async ({
 
 type UpdateParams = {
   username?: string;
-  email?: string;
+  nomorWa?: string;
   password?: string;
   oldPassword?: string;
   userId: string;
@@ -53,7 +53,7 @@ type UpdateParams = {
 
 export const updateUser = async ({
   username,
-  email,
+  nomorWa,
   password,
   oldPassword,
   userId,
@@ -61,7 +61,7 @@ export const updateUser = async ({
   try {
     const response = await axiosInstance.put<User>(`/users/${userId}`, {
       username,
-      email,
+      nomorWa,
       password,
       oldPassword,
     });

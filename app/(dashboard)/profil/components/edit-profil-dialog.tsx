@@ -29,20 +29,19 @@ const formSchema = z.object({
   username: z.string().min(1, {
     message: "Kolom Username harus diisi",
   }),
-  email: z.string().email({
-    message: "Kolom Email tidak valid",
+  nomorWa: z.string().min(1, {
+    message: "Kolom Nomor WA harus diisi",
   }),
 });
 
 const EditProfilDialog = ({ open, handleClose }: Props) => {
   const { update, data: session } = useSession();
-  const router = useRouter();
   const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: session?.user.username ?? "",
-      email: session?.user.email ?? "",
+      nomorWa: session?.user.nomorWa ?? "",
     },
   });
 
@@ -53,9 +52,9 @@ const EditProfilDialog = ({ open, handleClose }: Props) => {
         className: "text-emerald-600 font-semibold",
       });
       handleClose();
-      form.setValue("email", data.email);
+      form.setValue("nomorWa", data.nomorWa);
       form.setValue("username", data.username);
-      update({ username: data.username, email: data.email });
+      update({ username: data.username, nomorWa: data.nomorWa });
 
       queryClient.invalidateQueries({
         queryKey: ["users"],
@@ -83,7 +82,7 @@ const EditProfilDialog = ({ open, handleClose }: Props) => {
   return (
     <Modal
       title="Edit profil"
-      description="username / email"
+      description="username / nomorWa"
       isOpen={open}
       onClose={handleClose}
     >
@@ -111,14 +110,14 @@ const EditProfilDialog = ({ open, handleClose }: Props) => {
           />
           <FormField
             control={form.control}
-            name="email"
+            name="nomorWa"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Nomor WA</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Email"
+                    placeholder="Nomor WA"
                     disabled={disabledCondition}
                   />
                 </FormControl>

@@ -11,10 +11,10 @@ const login = async (values: z.infer<typeof masukSchema>) => {
     return { error: "Invalidate fields" };
   }
 
-  const { email, password } = validateFields.data;
+  const { nomorWa, password } = validateFields.data;
   try {
     const resSignIn = await signIn("credentials", {
-      email,
+      nomorWa,
       password,
       redirect: false,
     });

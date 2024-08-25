@@ -17,9 +17,9 @@ export default async function Home() {
         subtitle="Aplikasi pengelolaan desa Margaasih"
       />
 
-      <Suspense fallback={<MainDashboardSkeleton />}>
+      {/* <Suspense fallback={<MainDashboardSkeleton />}>
         <MainDashboard />
-      </Suspense>
+      </Suspense> */}
     </main>
   );
 }

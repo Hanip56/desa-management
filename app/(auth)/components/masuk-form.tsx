@@ -26,7 +26,7 @@ const MasukForm = () => {
   const form = useForm<z.infer<typeof masukSchema>>({
     resolver: zodResolver(masukSchema),
     defaultValues: {
-      email: "",
+      nomorWa: "",
       password: "",
     },
   });
@@ -56,15 +56,16 @@ const MasukForm = () => {
         <div className="flex flex-col gap-2 sm:gap-4">
           <FormField
             control={form.control}
-            name="email"
+            name="nomorWa"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Nomor WA</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Masukan email"
-                    type="email"
+                    placeholder="Masukan Nomor WA"
+                    type="number"
+                    min={0}
                     disabled={isPending}
                   />
                 </FormControl>

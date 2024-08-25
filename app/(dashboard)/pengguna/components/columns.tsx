@@ -9,7 +9,7 @@ import CellAction from "./cell-action";
 export type ColumnsType = {
   id: string;
   username: string;
-  email: string;
+  nomorWa: string;
   updatedAt: Date;
   role: string;
 };
@@ -49,8 +49,8 @@ export const columns = (toggleSortDate: () => void) => {
       header: "Username",
     },
     {
-      accessorKey: "email",
-      header: "Email",
+      accessorKey: "nomorWa",
+      header: "Nomor WA",
     },
     {
       accessorKey: "role",

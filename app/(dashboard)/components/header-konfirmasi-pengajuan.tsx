@@ -6,7 +6,7 @@ import { CheckIcon, Download, XIcon } from "lucide-react";
 import StatusBadge from "./status-badge";
 
 type Props = {
-  email: string;
+  nomorWa: string;
   tanggal: Date;
   noSurat?: string | null;
   tanggalPembuatan?: Date | null;
@@ -19,7 +19,7 @@ type Props = {
 };
 
 const HeaderKonfirmasiPengajuan = ({
-  email,
+  nomorWa,
   tanggal,
   status,
   noSurat,
@@ -66,7 +66,7 @@ const HeaderKonfirmasiPengajuan = ({
             </>
           )}
           <div>
-            <span className="font-semibold">Email Pengaju:</span> {email}
+            <span className="font-semibold">Nomor WA Pengaju:</span> {nomorWa}
           </div>
           <div>
             <span className="font-semibold">Tanggal Pengajuan :</span>{" "}

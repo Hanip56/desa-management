@@ -9,7 +9,7 @@ import {
 export type UserType = {
   id: string;
   username: string;
-  email: string;
+  nomorWa: string;
   role: "USER" | "ADMIN" | "SUPERADMIN";
   createdAt: Date;
   updatedAt: Date;

@@ -15,7 +15,7 @@ export async function PUT(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const { username, email, password, oldPassword } = await req.json();
+    const { username, nomorWa, password, oldPassword } = await req.json();
 
     if (params.id !== session.user.id) {
       return new NextResponse("Forbidden", { status: 403 });
@@ -53,7 +53,7 @@ export async function PUT(
       },
       data: {
         username,
-        email,
+        nomorWa,
         password: hashPass,
       },
     });

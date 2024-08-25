@@ -7,15 +7,15 @@ export const genderEnum = ["L", "P"] as const;
 export type UserType = {
   id: string;
   username: string;
-  email: string;
+  nomorWa: string;
   role: "USER" | "ADMIN" | "SUPERADMIN";
   createdAt: string;
   updatedAt: string;
 };
 
 export const masukSchema = z.object({
-  email: z.string().email({
-    message: "Format email tidak valid",
+  nomorWa: z.string().min(1, {
+    message: "Kolom nomor WA harus diisi",
   }),
   password: z.string().min(1, {
     message: "Kolom password harus diisi",
@@ -26,8 +26,8 @@ export const daftarSchema = z.object({
   nama: z.string().min(1, {
     message: "Kolom nama harus diisi",
   }),
-  email: z.string().email({
-    message: "Format email tidak valid",
+  nomorWa: z.string().min(1, {
+    message: "Kolom nomor WA harus diisi",
   }),
   password: z.string().min(6, {
     message: "Kolom password harus diisi minimal 6 karakter",

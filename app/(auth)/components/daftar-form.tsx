@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { daftarSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -26,33 +27,31 @@ const DaftarForm = () => {
     resolver: zodResolver(daftarSchema),
     defaultValues: {
       nama: "",
-      email: "",
+      nomorWa: "",
       password: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof daftarSchema>) => {
     setError("");
+
+    const body = {
+      nomorWa: values.nomorWa,
+      password: values.password,
+      username: values.nama,
+    };
+
     try {
       setIsLoading(true);
-      const res = await fetch(`/api/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-          username: values.nama,
-        }),
-      });
+      const res = await axios.post(`/api/auth/register`, body);
 
-      const data = await res.json();
-
-      if (!res.ok && data.message) {
-        throw new Error(data.message);
+      if (res.status !== 200 && res.data) {
+        console.log({ resData: res.data });
+        throw new Error(res.data);
       }
 
       // after register success invoke login
-      await login({ email: values.email, password: values.password }).then(
+      await login({ nomorWa: values.nomorWa, password: values.password }).then(
         (data) => {
           if (data?.error) {
             setError(data.error);
@@ -69,7 +68,7 @@ const DaftarForm = () => {
       );
     } catch (error) {
       console.log(error);
-      setError((error as any)?.message || "");
+      setError((error as any)?.response?.data || (error as any)?.message || "");
     } finally {
       setIsLoading(false);
     }
@@ -98,12 +97,17 @@ const DaftarForm = () => {
           />
           <FormField
             control={form.control}
-            name="email"
+            name="nomorWa"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Nomor WA</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="Masukan email" type="email" />
+                  <Input
+                    {...field}
+                    placeholder="Masukan nomor Wa"
+                    type="number"
+                    min={0}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

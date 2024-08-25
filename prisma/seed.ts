@@ -13,10 +13,10 @@ async function main() {
     "$2a$10$SYy2q91bFYEq..zAcn/qF.qimiZsyNqQf.Hkdk32m9660U96X1/ji";
 
   const alice = await prisma.user.upsert({
-    where: { email: "alice@example.io" },
+    where: { nomorWa: "081234567890" },
     update: {},
     create: {
-      email: "alice@example.io",
+      nomorWa: "081234567890",
       username: "Alice",
       password: hashPass,
       role: "USER",
@@ -38,10 +38,10 @@ async function main() {
     },
   });
   const bob = await prisma.user.upsert({
-    where: { email: "bob@example.io" },
+    where: { nomorWa: "082134567891" },
     update: {},
     create: {
-      email: "bob@example.io",
+      nomorWa: "082134567891",
       username: "Bob",
       password: hashPass,
       suratKematians: {
@@ -63,10 +63,10 @@ async function main() {
   });
 
   const wise = await prisma.user.upsert({
-    where: { email: "wise@example.io" },
+    where: { nomorWa: "082134567892" },
     update: {},
     create: {
-      email: "wise@example.io",
+      nomorWa: "082134567892",
       username: "Wise",
       password: hashPass,
       suratKelahirans: {
