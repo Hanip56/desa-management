@@ -183,14 +183,10 @@ model SkIjinKeramaian {
   maksud       String
   acara        String
 
-  namaBhabinkamtibmas       String?
-  jabatanNrpBhabinkamtibmas String?
-  namaBabinsa               String?
-  jabatanNrpBabinsa         String?
-  status                    Status    @default(DIPROSES)
-  pesanDitolak              String?
-  noSurat                   String?
-  tanggalPembuatan          DateTime?
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
 
   User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String

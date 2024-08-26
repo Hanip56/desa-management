@@ -51,7 +51,11 @@ export async function GET(
       (chunk) => writer.write(chunk),
       () => writer.close(),
       setting?.namaKepalaDesa,
-      tte8
+      tte8,
+      setting?.namaBabinsa,
+      `${setting?.pangkatBabinsa} NRP.${setting?.nrpBabinsa}`,
+      setting?.namaBhabinkamtibmas,
+      `${setting?.pangkatBhabinkamtibmas} NRP.${setting?.nrpBhabinkamtibmas}`
     );
 
     return new NextResponse(readable, {

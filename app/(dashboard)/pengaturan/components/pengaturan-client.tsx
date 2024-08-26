@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListSetting from "../../components/list-setting";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -9,6 +9,8 @@ import EditNamaDialog from "./edit-nama-dialog";
 import EditTteDialog from "./edit-tte-dialog";
 import { SettingClient } from "../page";
 import { base64ToFile } from "@/lib/utils";
+import EditBabinsaDialog from "./edit-babinsa-dialog";
+import EditBhabinkamtibmasDialog from "./edit-bhabinkamtibmas-dialog";
 
 type Props = {
   setting: SettingClient | null;
@@ -17,6 +19,8 @@ type Props = {
 const PengaturanClient = ({ setting }: Props) => {
   const [openEditNama, setOpenEditNama] = useState(false);
   const [openEditTte, setOpenEditTte] = useState(false);
+  const [openEditBabinsa, setOpenEditBabinsa] = useState(false);
+  const [openEditBhabinkamtibmas, setOpenEditBhabinkamtibmas] = useState(false);
   const [ttePreview, setTtePreview] = useState<File>();
 
   useEffect(() => {
@@ -49,11 +53,21 @@ const PengaturanClient = ({ setting }: Props) => {
             open={openEditTte}
             handleClose={() => setOpenEditTte(false)}
           />
+          <EditBabinsaDialog
+            setting={setting}
+            open={openEditBabinsa}
+            handleClose={() => setOpenEditBabinsa(false)}
+          />
+          <EditBhabinkamtibmasDialog
+            setting={setting}
+            open={openEditBhabinkamtibmas}
+            handleClose={() => setOpenEditBhabinkamtibmas(false)}
+          />
         </>
       )}
       <Card className="mt-8 rounded-2xl">
         <CardHeader className="flex flex-col md:flex-row items-center md:justify-between gap-y-2">
-          <CardTitle className="text-xl">Informasi desa</CardTitle>
+          <CardTitle className="text-xl">Informasi kepala desa</CardTitle>
           {/* <Button className="w-full sm:w-fit ml-auto" variant="secondary">
           Edit
         </Button> */}
@@ -63,11 +77,11 @@ const PengaturanClient = ({ setting }: Props) => {
             <ListSetting
               label="Nama kepala desa"
               value={setting?.namaKepalaDesa ?? "-"}
-              actionLabel="edit nama"
+              actionLabel="edit nama kepala desa"
               action={() => setOpenEditNama(true)}
             />
             <li className="flex flex-col gap-2 sm:flex-row items-center justify-between py-6 border-t">
-              <p className="basis-[30%] font-semibold">TTE</p>
+              <p className="basis-[30%] font-semibold">TTE Kepala Desa</p>
               <div className="flex-1 justify-start">
                 {ttePreview && (
                   <Image
@@ -85,9 +99,48 @@ const PengaturanClient = ({ setting }: Props) => {
                 className="text-sm text-slate-500 font-normal"
                 onClick={() => setOpenEditTte(true)}
               >
-                edit tte
+                edit tte kepala desa
               </Button>
             </li>
+            <div className="p-4"></div>
+            <ListSetting
+              label="Nama Babinsa"
+              value={setting?.namaBabinsa ?? "-"}
+              actionLabel="edit babinsa"
+              action={() => setOpenEditBabinsa(true)}
+            />
+
+            <ListSetting
+              label="Pangkat Babinsa"
+              value={setting?.pangkatBabinsa ?? "-"}
+            />
+            <ListSetting
+              label="NRP Babinsa"
+              value={setting?.nrpBabinsa ?? "-"}
+            />
+            <ListSetting
+              label="Jabatan Babinsa"
+              value={setting?.jabatanBabinsa ?? "-"}
+            />
+            <div className="p-4"></div>
+            <ListSetting
+              label="Nama Bhabinkamtibmas"
+              value={setting?.namaBhabinkamtibmas ?? "-"}
+              actionLabel="edit bhabinkamtibmas"
+              action={() => setOpenEditBhabinkamtibmas(true)}
+            />
+            <ListSetting
+              label="Pangkat Bhabinkamtibmas"
+              value={setting?.pangkatBhabinkamtibmas ?? "-"}
+            />
+            <ListSetting
+              label="NRP Bhabinkamtibmas"
+              value={setting?.nrpBhabinkamtibmas ?? "-"}
+            />
+            <ListSetting
+              label="Jabatan Bhabinkamtibmas"
+              value={setting?.jabatanBhabinkamtibmas ?? "-"}
+            />
           </ul>
         </CardContent>
       </Card>

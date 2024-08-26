@@ -15,7 +15,11 @@ export const generateSkIjinKeramaian = async (
   dataCb: (chunk: Uint8Array) => void,
   endCb: () => void,
   namaKepalaDesa?: string,
-  tte?: Uint8Array
+  tte?: Uint8Array,
+  namaBabinsa?: string,
+  pangkatNrpBabinsa?: string,
+  namaBhabinkamtibmas?: string,
+  pangkatNrpBhabinkamtibmas?: string
 ) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([595, 842]); // A4 size (595x842 points)
@@ -169,8 +173,8 @@ export const generateSkIjinKeramaian = async (
     "right",
     undefined,
     "Babinsa Desa Margaasih",
-    data.namaBabinsa ?? "",
-    data.jabatanNrpBabinsa ?? ""
+    namaBabinsa ?? "",
+    pangkatNrpBabinsa ?? ""
   );
 
   // ttd left
@@ -179,8 +183,8 @@ export const generateSkIjinKeramaian = async (
     "left",
     undefined,
     "Bhabinkamtibmas Desa Margaasih",
-    data.namaBhabinkamtibmas ?? "",
-    data.jabatanNrpBhabinkamtibmas ?? ""
+    namaBhabinkamtibmas ?? "",
+    pangkatNrpBhabinkamtibmas ?? ""
   );
 
   // ttd center

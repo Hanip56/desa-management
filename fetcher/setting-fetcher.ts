@@ -2,21 +2,52 @@ import axiosInstance from "@/lib/axiosConfig";
 import { Setting } from "@prisma/client";
 import axios from "axios";
 
+type UpdateSettingParams = {
+  namaKepalaDesa?: string;
+  tte?: string;
+  namaBabinsa?: string;
+  pangkatBabinsa: string;
+  nrpBabinsa: string;
+  jabatanBabinsa: string;
+  namaBhabinkamtibmas?: string;
+  pangkatBhabinkamtibmas: string;
+  nrpBhabinkamtibmas: string;
+  jabatanBhabinkamtibmas: string;
+};
+
 export const updateSetting = async ({
   namaKepalaDesa,
   tte,
-}: {
-  namaKepalaDesa?: string;
-  tte?: File;
-}) => {
+  namaBabinsa,
+  jabatanBabinsa,
+  jabatanBhabinkamtibmas,
+  nrpBabinsa,
+  nrpBhabinkamtibmas,
+  pangkatBabinsa,
+  pangkatBhabinkamtibmas,
+  namaBhabinkamtibmas,
+}: Partial<UpdateSettingParams>) => {
   try {
     const formData = new FormData();
-    if (namaKepalaDesa) {
-      formData.append("namaKepalaDesa", namaKepalaDesa);
-    }
-    if (tte) {
-      formData.append("tte", tte);
-    }
+    const fields = {
+      namaKepalaDesa,
+      tte,
+      namaBabinsa,
+      jabatanBabinsa,
+      jabatanBhabinkamtibmas,
+      nrpBabinsa,
+      nrpBhabinkamtibmas,
+      pangkatBabinsa,
+      pangkatBhabinkamtibmas,
+      namaBhabinkamtibmas,
+    };
+
+    Object.keys(fields).forEach((key) => {
+      const field = fields[key as keyof typeof fields];
+      if (field) {
+        formData.append(key, field);
+      }
+    });
 
     const response = await axiosInstance.put<Setting>(`/setting`, formData);
 

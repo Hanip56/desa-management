@@ -36,7 +36,23 @@ export async function PUT(req: NextRequest) {
     }
 
     const formData = await req.formData();
-    const namaKepalaDesa = formData.get("namaKepalaDesa");
+    const namaKepalaDesa = formData.get("namaKepalaDesa") as string | null;
+    const namaBabinsa = formData.get("namaBabinsa") as string | null;
+    const pangkatBabinsa = formData.get("pangkatBabinsa") as string | null;
+    const nrpBabinsa = formData.get("nrpBabinsa") as string | null;
+    const jabatanBabinsa = formData.get("jabatanBabinsa") as string | null;
+    const namaBhabinkamtibmas = formData.get("namaBhabinkamtibmas") as
+      | string
+      | null;
+    const pangkatBhabinkamtibmas = formData.get("pangkatBhabinkamtibmas") as
+      | string
+      | null;
+    const nrpBhabinkamtibmas = formData.get("nrpBhabinkamtibmas") as
+      | string
+      | null;
+    const jabatanBhabinkamtibmas = formData.get("jabatanBhabinkamtibmas") as
+      | string
+      | null;
     const tte = formData.get("tte") as File;
     let tteBuffer: Buffer | undefined = undefined;
 
@@ -52,8 +68,15 @@ export async function PUT(req: NextRequest) {
         id: setting.id,
       },
       data: {
-        namaKepalaDesa:
-          typeof namaKepalaDesa === "string" ? namaKepalaDesa : undefined,
+        namaKepalaDesa: namaKepalaDesa ?? undefined,
+        namaBabinsa: namaBabinsa ?? undefined,
+        pangkatBabinsa: pangkatBabinsa ?? undefined,
+        nrpBabinsa: nrpBabinsa ?? undefined,
+        jabatanBabinsa: jabatanBabinsa ?? undefined,
+        namaBhabinkamtibmas: namaBhabinkamtibmas ?? undefined,
+        pangkatBhabinkamtibmas: pangkatBhabinkamtibmas ?? undefined,
+        nrpBhabinkamtibmas: nrpBhabinkamtibmas ?? undefined,
+        jabatanBhabinkamtibmas: jabatanBhabinkamtibmas ?? undefined,
         tte: tteBuffer,
       },
     });

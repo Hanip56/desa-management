@@ -12,6 +12,22 @@ async function main() {
   const hashPass =
     "$2a$10$SYy2q91bFYEq..zAcn/qF.qimiZsyNqQf.Hkdk32m9660U96X1/ji";
 
+  const setting = await prisma.setting.create({
+    data: {
+      namaKepalaDesa: "YAYAN SURYANA",
+
+      namaBabinsa: "IIP NASARIP",
+      pangkatBabinsa: "Sersan Dua",
+      nrpBabinsa: "31010528541080",
+      jabatanBabinsa: "Babinsa Margaasih Koramil 2402/Cicalengka",
+
+      namaBhabinkamtibmas: "ANDRIK SLAMET",
+      pangkatBhabinkamtibmas: "Bripka",
+      nrpBhabinkamtibmas: "80040405",
+      jabatanBhabinkamtibmas: "Bhabinkamtibmas desa Margaasih",
+    },
+  });
+
   const sky = await prisma.user.upsert({
     where: { nomorWa: "0123456789" },
     update: {},
@@ -97,8 +113,6 @@ async function main() {
       },
     },
   });
-
-  console.log({ alice, bob, wise });
 }
 main()
   .then(async () => {
