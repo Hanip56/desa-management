@@ -17,7 +17,7 @@ const Pengajuan = () => {
       href: "/pengajuan/surat-kematian",
     },
     {
-      label: "SK belum nikah",
+      label: "SK belum menikah",
       href: "/pengajuan/sk-belum-menikah",
     },
     {

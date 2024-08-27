@@ -41,42 +41,15 @@ export const generateSkIjinKeramaian = async (
     font,
   });
 
-  // Title
-  const title = "SURAT PENGANTAR KETERANGAN IJIN KERAMAIAN";
-  const titleWidth = bold.widthOfTextAtSize(title, 14);
-
-  const titleX = width / 2 - titleWidth / 2;
-  const titleY = height - 140;
-
-  page.drawText(title, {
-    x: titleX,
-    y: titleY,
-    size: 14,
-    font: bold,
-  });
-
-  page.drawLine({
-    start: { x: titleX, y: titleY - 3 },
-    end: { x: titleX + titleWidth, y: titleY - 3 },
-    thickness: 1,
-  });
-
-  const No = `Nomor: ${data.noSurat}`;
-  const NoWidth = font.widthOfTextAtSize(No, 11);
-  page.drawText(No, {
-    x: width / 2 - NoWidth / 2,
-    y: titleY - 16,
-    size: 11,
-    font: font,
-  });
-
-  //   Content
-  //   config paragraph
+  //   Config
+  // startLine Paragraph
   const startLine = height - 166;
   const gap = 8;
-  const { p, pJustify, ttd } = generateUtils({
+  const xColon = 175;
+  const { p, pJustify, pColon, ttd, title } = generateUtils({
     pdfDoc,
     startLine,
+    xColon,
     font,
     bold,
     gap,
@@ -91,34 +64,30 @@ export const generateSkIjinKeramaian = async (
   const listImage = await pdfDoc.embedPng(listImageBytes);
   const { width: listImgWidth, height: listImgHeight } = listImage.scale(0.3);
 
+  title("SURAT PENGANTAR KETERANGAN IJIN KERAMAIAN", data.noSurat ?? "");
+
+  //   Content
   pJustify(
     "Pemerintah Desa Margaasih Kecamatan Cicalengka Kabupaten Bandung dalam rangka",
     2,
     true
   );
   p("permohonan izin rame rame dari :", 4);
-  p(`Nama                           : ${data.nama}`, 8);
-  p(`NIK                             : ${data.nik}`, 10);
-  p(
-    `Tempat, Tgl Lahir       : ${data.tempatLahir}, ${formatDate(
-      data.tanggalLahir
-    )}`,
+  pColon(`Nama`, data.nama, 8);
+  pColon(`NIK`, data.nik, 10);
+  pColon(
+    `Tempat, Tgl Lahir`,
+    `${data.tempatLahir}, ${formatDate(data.tanggalLahir)}`,
     12
   );
-  p(
-    `Alamat                         : ${getAlamat(
-      data.kampung,
-      data.rt,
-      data.rw
-    )}`,
-    14
-  );
-  p(
-    `Waktu dan Maksud     : ${DateToDayAndDate(data.waktu)}, ${data.maksud}`,
+  pColon("Alamat", `${getAlamat(data.kampung, data.rt, data.rw)}`, 14);
+  pColon(
+    `Waktu dan Maksud`,
+    `${DateToDayAndDate(data.waktu)}, ${data.maksud}`,
     16
   );
-  p(`Pukul                           : ${DatetoTime(data.waktu)}`, 18);
-  p(`Acara                           : ${data.acara}`, 20);
+  pColon("Pukul", DatetoTime(data.waktu), 18);
+  pColon("Acara", data.acara, 20);
 
   pJustify(
     "Dengan ini menerangkan bahwa pada prinsipnya tidak keberatan atas permohonan yang",

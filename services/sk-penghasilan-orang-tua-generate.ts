@@ -31,42 +31,14 @@ export const generateSkPenghasilanOrangTua = async (
     font,
   });
 
-  // Title
-  const title = "SURAT KETERANGAN PENGHASILAN ORANG TUA";
-  const titleWidth = bold.widthOfTextAtSize(title, 14);
-
-  const titleX = width / 2 - titleWidth / 2;
-  const titleY = height - 140;
-
-  page.drawText(title, {
-    x: titleX,
-    y: titleY,
-    size: 14,
-    font: bold,
-  });
-
-  page.drawLine({
-    start: { x: titleX, y: titleY - 3 },
-    end: { x: titleX + titleWidth, y: titleY - 3 },
-    thickness: 1,
-  });
-
-  const No = `Nomor: ${data.noSurat}`;
-  const NoWidth = font.widthOfTextAtSize(No, 11);
-  page.drawText(No, {
-    x: width / 2 - NoWidth / 2,
-    y: titleY - 16,
-    size: 11,
-    font: font,
-  });
-
-  //   Content
-  //   config paragraph
+  // Config
+  //   startLine paragraph
   const startLine = height - 166;
   const gap = 10;
-  const { p, pJustify, ttd } = generateUtils({
+  const { p, pJustify, pColon, ttd, title } = generateUtils({
     pdfDoc,
     startLine,
+    xColon: 220,
     font,
     bold,
     gap,
@@ -76,42 +48,24 @@ export const generateSkPenghasilanOrangTua = async (
     tte,
   });
 
+  title("SURAT KETERANGAN PENGHASILAN ORANG TUA", data.noSurat ?? "");
+
+  //   Content
   pJustify(
     "Yang bertanda tangan di bawah ini pemerintah Desa Margaasih Kecamatan Cicalengka",
     2,
     true
   );
   p("Kabupaten Bandung, menerangkan dengan sebenarnya bahwa :", 4);
-  p(`Nama Lengkap                         : ${data.namaLengkap}`, 8);
-  p(`Nomor Induk Kependudukan   : ${data.nik}`, 10);
-  p(
-    `Tanggal Lahir                           : ${formatDate(
-      data.tanggalLahir
-    )}`,
-    12
-  );
-  p(
-    `Jenis Kelamin                           : ${getGender(data.jenisKelamin)}`,
-    14
-  );
-  p(`Agama                                      : ${data.agama}`, 16);
-  p(`Pekerjaan                                  : ${data.pekerjaan}`, 18);
-  p(
-    `Status Perkawinan                    : ${data.statusPerkawinan.replace(
-      "_",
-      " "
-    )}`,
-    20
-  );
-  p(`Kewarganegaraan                     : ${data.kewarganegaraan}`, 22);
-  p(
-    `Alamat                                      : ${getAlamat(
-      data.kampung,
-      data.rt,
-      data.rw
-    )}`,
-    24
-  );
+  pColon(`Nama Lengkap`, data.namaLengkap, 8);
+  pColon(`Nomor Induk Kependudukan`, data.nik, 10);
+  pColon(`Tanggal Lahir`, formatDate(data.tanggalLahir), 12);
+  pColon(`Jenis Kelamin`, getGender(data.jenisKelamin), 14);
+  pColon(`Agama`, data.agama, 16);
+  pColon(`Pekerjaan`, data.pekerjaan, 18);
+  pColon(`Status Perkawinan`, data.statusPerkawinan.replace("_", " "), 20);
+  pColon(`Kewarganegaraan`, data.kewarganegaraan, 22);
+  pColon(`Alamat`, `${getAlamat(data.kampung, data.rt, data.rw)}`, 24);
 
   pJustify(
     "Menurut keterangan RT/RW setempat dan data yang ada, benar bahwa yang",

@@ -1,6 +1,6 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { formatDate, getAlamat, getGender } from "@/lib/utils";
-import { Setting, SuratKelahiran } from "@prisma/client";
+import { SuratKelahiran } from "@prisma/client";
 import { generateUtils } from "./utils";
 
 export const generateSuratKelahiran = async (
@@ -55,8 +55,7 @@ export const generateSuratKelahiran = async (
   //   config
   const startLine = height - 110;
   const gap = 10;
-  const indent = 30;
-  const { p, pJustify, ttd } = generateUtils({
+  const { p, pColon, pJustify, ttd } = generateUtils({
     pdfDoc,
     startLine,
     font,
@@ -73,71 +72,55 @@ export const generateSuratKelahiran = async (
   );
 
   // Content
-  p(`Nama                   : ${data.namaTerkait}`, 3);
+  pColon(`Nama`, data.namaTerkait, 3);
 
-  p(`Jenis Kelamin      : ${getGender(data.jenisKelaminTerkait)}`, 5);
+  pColon(`Jenis Kelamin`, getGender(data.jenisKelaminTerkait), 5);
 
-  p(
-    `Tempat/tgl lahir   : ${data.tempatLahirTerkait}, ${formatDate(
-      data.tanggalLahirTerkait
-    )}`,
+  pColon(
+    `Tempat/tgl lahir`,
+    `${data.tempatLahirTerkait}, ${formatDate(data.tanggalLahirTerkait)}`,
     7
   );
 
-  p(
-    `Alamat                 : ${getAlamat(
-      data.kampungTerkait,
-      data.rtTerkait,
-      data.rwTerkait
-    )}`,
+  pColon(
+    `Alamat`,
+    `${getAlamat(data.kampungTerkait, data.rtTerkait, data.rwTerkait)}`,
     9
   );
 
   p("Adalah benar Anak dari :", 12);
 
-  p(`Nama Ayah          : ${data.namaAyah}`, 15);
+  pColon(`Nama Ayah`, data.namaAyah, 15);
 
-  p(`Jenis Kelamin      : ${getGender(data.jenisKelaminAyah)}`, 17);
+  pColon(`Jenis Kelamin`, getGender(data.jenisKelaminAyah), 17);
 
-  p(
-    `Tempat/tgl lahir   : ${data.tempatLahirAyah}, ${formatDate(
-      data.tanggalLahirAyah
-    )}`,
+  pColon(
+    `Tempat/tgl lahir`,
+    `${data.tempatLahirAyah}, ${formatDate(data.tanggalLahirAyah)}`,
     19
   );
 
-  p(`Agama                 : ${data.agamaAyah}`, 21);
+  pColon(`Agama`, data.agamaAyah, 21);
 
-  p(
-    `Alamat                 : ${getAlamat(
-      data.kampungAyah,
-      data.rtAyah,
-      data.rwAyah
-    )}`,
+  pColon(
+    `Alamat`,
+    `${getAlamat(data.kampungAyah, data.rtAyah, data.rwAyah)}`,
     23
   );
 
-  p(`Nama                   : ${data.namaIbu}`, 26);
+  pColon(`Nama`, data.namaIbu, 26);
 
-  p(`Jenis Kelamin      : ${getGender(data.jenisKelaminIbu)}`, 28);
+  pColon(`Jenis Kelamin`, getGender(data.jenisKelaminIbu), 28);
 
-  p(
-    `Tempat/tgl lahir   : ${data.tempatLahirIbu}, ${formatDate(
-      data.tanggalLahirIbu
-    )}`,
+  pColon(
+    `Tempat/tgl lahir`,
+    `${data.tempatLahirIbu}, ${formatDate(data.tanggalLahirIbu)}`,
     30
   );
 
-  p(`Agama                 : ${data.agamaIbu}`, 32);
+  pColon(`Agama`, data.agamaIbu, 32);
 
-  p(
-    `Alamat                 : ${getAlamat(
-      data.kampungIbu,
-      data.rtIbu,
-      data.rwIbu
-    )}`,
-    34
-  );
+  pColon(`Alamat`, `${getAlamat(data.kampungIbu, data.rtIbu, data.rwIbu)}`, 34);
 
   pJustify(
     "Demikian Surat Keterangan Kelahiran ini kami buat dengan sebenarnya untuk",

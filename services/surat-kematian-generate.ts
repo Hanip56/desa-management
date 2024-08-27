@@ -63,7 +63,7 @@ export const generateSuratKematian = async (
     font: font,
   });
 
-  const { p, pJustify, ttd } = generateUtils({
+  const { p, pColon, pJustify, ttd } = generateUtils({
     pdfDoc,
     startLine,
     font,
@@ -77,43 +77,37 @@ export const generateSuratKematian = async (
 
   //   Content
   p("Yang bertanda tangan dibawah ini :");
-  p(`Nama                         : ${data.namaPemohon}`, 3);
-  p(`Jenis Kelamin            : ${getGender(data.jenisKelaminPemohon)}`, 5);
-  p(`No. NIK                     : ${data.noNikPemohon}`, 7);
-  p(
-    `Alamat                       : ${getAlamat(
-      data.kampungPemohon,
-      data.rtPemohon,
-      data.rwPemohon
-    )}`,
+  pColon(`Nama`, data.namaPemohon, 3);
+  pColon(`Jenis Kelamin`, getGender(data.jenisKelaminPemohon), 5);
+  pColon(`No. NIK`, data.noNikPemohon, 7);
+  pColon(
+    `Alamat`,
+    `${getAlamat(data.kampungPemohon, data.rtPemohon, data.rwPemohon)}`,
     9
   );
-  p(`Hubungan Keluarga   : ${data.hubunganKeluargaPemohon}`, 11);
+  pColon(`Hubungan Keluarga`, data.hubunganKeluargaPemohon, 11);
 
   p("Menerangkan bahwa yang bernama :", 15);
-  p(`Nama                         : ${data.namaTerkait}`, 18);
-  p(`Jenis Kelamin            : ${getGender(data.jenisKelaminTerkait)}`, 20);
-  p(`No. NIK                     : ${data.noNikTerkait}`, 22);
-  p(
-    `Alamat                       : ${getAlamat(
-      data.kampungTerkait,
-      data.rtTerkait,
-      data.rwTerkait
-    )}`,
+  pColon(`Nama`, data.namaTerkait, 18);
+  pColon(`Jenis Kelamin`, getGender(data.jenisKelaminTerkait), 20);
+  pColon(`No. NIK`, data.noNikTerkait, 22);
+  pColon(
+    `Alamat`,
+    `${getAlamat(data.kampungTerkait, data.rtTerkait, data.rwTerkait)}`,
     24
   );
 
   p("Telah meninggal dunia pada :", 28);
-  p(`Hari/Tanggal              : ${DateToDayAndDate(data.tanggal)}`, 31);
-  p(`Waktu                         : ${DatetoTime(data.tanggal)}`, 33);
-  p(`Penyebab                    : ${data.penyebab}`, 35);
-  p(`Tempat                       : ${data.tempat}`, 37);
+  pColon(`Hari/Tanggal`, DateToDayAndDate(data.tanggal), 31);
+  pColon(`Waktu`, DatetoTime(data.tanggal), 33);
+  pColon(`Penyebab`, data.penyebab, 35);
+  pColon(`Tempat`, data.tempat, 37);
   p(`Meninggal`, 39);
 
-  p(
+  pJustify(
     "Demikian Surat Keterangan Kematian ini kami buat dengan sebenarnya untuk",
     43,
-    65 + indent
+    true
   );
   p("dipergunakan sebagaimana mestinya.", 45);
 

@@ -17,6 +17,7 @@ type GenerateUtils = {
   font: PDFFont;
   bold: PDFFont;
   startLine: number;
+  xColon?: number;
   gap: number;
   fontSize?: number;
   tte?: Uint8Array | null;
@@ -30,10 +31,39 @@ export const generateUtils = ({
   marginX,
   page,
   startLine,
+  xColon = 175,
   fontSize = 13,
   tte,
 }: GenerateUtils) => {
   const { width, height } = page.getSize();
+
+  const title = (title: string, nomor: string, y?: number) => {
+    const titleWidth = bold.widthOfTextAtSize(title, 14);
+    const titleX = width / 2 - titleWidth / 2;
+    const titleY = y ?? height - 140;
+
+    page.drawText(title, {
+      x: titleX,
+      y: titleY,
+      size: 14,
+      font: bold,
+    });
+
+    page.drawLine({
+      start: { x: titleX, y: titleY - 3 },
+      end: { x: titleX + titleWidth, y: titleY - 3 },
+      thickness: 1,
+    });
+
+    const No = `Nomor: ${nomor}`;
+    const NoWidth = font.widthOfTextAtSize(No, 11);
+    page.drawText(No, {
+      x: width / 2 - NoWidth / 2,
+      y: titleY - 16,
+      size: 11,
+      font: font,
+    });
+  };
 
   const p = (content: string, indexY: number = 0, x?: number) => {
     page.drawText(content, {
@@ -43,6 +73,11 @@ export const generateUtils = ({
       font: font,
       maxWidth: width - 2 * marginX,
     });
+  };
+
+  const pColon = (label: string, value: string, indexY: number) => {
+    p(label, indexY);
+    p(`: ${value}`, indexY, xColon);
   };
 
   const pJustify = (
@@ -177,7 +212,7 @@ export const generateUtils = ({
     }
   };
 
-  return { p, pJustify, ttd };
+  return { p, pJustify, ttd, title, pColon };
 };
 
 export const generateKopSurat = async ({

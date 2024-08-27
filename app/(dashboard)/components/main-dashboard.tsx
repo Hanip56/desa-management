@@ -70,7 +70,7 @@ export default async function MainDashboard() {
 
   return (
     <>
-      <div className="mt-8">
+      <div className="-mt-8">
         <DataGrid
           data1={jumlahSuratMasuk}
           data2={jumlahSuratDiterima}
@@ -99,7 +99,7 @@ export default async function MainDashboard() {
 }
 
 export const MainDashboardSkeleton = () => (
-  <div className="mt-8">
+  <div className="-mt-8">
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8">
       <DataCardLoading />
       <DataCardLoading />
