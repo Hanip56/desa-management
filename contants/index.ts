@@ -1,3 +1,6 @@
+// max length for input
+export const maxLengthInput = 50;
+
 type SuratList = {
   type: "online" | "offline";
   name: string;

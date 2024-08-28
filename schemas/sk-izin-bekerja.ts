@@ -1,7 +1,8 @@
 import { z } from "zod";
-import { genderEnum, StatusPerkawinanEnum } from ".";
+import { genderEnum } from ".";
+import { DateRange } from "react-day-picker";
 
-export const skBelumMenikahSchema = z.object({
+export const skIzinBekerjaSchema = z.object({
   namaLengkap: z.string().min(1, {
     message: "Kolom Nama lengkap harus diisi",
   }),
@@ -15,16 +16,16 @@ export const skBelumMenikahSchema = z.object({
     message: "Kolom Jenis kelamin harus diisi",
   }),
   agama: z.string().min(1, {
-    message: "Kolom Agama diisi",
+    message: "Kolom Agama harus diisi",
   }),
   pekerjaan: z.string().min(1, {
     message: "Kolom Pekerjaan harus diisi",
   }),
-  statusPerkawinan: z.enum(StatusPerkawinanEnum, {
-    message: "Kolom Status perkawinan harus diisi",
+  bagian: z.string().min(1, {
+    message: "Kolom Bagian harus diisi",
   }),
-  kewarganegaraan: z.string().min(1, {
-    message: "Kolom Kewarganegaraan harus diisi",
+  nomorId: z.string().min(1, {
+    message: "Kolom Nomor ID harus diisi",
   }),
   kampung: z.string().min(1, {
     message: "Kolom Kampung harus diisi",
@@ -34,5 +35,15 @@ export const skBelumMenikahSchema = z.object({
   }),
   rw: z.string().min(1, {
     message: "Kolom RW harus diisi",
+  }),
+  tempatKerja: z.string().min(1, {
+    message: "Kolom Tempat kerja harus diisi",
+  }),
+  alasan: z.string().min(1, {
+    message: "Kolom Alasan harus diisi",
+  }),
+  waktuIzin: z.object({
+    from: z.date(),
+    to: z.date().optional(),
   }),
 });

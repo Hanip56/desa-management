@@ -1,0 +1,46 @@
+import Header from "@/app/(dashboard)/components/header";
+import ClientComp from "./components/client-comp";
+import prisma from "@/db/prisma";
+
+const DynamicPage = async ({ params }: { params: { id: string } }) => {
+  let initialData: any;
+  let skTidakMemilikiPekerjaan =
+    await prisma.skTidakMemilikiPekerjaan.findUnique({
+      where: { id: params.id },
+      include: {
+        User: {
+          select: {
+            id: true,
+            username: true,
+            nomorWa: true,
+            role: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+      },
+    });
+
+  if (skTidakMemilikiPekerjaan) {
+    initialData = {
+      ...skTidakMemilikiPekerjaan,
+      User: undefined,
+      user: skTidakMemilikiPekerjaan.User,
+    };
+  }
+
+  return (
+    <main className="max-w-screen-lg mx-auto">
+      <Header
+        title={`Formulir SK Tidak Memiliki Pekerjaan`}
+        className="text-center"
+        withBreadcrumb
+        breadcrumbClassName="flex justify-center"
+      />
+
+      <ClientComp initialData={initialData} />
+    </main>
+  );
+};
+
+export default DynamicPage;

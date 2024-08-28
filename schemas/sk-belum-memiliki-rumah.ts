@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { genderEnum, StatusPerkawinanEnum } from ".";
 
-export const skBelumMenikahSchema = z.object({
+export const skBelumMemilikiRumahSchema = z.object({
   namaLengkap: z.string().min(1, {
     message: "Kolom Nama lengkap harus diisi",
   }),
@@ -34,5 +34,8 @@ export const skBelumMenikahSchema = z.object({
   }),
   rw: z.string().min(1, {
     message: "Kolom RW harus diisi",
+  }),
+  keperluan: z.string().min(1, {
+    message: "Kolom Keperluan harus diisi",
   }),
 });

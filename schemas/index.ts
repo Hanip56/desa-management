@@ -2,6 +2,13 @@ import { date, z } from "zod";
 
 // FYI: Schema for form, type for anything else
 
+export const StatusPerkawinanEnum = [
+  "BELUM_KAWIN",
+  "KAWIN",
+  "CERAI_HIDUP",
+  "CERAI_MATI",
+] as const;
+
 export const genderEnum = ["L", "P"] as const;
 
 export type UserType = {

@@ -59,14 +59,18 @@ const NavMenu = () => {
           label: "SK penghasilan orang tua",
           href: "/pengajuan/sk-penghasilan-orang-tua",
         },
-        // {
-        //   label: "Pendaftaran pindah WNI",
-        //   href: "/pengajuan/pendaftaran-pindah-wni",
-        // },
-        // {
-        //   label: "Keterangan tidak mampu",
-        //   href: "/pengajuan/keterangan-tidak-mampu",
-        // },
+        {
+          label: "SK izin bekerja",
+          href: "/pengajuan/sk-izin-bekerja",
+        },
+        {
+          label: "SK belum memiliki rumah",
+          href: "/pengajuan/sk-belum-memiliki-rumah",
+        },
+        {
+          label: "SK tidak memiliki pekerjaan",
+          href: "/pengajuan/sk-tidak-memiliki-pekerjaan",
+        },
       ],
     },
     {

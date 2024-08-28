@@ -1,12 +1,18 @@
 import { z } from "zod";
 import { genderEnum, StatusPerkawinanEnum } from ".";
 
-export const skBelumMenikahSchema = z.object({
-  namaLengkap: z.string().min(1, {
-    message: "Kolom Nama lengkap harus diisi",
+export const skTidakMemilikiPekerjaanSchema = z.object({
+  nama: z.string().min(1, {
+    message: "Kolom Nama harus diisi",
   }),
   nik: z.string().min(1, {
     message: "Kolom NIK harus diisi",
+  }),
+  noKk: z.string().min(1, {
+    message: "Kolom No KK harus diisi",
+  }),
+  tempatLahir: z.string().min(1, {
+    message: "Kolom Tempat lahir harus diisi",
   }),
   tanggalLahir: z.date({
     message: "Kolom Tanggal lahir harus diisi",
@@ -14,17 +20,14 @@ export const skBelumMenikahSchema = z.object({
   jenisKelamin: z.enum(genderEnum, {
     message: "Kolom Jenis kelamin harus diisi",
   }),
-  agama: z.string().min(1, {
-    message: "Kolom Agama diisi",
+  statusPerkawinan: z.enum(StatusPerkawinanEnum, {
+    message: "Kolom Status perkawinan harus diisi",
   }),
   pekerjaan: z.string().min(1, {
     message: "Kolom Pekerjaan harus diisi",
   }),
-  statusPerkawinan: z.enum(StatusPerkawinanEnum, {
-    message: "Kolom Status perkawinan harus diisi",
-  }),
-  kewarganegaraan: z.string().min(1, {
-    message: "Kolom Kewarganegaraan harus diisi",
+  agama: z.string().min(1, {
+    message: "Kolom Agama diisi",
   }),
   kampung: z.string().min(1, {
     message: "Kolom Kampung harus diisi",

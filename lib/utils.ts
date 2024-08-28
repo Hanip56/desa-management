@@ -1,5 +1,11 @@
 import { type ClassValue, clsx } from "clsx";
-import { endOfDay, format, formatISO, parseISO } from "date-fns";
+import {
+  differenceInDays,
+  endOfDay,
+  format,
+  formatISO,
+  parseISO,
+} from "date-fns";
 import { id } from "date-fns/locale";
 import { twMerge } from "tailwind-merge";
 import { createCanvas, loadImage } from "canvas";
@@ -24,6 +30,34 @@ export function getGender(gender: "L" | "P") {
 
 export function getAlamat(kampung: string, rt: string, rw: string) {
   return `Kp. ${kampung} RT ${rt} RW ${rw}`;
+}
+
+export function getRangeDays(dateFrom: Date | string, dateTo: Date | string) {
+  let from = dateFrom;
+  let to = dateTo;
+
+  if (typeof from === "string") {
+    from = new Date(dateFrom);
+  }
+
+  if (typeof to === "string") {
+    to = new Date(dateTo);
+  }
+
+  const number = differenceInDays(to, from) + 1;
+
+  const text =
+    to.getTime() !== from.getTime()
+      ? `${format(from, "d MMMM", { locale: id })} sampai ${format(
+          to,
+          "d MMMM",
+          {
+            locale: id,
+          }
+        )}`
+      : `${format(from, "d MMMM", { locale: id })}`;
+
+  return { number, text };
 }
 
 export function dateTimeToISO(value: Date) {
