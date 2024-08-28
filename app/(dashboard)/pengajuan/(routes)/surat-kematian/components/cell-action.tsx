@@ -1,21 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ScanSearch, MoreHorizontal, Trash, Edit } from "lucide-react";
 import { ColumnsType } from "./columns";
-import { useRouter } from "next/navigation";
 import { useConfirm } from "@/hooks/use-confirm";
-import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteSuratKematian } from "@/fetcher/surat-kematian-fetcher";
 import { toast } from "sonner";
+import CellActionPengajuan from "@/app/(dashboard)/components/cell-action-pengajuan";
 
 type CellActionProps = {
   data: ColumnsType;
@@ -23,17 +14,20 @@ type CellActionProps = {
 
 const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const { data: session } = useSession();
-  const router = useRouter();
+  const isUser = session?.user.role === "USER";
+
   const queryClient = useQueryClient();
   const [ConfirmationDialog, confirm] = useConfirm(
     "Apa anda yakin?",
-    "Anda akan membatalkan pengajuan ini"
+    isUser
+      ? "Anda akan membatalkan pengajuan ini"
+      : "pengajuan ini akan dihapus ( berlaku juga untuk user )."
   );
 
   const deleteMutation = useMutation({
     mutationFn: deleteSuratKematian,
     onSuccess: (data) => {
-      toast("Data berhasil dibatalkan.", {
+      toast(`Data berhasil ${isUser ? "dibatalkan" : "dihapus"}.`, {
         className: "text-emerald-600 font-semibold",
       });
 
@@ -42,7 +36,7 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
       });
     },
     onError: (error) => {
-      toast("Data gagal dibatalkan.", {
+      toast(`Data gagal ${isUser ? "dibatalkan" : "dihapus"}.`, {
         className: "text-rose-600 font-semibold",
       });
       console.log(error);
@@ -62,39 +56,11 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
   return (
     <>
       <ConfirmationDialog />
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="w-8 h-8 p-0">
-            <span className="sr-only">Buka menu</span>
-            <MoreHorizontal className="w-4 h-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          {(session?.user.role === "ADMIN" || data.status !== "DIPROSES") && (
-            <DropdownMenuItem asChild>
-              <Link
-                href={`surat-kematian/${data.id}`}
-                className="flex items-center"
-              >
-                <ScanSearch className="mr-2 size-4" /> Lihat Detail
-              </Link>
-            </DropdownMenuItem>
-          )}
-          {session?.user.role === "USER" && data.status === "DIPROSES" && (
-            <>
-              <DropdownMenuItem
-                onClick={() => router.push(`surat-kematian/${data.id}`)}
-              >
-                <Edit className="mr-2 size-4" /> Edit
-              </DropdownMenuItem>
-
-              <DropdownMenuItem onClick={handleDelete}>
-                <Trash className="mr-2 size-4" /> Batal
-              </DropdownMenuItem>
-            </>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <CellActionPengajuan
+        handleDelete={handleDelete}
+        id={data.id}
+        status={data.status}
+      />
     </>
   );
 };

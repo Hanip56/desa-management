@@ -7,7 +7,7 @@ import CellAction from "./cell-action";
 import StatusBadge from "@/app/(dashboard)/components/status-badge";
 import { formatDate } from "@/lib/utils";
 
-export type SuratKelahiranType = {
+export type ColumnsType = {
   id: string;
   nama: string;
   alamat: string;
@@ -17,7 +17,7 @@ export type SuratKelahiranType = {
 };
 
 export const columns = (toggleSortDate: () => void) => {
-  const columns: ColumnDef<SuratKelahiranType>[] = [
+  const columns: ColumnDef<ColumnsType>[] = [
     {
       id: "id",
       accessorKey: "id",
