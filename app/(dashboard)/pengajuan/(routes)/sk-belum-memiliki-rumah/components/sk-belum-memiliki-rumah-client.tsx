@@ -26,6 +26,7 @@ export const SkBelumMemilikiRumahClient = () => {
     handleFilterStatus,
     updatedAt,
     toggleSortDate,
+    limit,
   ] = useNavigate();
 
   const printableRef = useRef<HTMLDivElement>(null);
@@ -39,7 +40,7 @@ export const SkBelumMemilikiRumahClient = () => {
     queryFn: () =>
       getAllSkBelumMemilikiRumah({
         page,
-        limit: 8,
+        limit,
         search,
         status,
         updatedAt,

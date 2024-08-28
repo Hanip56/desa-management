@@ -48,6 +48,7 @@ interface DataTableProps<TData, TValue> {
   search: string;
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleFilterStatus?: (status?: StatusType) => void;
+  handleLimit?: (limit?: number) => void;
 }
 
 export const DataTable = React.forwardRef<
@@ -68,6 +69,7 @@ export const DataTable = React.forwardRef<
       search,
       handleSearch,
       handleFilterStatus,
+      handleLimit,
     }: DataTableProps<any, any>,
     ref
   ) => {
@@ -106,30 +108,49 @@ export const DataTable = React.forwardRef<
             placeholder={`Filter ${filterKey}...`}
             value={search}
             onChange={handleSearch}
-            className="sm:max-w-sm"
+            className="sm:max-w-xs"
           />
-          {!!handleFilterStatus && (
-            <div className="w-full sm:w-[150px]">
-              <Select
-                defaultValue={status ?? ""}
-                onValueChange={(value) =>
-                  handleFilterStatus(
-                    value === "-" ? undefined : (value as StatusType)
-                  )
-                }
-              >
-                <SelectTrigger className="w-full text-sm">
-                  <SelectValue placeholder="Filter status" />
-                </SelectTrigger>
-                <SelectContent className="text-sm">
-                  <SelectItem value="-">SEMUA</SelectItem>
-                  <SelectItem value="DIPROSES">DIPROSES</SelectItem>
-                  <SelectItem value="DITERIMA">DITERIMA</SelectItem>
-                  <SelectItem value="DITOLAK">DITOLAK</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          )}
+          <div className="flex gap-2 sm:gap-4 w-full sm:w-fit">
+            {!!handleFilterStatus && (
+              <div className="w-full sm:w-[150px]">
+                <Select
+                  defaultValue={status ?? ""}
+                  onValueChange={(value) =>
+                    handleFilterStatus(
+                      value === "-" ? undefined : (value as StatusType)
+                    )
+                  }
+                >
+                  <SelectTrigger className="w-full text-sm">
+                    <SelectValue placeholder="Filter status" />
+                  </SelectTrigger>
+                  <SelectContent className="text-sm">
+                    <SelectItem value="-">SEMUA</SelectItem>
+                    <SelectItem value="DIPROSES">DIPROSES</SelectItem>
+                    <SelectItem value="DITERIMA">DITERIMA</SelectItem>
+                    <SelectItem value="DITOLAK">DITOLAK</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+            {!!handleLimit && (
+              <div className="w-[70px]">
+                <Select
+                  defaultValue={limit.toString()}
+                  onValueChange={(value) => handleLimit(parseInt(value))}
+                >
+                  <SelectTrigger className="w-full text-sm">
+                    <SelectValue placeholder="-" />
+                  </SelectTrigger>
+                  <SelectContent className="text-sm">
+                    <SelectItem value="10">10</SelectItem>
+                    <SelectItem value="25">25</SelectItem>
+                    <SelectItem value="50">50</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+          </div>
         </div>
         <div className="rounded-md border" ref={ref}>
           <Table>
@@ -181,24 +202,33 @@ export const DataTable = React.forwardRef<
             </TableBody>
           </Table>
         </div>
-        <div className="flex items-center justify-end space-x-2 py-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handlePrevious}
-            disabled={page <= 1}
-          >
-            <ChevronLeft className="size-4" />
-          </Button>
-          <div className="text-sm text-muted-foreground px-3">{page}</div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleNext}
-            disabled={totalItems <= page * limit}
-          >
-            <ChevronRight className="size-4" />
-          </Button>
+        <div className="flex items-center justify-between gap-1 sm:gap-2 space-x-2 py-4">
+          <p className="text-xs sm:text-sm text-slate-500">
+            Menampilkan <span className="font-semibold">{data.length}</span>{" "}
+            dari <span className="font-semibold">{totalItems}</span>
+          </p>
+          <div className="flex items-center justify-end space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handlePrevious}
+              disabled={page <= 1}
+            >
+              <ChevronLeft className="size-4" />
+            </Button>
+            <div className="text-sm text-muted-foreground px-3">
+              {page}
+              <small>{!totalPages ? "" : `/${totalPages}`}</small>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleNext}
+              disabled={totalItems <= page * limit}
+            >
+              <ChevronRight className="size-4" />
+            </Button>
+          </div>
         </div>
       </div>
     );

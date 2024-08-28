@@ -19,7 +19,7 @@ type GetAllResponse = {
 
 export const getAllUsers = async ({
   page = 1,
-  limit = 1,
+  limit = 10,
   search,
   updatedAt,
 }: GetAllParams) => {

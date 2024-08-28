@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Printer } from "lucide-react";
-import { columns, SuratKelahiranType } from "./columns";
+import { columns, ColumnsType } from "./columns";
 import { DataTable } from "@/components/data-table";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -26,6 +26,7 @@ export const SuratKelahiranClient = () => {
     handleFilterStatus,
     updatedAt,
     toggleSortDate,
+    limit,
   ] = useNavigate();
 
   const printableRef = useRef<HTMLDivElement>(null);
@@ -39,7 +40,6 @@ export const SuratKelahiranClient = () => {
     queryFn: () =>
       getAllSuratKelahiran({
         page,
-        limit: 8,
         search,
         status,
         updatedAt,
@@ -50,7 +50,7 @@ export const SuratKelahiranClient = () => {
   if (query.isLoading || query.isPending) return <CardSkeleton />;
   if (query.isError) return <CardError error={query?.error?.message} />;
 
-  const data: SuratKelahiranType[] = query.data.data.map((surat) => ({
+  const data: ColumnsType[] = query.data.data.map((surat) => ({
     id: surat.id,
     nama: surat.namaTerkait,
     alamat: getAlamat(surat.kampungTerkait, surat.rtTerkait, surat.rwTerkait),
@@ -86,7 +86,7 @@ export const SuratKelahiranClient = () => {
           data={data}
           filterKey="nama"
           onDelete={() => {}}
-          limit={query.data.limit}
+          limit={limit}
           totalPages={query.data.total_pages}
           totalItems={query.data.total_items}
           page={page}

@@ -21,7 +21,7 @@ type GetAllResponse = {
 
 export const getAllSuratKelahiran = async ({
   page = 1,
-  limit = 1,
+  limit = 10,
   search,
   status,
   updatedAt,

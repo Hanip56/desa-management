@@ -26,6 +26,7 @@ export const SkPenghasilanOrangTuaClient = () => {
     handleFilterStatus,
     updatedAt,
     toggleSortDate,
+    limit,
   ] = useNavigate();
 
   const printableRef = useRef<HTMLDivElement>(null);
@@ -42,7 +43,7 @@ export const SkPenghasilanOrangTuaClient = () => {
     queryFn: () =>
       getAllSkPenghasilanOrangTua({
         page,
-        limit: 8,
+        limit,
         search,
         status,
         updatedAt,

@@ -15,12 +15,15 @@ export const useNavigate = (): [
   string, // status
   (status?: StatusType) => void, // handleFilterStatus
   string, // updatedAt
-  () => void // handle sort date
+  () => void, // handle sort date
+  number, // limit
+  (limit?: number) => void // handle limit
 ] => {
   const params = qs.parse(useSearchParams().toString());
   const router = useRouter();
   const pathname = usePathname();
   const page = params?.page ? Number(params.page) : 1;
+  const limit = params?.limit ? Number(params.limit) : 10;
   const updatedAt = params?.updatedAt ? params.updatedAt.toString() : "";
   const status = params?.status ? params.status.toString() : "";
   const [search, setSearch] = useState(params?.search?.toString() ?? "");
@@ -45,6 +48,12 @@ export const useNavigate = (): [
     },
     [params, router, pathname]
   );
+
+  const handleLimit = (limit?: number) => {
+    handleNavigate({
+      limit: limit ?? "",
+    });
+  };
 
   const handleNext = () => {
     handleNavigate({
@@ -98,5 +107,7 @@ export const useNavigate = (): [
     handleFilterStatus,
     updatedAt,
     toggleSortDate,
+    limit,
+    handleLimit,
   ];
 };

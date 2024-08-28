@@ -26,6 +26,7 @@ export const SkIzinBekerjaClient = () => {
     handleFilterStatus,
     updatedAt,
     toggleSortDate,
+    limit,
   ] = useNavigate();
 
   const printableRef = useRef<HTMLDivElement>(null);
@@ -39,7 +40,7 @@ export const SkIzinBekerjaClient = () => {
     queryFn: () =>
       getAllSkIzinBekerja({
         page,
-        limit: 8,
+        limit,
         search,
         status,
         updatedAt,

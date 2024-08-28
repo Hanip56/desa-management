@@ -24,6 +24,7 @@ const PenggunaClient = () => {
     handleFilterStatus,
     updatedAt,
     toggleSortDate,
+    limit,
   ] = useNavigate();
 
   const query = useQuery({
@@ -31,7 +32,7 @@ const PenggunaClient = () => {
     queryFn: () =>
       getAllUsers({
         page,
-        limit: 8,
+        limit,
         search,
         updatedAt,
       }),

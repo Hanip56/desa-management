@@ -32,7 +32,7 @@ type GetAllResponse = {
 
 export const getAllSkIzinBekerja = async ({
   page = 1,
-  limit = 1,
+  limit = 10,
   search,
   status,
   updatedAt,

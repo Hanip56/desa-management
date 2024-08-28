@@ -33,8 +33,8 @@ export const daftarSchema = z.object({
   nama: z.string().min(1, {
     message: "Kolom nama harus diisi",
   }),
-  nomorWa: z.string().min(1, {
-    message: "Kolom nomor WA harus diisi",
+  nomorWa: z.string().regex(/^(\+62|62|0)8[1-9][0-9]{6,9}$/, {
+    message: "Nomor WA tidak valid",
   }),
   password: z.string().min(6, {
     message: "Kolom password harus diisi minimal 6 karakter",

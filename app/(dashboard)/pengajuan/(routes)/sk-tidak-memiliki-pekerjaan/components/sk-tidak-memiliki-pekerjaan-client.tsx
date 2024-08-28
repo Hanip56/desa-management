@@ -26,6 +26,7 @@ export const SkTidakMemilikiPekerjaanClient = () => {
     handleFilterStatus,
     updatedAt,
     toggleSortDate,
+    limit,
   ] = useNavigate();
 
   const printableRef = useRef<HTMLDivElement>(null);
@@ -42,7 +43,7 @@ export const SkTidakMemilikiPekerjaanClient = () => {
     queryFn: () =>
       getAllSkTidakMemilikiPekerjaan({
         page,
-        limit: 8,
+        limit,
         search,
         status,
         updatedAt,
