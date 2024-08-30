@@ -1,6 +1,9 @@
 // max length for input
 export const maxLengthInput = 50;
 
+export const alamatPlaceholder =
+  "Kp. ... RT ... RW ... Ds. ... Kec. ... Kab. ...";
+
 type SuratList = {
   type: "online" | "offline";
   name: string;

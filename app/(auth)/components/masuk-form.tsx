@@ -66,6 +66,7 @@ const MasukForm = () => {
                     placeholder="Masukan Nomor WA"
                     type="number"
                     min={0}
+                    onWheel={(e: any) => e.target.blur()}
                     disabled={isPending}
                   />
                 </FormControl>

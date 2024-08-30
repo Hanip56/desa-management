@@ -58,7 +58,11 @@ export const columns = (toggleSortDate: () => void) => {
     },
     {
       accessorKey: "jenisKelamin",
-      header: "Jenis kelamin",
+      header: () => (
+        <div className="flex items-center justify-center text-center">
+          Jenis kelamin
+        </div>
+      ),
       cell: ({ row }) => (
         <p className="text-center">{row.original.jenisKelamin}</p>
       ),

@@ -72,12 +72,21 @@ export const generateUtils = ({
       size: fontSize,
       font: font,
       maxWidth: width - 2 * marginX,
+      lineHeight: 20,
     });
   };
 
   const pColon = (label: string, value: string, indexY: number) => {
     p(label, indexY);
-    p(`: ${value}`, indexY, xColon);
+    p(`: `, indexY, xColon);
+    page.drawText(value, {
+      x: xColon + 7,
+      y: startLine - gap * indexY,
+      size: fontSize,
+      font: font,
+      maxWidth: width - marginX - xColon - 5,
+      lineHeight: 20,
+    });
   };
 
   const pJustify = (

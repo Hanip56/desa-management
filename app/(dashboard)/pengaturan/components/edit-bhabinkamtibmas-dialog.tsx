@@ -144,6 +144,7 @@ const EditBhabinkamtibmasDialog = ({ setting, open, handleClose }: Props) => {
                     disabled={disabledCondition}
                     min={0}
                     type="number"
+                    onWheel={(e: any) => e.target.blur()}
                   />
                 </FormControl>
                 <FormMessage />

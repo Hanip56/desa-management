@@ -1,5 +1,11 @@
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import { formatDate, formatRupiah, getAlamat, getGender } from "@/lib/utils";
+import {
+  formatDate,
+  formatRupiah,
+  getAlamat,
+  getGender,
+  getStatusPerkawinan,
+} from "@/lib/utils";
 import { SkPenghasilanOrangTua } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
 
@@ -63,7 +69,7 @@ export const generateSkPenghasilanOrangTua = async (
   pColon(`Jenis Kelamin`, getGender(data.jenisKelamin), 14);
   pColon(`Agama`, data.agama, 16);
   pColon(`Pekerjaan`, data.pekerjaan, 18);
-  pColon(`Status Perkawinan`, data.statusPerkawinan.replace("_", " "), 20);
+  pColon(`Status Perkawinan`, getStatusPerkawinan(data.statusPerkawinan), 20);
   pColon(`Kewarganegaraan`, data.kewarganegaraan, 22);
   pColon(`Alamat`, `${getAlamat(data.kampung, data.rt, data.rw)}`, 24);
 

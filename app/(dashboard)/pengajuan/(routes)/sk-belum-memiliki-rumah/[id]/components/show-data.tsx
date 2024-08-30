@@ -4,6 +4,7 @@ import {
   DatetoTime,
   formatDate,
   getAlamat,
+  getStatusPerkawinan,
 } from "@/lib/utils";
 import { SkBelumMemilikiRumahWithUser } from "@/types";
 
@@ -34,7 +35,7 @@ const ShowData = ({ data }: Props) => {
             <SemiField label="Pekerjaan" value={data.pekerjaan} />
             <SemiField
               label="Status perkawinan"
-              value={data.statusPerkawinan.replace("_", " ")}
+              value={getStatusPerkawinan(data.statusPerkawinan)}
             />
             <SemiField label="Kewarganegaraan" value={data.kewarganegaraan} />
             <SemiField

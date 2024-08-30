@@ -182,6 +182,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       placeholder="NIK"
                       type="number"
                       min={0}
+                      onWheel={(e: any) => e.target.blur()}
                     />
                   </FormControl>
                   <FormMessage />
@@ -237,6 +238,7 @@ const UpsertForm = ({ initialData }: Props) => {
                           placeholder="RT"
                           type="number"
                           min={0}
+                          onWheel={(e: any) => e.target.blur()}
                         />
                       </FormControl>
                       <FormMessage />
@@ -256,6 +258,7 @@ const UpsertForm = ({ initialData }: Props) => {
                           placeholder="RW"
                           type="number"
                           min={0}
+                          onWheel={(e: any) => e.target.blur()}
                         />
                       </FormControl>
                       <FormMessage />
@@ -318,6 +321,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       placeholder="NIK"
                       type="number"
                       min={0}
+                      onWheel={(e: any) => e.target.blur()}
                     />
                   </FormControl>
                   <FormMessage />
@@ -356,6 +360,7 @@ const UpsertForm = ({ initialData }: Props) => {
                           placeholder="RT"
                           type="number"
                           min={0}
+                          onWheel={(e: any) => e.target.blur()}
                         />
                       </FormControl>
                       <FormMessage />
@@ -375,6 +380,7 @@ const UpsertForm = ({ initialData }: Props) => {
                           placeholder="RW"
                           type="number"
                           min={0}
+                          onWheel={(e: any) => e.target.blur()}
                         />
                       </FormControl>
                       <FormMessage />

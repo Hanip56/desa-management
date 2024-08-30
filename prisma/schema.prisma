@@ -47,17 +47,22 @@ model User {
   kkUrl        String?
   refreshToken String?
 
-  suratKelahirans       SuratKelahiran[]
-  suratKematians        SuratKematian[]
-  skBelumMenikahs       SkBelumMenikah[]
-  skIjinKeramaian       SkIjinKeramaian[]
-  skPenghasilanOrangTua SkPenghasilanOrangTua[]
-
-  createdAt                DateTime                   @default(now())
-  updatedAt                DateTime                   @updatedAt
+  suratKelahirans          SuratKelahiran[]
+  suratKematians           SuratKematian[]
+  skBelumMenikahs          SkBelumMenikah[]
+  skIjinKeramaian          SkIjinKeramaian[]
+  skPenghasilanOrangTua    SkPenghasilanOrangTua[]
   SkIzinBekerja            SkIzinBekerja[]
   SkBelumMemilikiRumah     SkBelumMemilikiRumah[]
   SkTidakMemilikiPekerjaan SkTidakMemilikiPekerjaan[]
+  SkUsaha                  SkUsaha[]
+  SkDomisiliLembaga        SkDomisiliLembaga[]
+  SkDomisiliImigrasi       SkDomisiliImigrasi[]
+  SkDomisiliSementara      SkDomisiliSementara[]
+  SkTidakMampu             SkTidakMampu[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Setting {
@@ -297,6 +302,135 @@ model SkTidakMemilikiPekerjaan {
   rt               String
   rw               String
 
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkUsaha {
+  id               String           @id @default(uuid())
+  namaLengkap      String
+  nik              String
+  tanggalLahir     DateTime
+  jenisKelamin     Gender
+  agama            String
+  pekerjaan        String
+  statusPerkawinan StatusPerkawinan
+  kewarganegaraan  String
+  alamat           String
+  namaUsaha        String
+  alamatUsaha      String
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkDomisiliLembaga {
+  id            String   @id @default(uuid())
+  nama          String
+  tempatLahir   String
+  tanggalLahir  DateTime
+  jabatan       String
+  alamat        String
+  namaLembaga   String
+  alamatLembaga String
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkDomisiliImigrasi {
+  id               String           @id @default(uuid())
+  namaLengkap      String
+  tanggalLahir     DateTime
+  jenisKelamin     Gender
+  agama            String
+  pekerjaan        String
+  statusPerkawinan StatusPerkawinan
+  kewarganegaraan  String
+  alamat           String
+  keperluan        String
+
+  namaCamat        String?
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkDomisiliSementara {
+  id                String           @id @default(uuid())
+  namaLengkap       String
+  nik               String
+  tanggalLahir      DateTime
+  jenisKelamin      Gender
+  agama             String
+  pekerjaan         String
+  statusPerkawinan  StatusPerkawinan
+  kewarganegaraan   String
+  alamat            String
+  domisiliSementara String
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkTidakMampu {
+  id                   String   @id @default(uuid())
+  nama                 String
+  tempatLahir          String
+  tanggalLahir         DateTime
+  nik                  String
+  noKk                 String
+  pekerjaan            String
+  alamat               String
+  namaOrangTua         String
+  tempatLahirOrangTua  String
+  tanggalLahirOrangTua DateTime
+  nikOrangTua          String
+  pekerjaanOrangTua    String
+  alamatOrangTua       String
+  keperluan            String
+
+  noRegCamat       String?
+  namaCamat        String?
   status           Status    @default(DIPROSES)
   pesanDitolak     String?
   noSurat          String?

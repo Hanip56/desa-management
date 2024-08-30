@@ -32,6 +32,11 @@ export function getAlamat(kampung: string, rt: string, rw: string) {
   return `Kp. ${kampung} RT ${rt} RW ${rw}`;
 }
 
+export function getStatusPerkawinan(status: string) {
+  const replaced = status.replace("_", " ");
+  return replaced.charAt(0).toUpperCase() + replaced.slice(1).toLowerCase();
+}
+
 export function getRangeDays(dateFrom: Date | string, dateTo: Date | string) {
   let from = dateFrom;
   let to = dateTo;

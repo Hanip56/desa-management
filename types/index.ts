@@ -1,10 +1,15 @@
 import {
   SkBelumMemilikiRumah,
   SkBelumMenikah,
+  SkDomisiliImigrasi,
+  SkDomisiliLembaga,
+  SkDomisiliSementara,
   SkIjinKeramaian,
   SkIzinBekerja,
   SkPenghasilanOrangTua,
+  SkTidakMampu,
   SkTidakMemilikiPekerjaan,
+  SkUsaha,
   SuratKelahiran,
   SuratKematian,
 } from "@prisma/client";
@@ -49,5 +54,25 @@ export type SkBelumMemilikiRumahWithUser = SkBelumMemilikiRumah & {
 };
 
 export type SkTidakMemilikiPekerjaanWithUser = SkTidakMemilikiPekerjaan & {
+  user: UserType;
+};
+
+export type SkUsahaWithUser = SkUsaha & {
+  user: UserType;
+};
+
+export type SkTidakMampuWithUser = SkTidakMampu & {
+  user: UserType;
+};
+
+export type SkDomisiliSementaraWithUser = SkDomisiliSementara & {
+  user: UserType;
+};
+
+export type SkDomisiliImigrasiWithUser = SkDomisiliImigrasi & {
+  user: UserType;
+};
+
+export type SkDomisiliLembagaWithUser = SkDomisiliLembaga & {
   user: UserType;
 };

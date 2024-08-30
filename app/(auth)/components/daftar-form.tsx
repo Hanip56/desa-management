@@ -107,6 +107,8 @@ const DaftarForm = () => {
                     placeholder="Masukan nomor Wa"
                     type="number"
                     min={0}
+                    onWheel={(e: any) => e.target.blur()}
+                    disabled={isLoading}
                   />
                 </FormControl>
                 <FormMessage />

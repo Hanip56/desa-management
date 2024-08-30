@@ -71,6 +71,26 @@ const NavMenu = () => {
           label: "SK tidak memiliki pekerjaan",
           href: "/pengajuan/sk-tidak-memiliki-pekerjaan",
         },
+        {
+          label: "SK usaha",
+          href: "/pengajuan/sk-usaha",
+        },
+        {
+          label: "SK tidak mampu",
+          href: "/pengajuan/sk-tidak-mampu",
+        },
+        {
+          label: "SK domisili sementara",
+          href: "/pengajuan/sk-domisili-sementara",
+        },
+        {
+          label: "SK domisili imigrasi",
+          href: "/pengajuan/sk-domisili-imigrasi",
+        },
+        {
+          label: "SK domisili lembaga",
+          href: "/pengajuan/sk-domisili-lembaga",
+        },
       ],
     },
     {
@@ -127,32 +147,30 @@ const NavMenu = () => {
                   </div>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  {route.sub?.map((route) => (
-                    <Link
-                      key={route.href}
-                      href={route.href}
-                      legacyBehavior
-                      passHref
-                      className="w-full"
-                    >
-                      <NavigationMenuLink
-                        style={{ width: "18rem" }}
-                        className={navigationMenuTriggerStyle({
-                          className: cn(
-                            "text-primary/80 bg-transparent text-center",
-                            pathname === route.href && "bg-primary/10"
-                          ),
-                        })}
+                  <ul className="grid w-[400px] gap-2 p-2 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                    {route.sub?.map((route) => (
+                      <Link
+                        key={route.href}
+                        href={route.href}
+                        legacyBehavior
+                        passHref
                       >
-                        <div className="relative">
-                          {route.notif && (
-                            <div className="absolute w-[6px] h-[6px] rounded-full bg-red-500 top-0 -right-[5px]" />
-                          )}
-                          {route.label}
-                        </div>
-                      </NavigationMenuLink>
-                    </Link>
-                  ))}
+                        <NavigationMenuLink
+                          className={navigationMenuTriggerStyle({
+                            className: cn(
+                              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                              pathname === route.href && "bg-sky-50/80"
+                            ),
+                          })}
+                          style={{ width: "100%" }}
+                        >
+                          <div className="w-full text-sm font-medium leading-none">
+                            {route.label}
+                          </div>
+                        </NavigationMenuLink>
+                      </Link>
+                    ))}
+                  </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             )
