@@ -140,7 +140,7 @@ export async function DELETE(
 
     if (skIjinKeramaian.status === "DITERIMA" && session.user.role === "USER") {
       return new NextResponse(
-        "You cannot delete sk-ijin-keramaian with status 'DITERMA'",
+        "You cannot delete sk-ijin-keramaian with status 'DITERIMA'",
         { status: 400 }
       );
     }

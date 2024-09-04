@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import prisma from "@/db/prisma";
+import { AnggotaPindahWni } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 const disabledUpdateField = [
@@ -24,7 +25,7 @@ export async function GET(
   }
 
   try {
-    const skTidakMampu = await prisma.skTidakMampu.findUnique({
+    const pendaftaranPindahWni = await prisma.pendaftaranPindahWni.findUnique({
       where: { id: params.id },
       include: {
         User: {
@@ -37,27 +38,28 @@ export async function GET(
             updatedAt: true,
           },
         },
+        anggotaPindah: true,
       },
     });
 
-    if (!skTidakMampu) {
-      return new NextResponse("Surat keterangan tidak mampu not found", {
+    if (!pendaftaranPindahWni) {
+      return new NextResponse("Formulir pendaftaran pindah wni not found", {
         status: 400,
       });
     }
 
     return NextResponse.json({
-      ...skTidakMampu,
+      ...pendaftaranPindahWni,
       User: undefined,
-      user: skTidakMampu.User,
+      user: pendaftaranPindahWni.User,
     });
   } catch (error) {
-    console.log("[GET_ONE_SK-TIDAK-MAMPU]", error);
+    console.log("[GET_ONE_PENDAFTARAN-PINDAH-WNI]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
 
-// UPDATE sk-tidak-mampu
+// UPDATE pendaftaran-pindah-wni
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -67,19 +69,19 @@ export async function PUT(
   if (!session) return new NextResponse("Unauthorized", { status: 401 });
 
   try {
-    const skTidakMampu = await prisma.skTidakMampu.findUnique({
+    const pendaftaranPindahWni = await prisma.pendaftaranPindahWni.findUnique({
       where: { id: params.id },
     });
 
-    if (!skTidakMampu) {
-      return new NextResponse("Surat keterangan tidak mampu not found", {
+    if (!pendaftaranPindahWni) {
+      return new NextResponse("Formulir pendaftaran pindah wni not found", {
         status: 404,
       });
     }
 
     // is it own or admin
     if (
-      skTidakMampu.userId !== session.user.id &&
+      pendaftaranPindahWni.userId !== session.user.id &&
       session.user.role === "USER"
     ) {
       return new NextResponse("Forbidden", { status: 403 });
@@ -94,19 +96,38 @@ export async function PUT(
       });
     }
 
-    const updatedSkTidakMampu = await prisma.skTidakMampu.update({
-      where: { id: params.id },
-      data: body,
-    });
+    const updatedPendaftaranPindahWni =
+      await prisma.pendaftaranPindahWni.update({
+        where: { id: params.id },
+        data: {
+          ...body,
+          anggotaPindah: undefined,
+        },
+      });
 
-    return NextResponse.json(updatedSkTidakMampu);
+    if (body.anggotaPindah) {
+      await prisma.anggotaPindahWni.deleteMany({
+        where: {
+          pendaftaranPindahWniId: updatedPendaftaranPindahWni.id,
+        },
+      });
+
+      await prisma.anggotaPindahWni.createMany({
+        data: body.anggotaPindah.map((anggota: AnggotaPindahWni) => ({
+          ...anggota,
+          pendaftaranPindahWniId: updatedPendaftaranPindahWni.id,
+        })),
+      });
+    }
+
+    return NextResponse.json(updatedPendaftaranPindahWni);
   } catch (error) {
-    console.log("[UPDATE_SK-TIDAK-MAMPU]", error);
+    console.log("[UPDATE_PENDAFTARAN-PINDAH-WNI]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
 
-// DELETE sk-tidak-mampu
+// DELETE pendaftaran-pindah-wni
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -116,40 +137,44 @@ export async function DELETE(
   if (!session) return new NextResponse("Unauthorized", { status: 401 });
 
   try {
-    const skTidakMampu = await prisma.skTidakMampu.findUnique({
+    const pendaftaranPindahWni = await prisma.pendaftaranPindahWni.findUnique({
       where: { id: params.id },
     });
 
-    if (!skTidakMampu) {
-      return new NextResponse("Surat keterangan tidak mampu not found", {
+    if (!pendaftaranPindahWni) {
+      return new NextResponse("Formulir pendaftaran pindah wni not found", {
         status: 404,
       });
     }
 
     // is it own or admin
     if (
-      skTidakMampu.userId !== session.user.id &&
+      pendaftaranPindahWni.userId !== session.user.id &&
       session.user.role === "USER"
     ) {
       return new NextResponse("Forbidden", { status: 403 });
     }
 
-    if (skTidakMampu.status === "DITERIMA" && session.user.role === "USER") {
+    if (
+      pendaftaranPindahWni.status === "DITERIMA" &&
+      session.user.role === "USER"
+    ) {
       return new NextResponse(
-        "You cannot delete sk-tidak-mampu with status 'DITERIMA'",
+        "You cannot delete pendaftaran-pindah-wni with status 'DITERIMA'",
         { status: 400 }
       );
     }
 
-    const deletedSkTidakMampu = await prisma.skTidakMampu.delete({
-      where: { id: params.id },
-    });
+    const deletedPendaftaranPindahWni =
+      await prisma.pendaftaranPindahWni.delete({
+        where: { id: params.id },
+      });
 
     return NextResponse.json({
-      success: `Surat keterangan tidak mampu with id:${deletedSkTidakMampu.id} has been deleted.`,
+      success: `Formulir pendaftaran pindah wni with id:${deletedPendaftaranPindahWni.id} has been deleted.`,
     });
   } catch (error) {
-    console.log("[DELETE_SK-TIDAK-MAMPU]", error);
+    console.log("[DELETE_PENDAFTARAN-PINDAH-WNI]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

@@ -24,8 +24,8 @@ export async function GET(
   }
 
   try {
-    const skTidakMemilikiPekerjaan =
-      await prisma.skTidakMemilikiPekerjaan.findUnique({
+    const suratRekomendasiPembelianBbm =
+      await prisma.suratRekomendasiPembelianBbm.findUnique({
         where: { id: params.id },
         include: {
           User: {
@@ -41,27 +41,24 @@ export async function GET(
         },
       });
 
-    if (!skTidakMemilikiPekerjaan) {
-      return new NextResponse(
-        "Surat keterangan tidak memiliki pekerjaan not found",
-        {
-          status: 400,
-        }
-      );
+    if (!suratRekomendasiPembelianBbm) {
+      return new NextResponse("Surat rekomendasi pembelian  bbm not found", {
+        status: 400,
+      });
     }
 
     return NextResponse.json({
-      ...skTidakMemilikiPekerjaan,
+      ...suratRekomendasiPembelianBbm,
       User: undefined,
-      user: skTidakMemilikiPekerjaan.User,
+      user: suratRekomendasiPembelianBbm.User,
     });
   } catch (error) {
-    console.log("[GET_ONE_SK-TIDAK-MEMILIKI-PEKERJAAN]", error);
+    console.log("[GET_ONE_SURAT-REKOMENDASI-PEMBELIAN-BBM]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
 
-// UPDATE sk-tidak-memiliki-pekerjaan
+// UPDATE surat-rekomendasi-pembelian-bbm
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -71,23 +68,20 @@ export async function PUT(
   if (!session) return new NextResponse("Unauthorized", { status: 401 });
 
   try {
-    const skTidakMemilikiPekerjaan =
-      await prisma.skTidakMemilikiPekerjaan.findUnique({
+    const suratRekomendasiPembelianBbm =
+      await prisma.suratRekomendasiPembelianBbm.findUnique({
         where: { id: params.id },
       });
 
-    if (!skTidakMemilikiPekerjaan) {
-      return new NextResponse(
-        "Surat keterangan tidak memiliki pekerjaan not found",
-        {
-          status: 404,
-        }
-      );
+    if (!suratRekomendasiPembelianBbm) {
+      return new NextResponse("Surat rekomendasi pembelian  bbm not found", {
+        status: 404,
+      });
     }
 
     // is it own or admin
     if (
-      skTidakMemilikiPekerjaan.userId !== session.user.id &&
+      suratRekomendasiPembelianBbm.userId !== session.user.id &&
       session.user.role === "USER"
     ) {
       return new NextResponse("Forbidden", { status: 403 });
@@ -102,20 +96,20 @@ export async function PUT(
       });
     }
 
-    const updatedSkTidakMemilikiPekerjaan =
-      await prisma.skTidakMemilikiPekerjaan.update({
+    const updatedSuratRekomendasiPembelianBbm =
+      await prisma.suratRekomendasiPembelianBbm.update({
         where: { id: params.id },
         data: body,
       });
 
-    return NextResponse.json(updatedSkTidakMemilikiPekerjaan);
+    return NextResponse.json(updatedSuratRekomendasiPembelianBbm);
   } catch (error) {
-    console.log("[UPDATE_SK-TIDAK-MEMILIKI-PEKERJAAN]", error);
+    console.log("[UPDATE_SURAT-REKOMENDASI-PEMBELIAN-BBM]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
 
-// DELETE sk-tidak-memiliki-pekerjaan
+// DELETE surat-rekomendasi-pembelian-bbm
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -125,48 +119,45 @@ export async function DELETE(
   if (!session) return new NextResponse("Unauthorized", { status: 401 });
 
   try {
-    const skTidakMemilikiPekerjaan =
-      await prisma.skTidakMemilikiPekerjaan.findUnique({
+    const suratRekomendasiPembelianBbm =
+      await prisma.suratRekomendasiPembelianBbm.findUnique({
         where: { id: params.id },
       });
 
-    if (!skTidakMemilikiPekerjaan) {
-      return new NextResponse(
-        "Surat keterangan tidak memiliki pekerjaan not found",
-        {
-          status: 404,
-        }
-      );
+    if (!suratRekomendasiPembelianBbm) {
+      return new NextResponse("Surat rekomendasi pembelian  bbm not found", {
+        status: 404,
+      });
     }
 
     // is it own or admin
     if (
-      skTidakMemilikiPekerjaan.userId !== session.user.id &&
+      suratRekomendasiPembelianBbm.userId !== session.user.id &&
       session.user.role === "USER"
     ) {
       return new NextResponse("Forbidden", { status: 403 });
     }
 
     if (
-      skTidakMemilikiPekerjaan.status === "DITERIMA" &&
+      suratRekomendasiPembelianBbm.status === "DITERIMA" &&
       session.user.role === "USER"
     ) {
       return new NextResponse(
-        "You cannot delete sk-tidak-memiliki-pekerjaan with status 'DITERIMA'",
+        "You cannot delete surat-rekomendasi-pembelian-bbm with status 'DITERIMA'",
         { status: 400 }
       );
     }
 
-    const deletedSkTidakMemilikiPekerjaan =
-      await prisma.skTidakMemilikiPekerjaan.delete({
+    const deletedSuratRekomendasiPembelianBbm =
+      await prisma.suratRekomendasiPembelianBbm.delete({
         where: { id: params.id },
       });
 
     return NextResponse.json({
-      success: `Surat keterangan tidak memiliki pekerjaan with id:${deletedSkTidakMemilikiPekerjaan.id} has been deleted.`,
+      success: `Surat rekomendasi pembelian  bbm with id:${deletedSuratRekomendasiPembelianBbm.id} has been deleted.`,
     });
   } catch (error) {
-    console.log("[DELETE_SK-TIDAK-MEMILIKI-PEKERJAAN]", error);
+    console.log("[DELETE_SURAT-REKOMENDASI-PEMBELIAN-BBM]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

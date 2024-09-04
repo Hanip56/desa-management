@@ -139,7 +139,7 @@ export async function DELETE(
       session.user.role === "USER"
     ) {
       return new NextResponse(
-        "You cannot delete sk-domisili-sementara with status 'DITERMA'",
+        "You cannot delete sk-domisili-sementara with status 'DITERIMA'",
         { status: 400 }
       );
     }

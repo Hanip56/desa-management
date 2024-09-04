@@ -130,7 +130,7 @@ export async function DELETE(
 
     if (suratKematian.status === "DITERIMA" && session.user.role === "USER") {
       return new NextResponse(
-        "You cannot delete surat kematian with status 'DITERMA'",
+        "You cannot delete surat kematian with status 'DITERIMA'",
         { status: 400 }
       );
     }

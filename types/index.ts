@@ -1,4 +1,6 @@
 import {
+  AnggotaPindahWni,
+  PendaftaranPindahWni,
   SkBelumMemilikiRumah,
   SkBelumMenikah,
   SkDomisiliImigrasi,
@@ -12,6 +14,7 @@ import {
   SkUsaha,
   SuratKelahiran,
   SuratKematian,
+  SuratRekomendasiPembelianBbm,
 } from "@prisma/client";
 
 export type UserType = {
@@ -76,3 +79,17 @@ export type SkDomisiliImigrasiWithUser = SkDomisiliImigrasi & {
 export type SkDomisiliLembagaWithUser = SkDomisiliLembaga & {
   user: UserType;
 };
+
+export type PendaftaranPindahWniWithAnggota = PendaftaranPindahWni & {
+  anggotaPindah: AnggotaPindahWni[];
+};
+
+export type PendaftaranPindahWniWithUser = PendaftaranPindahWni & {
+  user: UserType;
+  anggotaPindah: AnggotaPindahWni[];
+};
+
+export type SuratRekomendasiPembelianBbmWithUser =
+  SuratRekomendasiPembelianBbm & {
+    user: UserType;
+  };

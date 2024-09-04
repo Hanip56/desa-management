@@ -136,7 +136,7 @@ export async function DELETE(
 
     if (skBelumMenikah.status === "DITERIMA" && session.user.role === "USER") {
       return new NextResponse(
-        "You cannot delete sk-belum-nikah with status 'DITERMA'",
+        "You cannot delete sk-belum-nikah with status 'DITERIMA'",
         { status: 400 }
       );
     }

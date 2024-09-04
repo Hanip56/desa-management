@@ -61,8 +61,10 @@ model User {
   SkDomisiliSementara      SkDomisiliSementara[]
   SkTidakMampu             SkTidakMampu[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt                    DateTime                       @default(now())
+  updatedAt                    DateTime                       @updatedAt
+  SuratRekomendasiPembelianBbm SuratRekomendasiPembelianBbm[]
+  PendaftaranPindahWni         PendaftaranPindahWni[]
 }
 
 model Setting {
@@ -438,6 +440,92 @@ model SkTidakMampu {
 
   User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SuratRekomendasiPembelianBbm {
+  id                 String @id @default(uuid())
+  nama               String
+  nik                String
+  alamatUsaha        String
+  konsumenPengguna   String
+  jenisUsahaKegiatan String
+
+  jenisAlat  String
+  jumlahAlat Int
+  fungsiAlat String
+  jamOperasi String
+  konsumsi   String
+
+  alokasiVolume          String?
+  tempatPengambilan      String?
+  nomorLembagaPenyalur   String?
+  lokasi                 String?
+  alatPembelianDigunakan String?
+  masaBerlakuRekomendasi DateTime?
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PendaftaranPindahWni {
+  id                 String @id @default(uuid())
+  noKk               String
+  namaLengkapPemohon String
+  nik                String
+  jenisPermohonan    String
+
+  alamatAsal    String
+  desaAsal      String
+  kecamatanAsal String
+  kabupatenAsal String
+  provinsiAsal  String
+  kodePosAsal   String
+
+  alamatTujuan    String
+  desaTujuan      String
+  kecamatanTujuan String
+  kabupatenTujuan String
+  provinsiTujuan  String
+  kodePosTujuan   String
+
+  klasifikasiKepindahan String
+  alasanPindah          String
+  jenisKepindahan       String
+  anggotaPindah         AnggotaPindahWni[]
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AnggotaPindahWni {
+  id String @id @default(uuid())
+
+  nik            String
+  namaLengkap    String
+  masaBerlakuKtp DateTime
+  shdk           String
+
+  PendaftaranPindahWni   PendaftaranPindahWni @relation(fields: [pendaftaranPindahWniId], references: [id], onDelete: Cascade)
+  pendaftaranPindahWniId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -130,7 +130,7 @@ export async function DELETE(
 
     if (skUsaha.status === "DITERIMA" && session.user.role === "USER") {
       return new NextResponse(
-        "You cannot delete sk-usaha with status 'DITERMA'",
+        "You cannot delete sk-usaha with status 'DITERIMA'",
         { status: 400 }
       );
     }

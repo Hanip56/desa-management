@@ -91,6 +91,14 @@ const NavMenu = () => {
           label: "SK domisili lembaga",
           href: "/pengajuan/sk-domisili-lembaga",
         },
+        {
+          label: "Pendaftaran pindah WNI",
+          href: "/pengajuan/pendaftaran-pindah-wni",
+        },
+        {
+          label: "Surat rekomendasi pembelian BBM",
+          href: "/pengajuan/surat-rekomendasi-pembelian-bbm",
+        },
       ],
     },
     {

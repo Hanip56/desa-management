@@ -130,7 +130,7 @@ export async function DELETE(
 
     if (suratKelahiran.status === "DITERIMA" && session.user.role === "USER") {
       return new NextResponse(
-        "You cannot delete surat kelahiran with status 'DITERMA'",
+        "You cannot delete surat kelahiran with status 'DITERIMA'",
         { status: 400 }
       );
     }

@@ -155,7 +155,7 @@ export async function DELETE(
       session.user.role === "USER"
     ) {
       return new NextResponse(
-        "You cannot delete sk-penghasilan-orang-tua with status 'DITERMA'",
+        "You cannot delete sk-penghasilan-orang-tua with status 'DITERIMA'",
         { status: 400 }
       );
     }

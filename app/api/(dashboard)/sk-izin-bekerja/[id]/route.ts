@@ -24,31 +24,26 @@ export async function GET(
   }
 
   try {
-    const skIzinBekerja = await prisma.skIzinBekerja.findUnique(
-      {
-        where: { id: params.id },
-        include: {
-          User: {
-            select: {
-              id: true,
-              username: true,
-              nomorWa: true,
-              role: true,
-              createdAt: true,
-              updatedAt: true,
-            },
+    const skIzinBekerja = await prisma.skIzinBekerja.findUnique({
+      where: { id: params.id },
+      include: {
+        User: {
+          select: {
+            id: true,
+            username: true,
+            nomorWa: true,
+            role: true,
+            createdAt: true,
+            updatedAt: true,
           },
         },
-      }
-    );
+      },
+    });
 
     if (!skIzinBekerja) {
-      return new NextResponse(
-        "Surat keterangan izin bekerja not found",
-        {
-          status: 400,
-        }
-      );
+      return new NextResponse("Surat keterangan izin bekerja not found", {
+        status: 400,
+      });
     }
 
     return NextResponse.json({
@@ -72,19 +67,14 @@ export async function PUT(
   if (!session) return new NextResponse("Unauthorized", { status: 401 });
 
   try {
-    const skIzinBekerja = await prisma.skIzinBekerja.findUnique(
-      {
-        where: { id: params.id },
-      }
-    );
+    const skIzinBekerja = await prisma.skIzinBekerja.findUnique({
+      where: { id: params.id },
+    });
 
     if (!skIzinBekerja) {
-      return new NextResponse(
-        "Surat keterangan izin bekerja not found",
-        {
-          status: 404,
-        }
-      );
+      return new NextResponse("Surat keterangan izin bekerja not found", {
+        status: 404,
+      });
     }
 
     // is it own or admin
@@ -104,11 +94,10 @@ export async function PUT(
       });
     }
 
-    const updatedSkIzinBekerja =
-      await prisma.skIzinBekerja.update({
-        where: { id: params.id },
-        data: body,
-      });
+    const updatedSkIzinBekerja = await prisma.skIzinBekerja.update({
+      where: { id: params.id },
+      data: body,
+    });
 
     return NextResponse.json(updatedSkIzinBekerja);
   } catch (error) {
@@ -127,19 +116,14 @@ export async function DELETE(
   if (!session) return new NextResponse("Unauthorized", { status: 401 });
 
   try {
-    const skIzinBekerja = await prisma.skIzinBekerja.findUnique(
-      {
-        where: { id: params.id },
-      }
-    );
+    const skIzinBekerja = await prisma.skIzinBekerja.findUnique({
+      where: { id: params.id },
+    });
 
     if (!skIzinBekerja) {
-      return new NextResponse(
-        "Surat keterangan izin bekerja not found",
-        {
-          status: 404,
-        }
-      );
+      return new NextResponse("Surat keterangan izin bekerja not found", {
+        status: 404,
+      });
     }
 
     // is it own or admin
@@ -150,20 +134,16 @@ export async function DELETE(
       return new NextResponse("Forbidden", { status: 403 });
     }
 
-    if (
-      skIzinBekerja.status === "DITERIMA" &&
-      session.user.role === "USER"
-    ) {
+    if (skIzinBekerja.status === "DITERIMA" && session.user.role === "USER") {
       return new NextResponse(
-        "You cannot delete sk-izin-bekerja with status 'DITERMA'",
+        "You cannot delete sk-izin-bekerja with status 'DITERIMA'",
         { status: 400 }
       );
     }
 
-    const deletedSkIzinBekerja =
-      await prisma.skIzinBekerja.delete({
-        where: { id: params.id },
-      });
+    const deletedSkIzinBekerja = await prisma.skIzinBekerja.delete({
+      where: { id: params.id },
+    });
 
     return NextResponse.json({
       success: `Surat keterangan izin bekerja with id:${deletedSkIzinBekerja.id} has been deleted.`,
