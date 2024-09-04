@@ -99,6 +99,22 @@ const NavMenu = () => {
           label: "Surat rekomendasi pembelian BBM",
           href: "/pengajuan/surat-rekomendasi-pembelian-bbm",
         },
+        {
+          label: "Persyaratan buat SPPT (OP BARU)",
+          href: "/pengajuan/persyaratan-buat-sppt",
+        },
+        {
+          label: "Persyaratan mutasi",
+          href: "/pengajuan/persyaratan-mutasi",
+        },
+        {
+          label: "Persyaratan aktivasi",
+          href: "/pengajuan/persyaratan-aktivasi",
+        },
+        {
+          label: "Persyaratan fatwa-waris",
+          href: "/pengajuan/persyaratan-fatwa-waris",
+        },
       ],
     },
     {
@@ -166,13 +182,13 @@ const NavMenu = () => {
                         <NavigationMenuLink
                           className={navigationMenuTriggerStyle({
                             className: cn(
-                              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                              "block select-none space-y-1 rounded-md p-3 no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
                               pathname === route.href && "bg-sky-50/80"
                             ),
                           })}
                           style={{ width: "100%" }}
                         >
-                          <div className="w-full text-sm font-medium leading-none">
+                          <div className="w-full text-sm font-medium">
                             {route.label}
                           </div>
                         </NavigationMenuLink>
