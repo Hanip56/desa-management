@@ -5,8 +5,8 @@ export const skUsahaSchema = z.object({
   namaLengkap: z.string().min(1, {
     message: "Kolom Nama lengkap harus diisi",
   }),
-  nik: z.string().min(1, {
-    message: "Kolom NIK harus diisi",
+  nik: z.string().length(16, {
+    message: "Kolom NIK tidak valid",
   }),
   tanggalLahir: z.date({
     message: "Kolom Tanggal lahir harus diisi",

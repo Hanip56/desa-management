@@ -4,8 +4,8 @@ export const suratRekomendasiPembelianBbmSchema = z.object({
   nama: z.string().min(1, {
     message: "Kolom Nama harus diisi",
   }),
-  nik: z.string().min(1, {
-    message: "Kolom NIK harus diisi",
+  nik: z.string().length(16, {
+    message: "Kolom NIK tidak valid",
   }),
   alamatUsaha: z.string().min(1, {
     message: "Kolom Alamat usaha harus diisi",

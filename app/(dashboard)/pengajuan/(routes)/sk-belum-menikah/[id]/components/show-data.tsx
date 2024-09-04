@@ -38,10 +38,7 @@ const ShowData = ({ data }: Props) => {
               value={getStatusPerkawinan(data.statusPerkawinan)}
             />
             <SemiField label="Kewarganegaraan" value={data.kewarganegaraan} />
-            <SemiField
-              label="Alamat"
-              value={getAlamat(data.kampung, data.rt, data.rw)}
-            />
+            <SemiField label="Alamat" value={data.alamat} />
           </div>
         </div>
       </div>

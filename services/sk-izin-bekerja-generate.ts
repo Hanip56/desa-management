@@ -1,11 +1,5 @@
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import {
-  formatDate,
-  formatRupiah,
-  getAlamat,
-  getGender,
-  getRangeDays,
-} from "@/lib/utils";
+import { formatDate, getGender, getRangeDays } from "@/lib/utils";
 import { SkIzinBekerja } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
 
@@ -50,6 +44,7 @@ export const generateSkIzinBekerja = async (
     marginX,
     page,
     fontSize: 13,
+    lineHeight: 19,
     tte,
   });
 
@@ -70,16 +65,16 @@ export const generateSkIzinBekerja = async (
   pColon(`Pekerjaan`, data.pekerjaan, 18);
   pColon(`Bagian`, data.bagian, 20);
   pColon(`Nomor ID`, data.nomorId, 22);
-  pColon(`Alamat`, `${getAlamat(data.kampung, data.rt, data.rw)}`, 24);
+  pColon(`Alamat`, data.alamat, 24);
 
   pJustify(
     "Sesuai dengan nama yang tertera diatas adalah benar bahwa orang tersebut",
-    28,
+    29,
     true
   );
   pJustify(
     "adalah warga Desa kami, dan surat keterangan ini dibuat untuk keperluan izin tidak",
-    30
+    31
   );
   p(
     "masuk kerja di " +
@@ -91,16 +86,16 @@ export const generateSkIzinBekerja = async (
       ", izin kerja dikarenakan " +
       data.alasan +
       ".",
-    32
+    33
   );
   pJustify(
     "Demikian surat keterangan ini kami buat untuk dipergunakan sebagaimana",
-    37,
+    39,
     true
   );
   p(
     "mestinya, atas perhatian dan kerjasamanya kami sampaikan terima kasih.",
-    39
+    41
   );
 
   // ttd center

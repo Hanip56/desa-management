@@ -89,9 +89,7 @@ export async function POST(req: NextRequest) {
       pekerjaan,
       statusPerkawinan,
       kewarganegaraan,
-      kampung,
-      rt,
-      rw,
+      alamat,
       keperluan,
     } = await req.json();
 
@@ -104,9 +102,7 @@ export async function POST(req: NextRequest) {
       !pekerjaan ||
       !statusPerkawinan ||
       !kewarganegaraan ||
-      !kampung ||
-      !rt ||
-      !rw ||
+      !alamat ||
       !keperluan
     ) {
       return new NextResponse("Required field is missing", { status: 400 });
@@ -122,9 +118,7 @@ export async function POST(req: NextRequest) {
         pekerjaan,
         statusPerkawinan,
         kewarganegaraan,
-        kampung,
-        rt,
-        rw,
+        alamat,
         keperluan,
         userId: session.user.id,
       },

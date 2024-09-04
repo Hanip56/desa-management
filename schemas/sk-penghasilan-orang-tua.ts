@@ -12,8 +12,8 @@ export const skPenghasilanOrangTuaSchema = z.object({
   namaLengkap: z.string().min(1, {
     message: "Kolom Nama lengkap harus diisi",
   }),
-  nik: z.string().min(1, {
-    message: "Kolom NIK harus diisi",
+  nik: z.string().length(16, {
+    message: "Kolom NIK tidak valid",
   }),
   tanggalLahir: z.date({
     message: "Kolom Tanggal lahir harus diisi",
@@ -33,14 +33,8 @@ export const skPenghasilanOrangTuaSchema = z.object({
   kewarganegaraan: z.string().min(1, {
     message: "Kolom Kewarganegaraan harus diisi",
   }),
-  kampung: z.string().min(1, {
-    message: "Kolom Kampung harus diisi",
-  }),
-  rt: z.string().min(1, {
-    message: "Kolom RT harus diisi",
-  }),
-  rw: z.string().min(1, {
-    message: "Kolom RW harus diisi",
+  alamat: z.string().min(1, {
+    message: "Kolom Alamat harus diisi",
   }),
   penghasilan: z.number({
     message: "Kolom Penghasilan harus diisi",

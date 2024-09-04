@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ColumnDef, Row } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import CellAction from "./cell-action";
 import StatusBadge from "@/app/(dashboard)/components/status-badge";
@@ -24,7 +24,6 @@ export const columns = (toggleSortDate: () => void) => {
       header: () => <div className="text-center">ID</div>,
       cell: ({ row }) => (
         <div className="text-center">{row.original.id.slice(0, 5) + "..."}</div>
-        // <div >{row.index + 1}</div>
       ),
     },
     {

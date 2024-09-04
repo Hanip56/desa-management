@@ -103,7 +103,7 @@ const UpsertAnggotaDialog = ({
                     {...field}
                     placeholder="Nama lengkap"
                     disabled={disabledCondition}
-                    maxLength={25}
+                    maxLength={40}
                   />
                 </FormControl>
                 <FormMessage />

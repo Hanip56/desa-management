@@ -63,7 +63,7 @@ export const generateSuratKelahiran = async (
     gap,
     marginX,
     page,
-    fontSize: 13,
+    fontSize: 12.5,
     tte,
   });
 
@@ -82,53 +82,45 @@ export const generateSuratKelahiran = async (
     7
   );
 
-  pColon(
-    `Alamat`,
-    `${getAlamat(data.kampungTerkait, data.rtTerkait, data.rwTerkait)}`,
-    9
-  );
+  pColon(`Alamat`, data.alamatTerkait, 9);
 
-  p("Adalah benar Anak dari :", 12);
+  p("Adalah benar Anak dari :", 14);
 
-  pColon(`Nama Ayah`, data.namaAyah, 15);
+  pColon(`Nama Ayah`, data.namaAyah, 17);
 
-  pColon(`Jenis Kelamin`, getGender(data.jenisKelaminAyah), 17);
+  pColon(`Jenis Kelamin`, getGender(data.jenisKelaminAyah), 19);
 
   pColon(
     `Tempat/tgl lahir`,
     `${data.tempatLahirAyah}, ${formatDate(data.tanggalLahirAyah)}`,
-    19
+    21
   );
 
-  pColon(`Agama`, data.agamaAyah, 21);
+  pColon(`Agama`, data.agamaAyah, 23);
 
-  pColon(
-    `Alamat`,
-    `${getAlamat(data.kampungAyah, data.rtAyah, data.rwAyah)}`,
-    23
-  );
+  pColon(`Alamat`, data.alamatAyah, 25);
 
-  pColon(`Nama`, data.namaIbu, 26);
+  pColon(`Nama`, data.namaIbu, 30);
 
-  pColon(`Jenis Kelamin`, getGender(data.jenisKelaminIbu), 28);
+  pColon(`Jenis Kelamin`, getGender(data.jenisKelaminIbu), 32);
 
   pColon(
     `Tempat/tgl lahir`,
     `${data.tempatLahirIbu}, ${formatDate(data.tanggalLahirIbu)}`,
-    30
+    34
   );
 
-  pColon(`Agama`, data.agamaIbu, 32);
+  pColon(`Agama`, data.agamaIbu, 36);
 
-  pColon(`Alamat`, `${getAlamat(data.kampungIbu, data.rtIbu, data.rwIbu)}`, 34);
+  pColon(`Alamat`, data.alamatIbu, 38);
 
   pJustify(
     "Demikian Surat Keterangan Kelahiran ini kami buat dengan sebenarnya untuk",
-    38,
+    43,
     true
   );
 
-  p("dipergunakan sebagaimana mestinya.", 40);
+  p("dipergunakan sebagaimana mestinya.", 45);
 
   ttd(
     635,

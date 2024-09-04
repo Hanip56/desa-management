@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,7 +31,7 @@ import {
   SelectContent,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { alamatPlaceholder } from "@/contants";
+import { alamatPlaceholder, maxLengthInput } from "@/contants";
 import { TextAlignment } from "pdf-lib";
 
 type Props = {
@@ -146,6 +147,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Nama lengkap"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -212,6 +214,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Agama"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -229,6 +232,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Pekerjaan"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -273,6 +277,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Kewarganegaraan"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -290,9 +295,8 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder={alamatPlaceholder}
-                      rows={2}
                       className="resize-none"
-                      maxLength={100}
+                      maxLength={120}
                     />
                   </FormControl>
                   <FormMessage />
@@ -316,6 +320,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Nama usaha"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -336,7 +341,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       className="resize-none"
                       cols={10}
                       rows={1}
-                      maxLength={100}
+                      maxLength={120}
                     />
                   </FormControl>
                   <FormMessage />

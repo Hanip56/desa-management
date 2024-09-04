@@ -24,14 +24,7 @@ const ShowData = ({ data }: Props) => {
               }
             />
             <SemiField label="No. NIK" value={data.noNikPemohon} />
-            <SemiField
-              label="Alamat"
-              value={getAlamat(
-                data.kampungPemohon,
-                data.rtPemohon,
-                data.rwPemohon
-              )}
-            />
+            <SemiField label="Alamat" value={data.alamatPemohon} />
             <SemiField
               label="Hubungan Keluarga"
               value={data.hubunganKeluargaPemohon}
@@ -51,14 +44,7 @@ const ShowData = ({ data }: Props) => {
               }
             />
             <SemiField label="No. NIK" value={data.noNikTerkait} />
-            <SemiField
-              label="Alamat"
-              value={getAlamat(
-                data.kampungTerkait,
-                data.rtTerkait,
-                data.rwTerkait
-              )}
-            />
+            <SemiField label="Alamat" value={data.alamatTerkait} />
           </div>
         </div>
         <div>

@@ -36,6 +36,7 @@ import UpsertAnggotaDialog from "./upsert-anggota-dialog";
 import { useState } from "react";
 import ListAnggotaPindah from "./list-anggota-pindah";
 import { Plus } from "lucide-react";
+import { maxLengthInput } from "@/contants";
 
 type Props = {
   initialData?: PendaftaranPindahWniWithUser | null;
@@ -184,6 +185,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Nama lengkap pemohon"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />
@@ -281,6 +283,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Jalan / Kampung RT RW"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />
@@ -298,6 +301,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Desa"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />
@@ -315,6 +319,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Kecamatan"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />
@@ -332,6 +337,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Kabupaten"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />
@@ -349,6 +355,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Provinsi"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />
@@ -394,6 +401,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Jalan / Kampung RT RW"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />
@@ -411,6 +419,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Desa"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />
@@ -428,6 +437,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Kecamatan"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />
@@ -445,6 +455,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Kabupaten"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />
@@ -462,6 +473,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Provinsi"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />
@@ -542,6 +554,7 @@ const UpsertForm = ({ initialData }: Props) => {
                         disabled={disabledCondition}
                         {...field}
                         placeholder="Pekerjaan / Pendidikan / Kesehatan / dll"
+                        maxLength={maxLengthInput}
                       />
                     </FormControl>
                     <FormMessage />

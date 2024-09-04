@@ -57,7 +57,7 @@ export const SkPenghasilanOrangTuaClient = () => {
   const data: ColumnsType[] = query.data.data.map((surat) => ({
     id: surat.id,
     nama: surat.namaLengkap,
-    alamat: getAlamat(surat.kampung, surat.rt, surat.rw),
+    alamat: surat.alamat,
     jenisKelamin: surat.jenisKelamin,
     status: surat.status,
     updatedAt: surat.updatedAt,

@@ -1,5 +1,5 @@
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import { formatDate, getGender, getStatusPerkawinan } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 import { SkTidakMampu } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
 
@@ -12,7 +12,7 @@ export const generateSkTidakMampu = async (
 ) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([595, 842]); // A4 size (595x842 points)
-  const { width, height } = page.getSize();
+  const { height } = page.getSize();
 
   // font
   const font = await pdfDoc.embedFont(StandardFonts.TimesRoman);
@@ -109,7 +109,7 @@ export const generateSkTidakMampu = async (
     "left",
     `No. Reg. ${data.noRegCamat ?? "......................."}`,
     "Camat Cicalengka",
-    namaKepalaDesa ?? "",
+    "",
     "",
     true
   );

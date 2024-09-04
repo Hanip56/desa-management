@@ -27,10 +27,7 @@ const ShowData = ({ data }: Props) => {
               label="Tanggal Lahir"
               value={formatDate(data.tanggalLahir)}
             />
-            <SemiField
-              label="Alamat"
-              value={getAlamat(data.kampung, data.rt, data.rw)}
-            />
+            <SemiField label="Alamat" value={data.alamat} />
             <SemiField
               label="Waktu"
               value={`${DateToDayAndDate(data.waktu)}, ${DatetoTime(

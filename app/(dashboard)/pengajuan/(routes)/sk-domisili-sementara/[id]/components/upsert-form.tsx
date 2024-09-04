@@ -298,7 +298,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       placeholder={alamatPlaceholder}
                       rows={2}
                       className="resize-none"
-                      maxLength={100}
+                      maxLength={120}
                     />
                   </FormControl>
                   <FormMessage />
@@ -318,7 +318,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       placeholder={alamatPlaceholder}
                       rows={2}
                       className="resize-none"
-                      maxLength={100}
+                      maxLength={120}
                     />
                   </FormControl>
                   <FormMessage />

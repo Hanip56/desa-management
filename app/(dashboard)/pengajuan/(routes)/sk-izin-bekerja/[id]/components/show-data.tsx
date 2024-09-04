@@ -29,10 +29,7 @@ const ShowData = ({ data }: Props) => {
             <SemiField label="Pekerjaan" value={data.pekerjaan} />
             <SemiField label="Bagian" value={data.bagian} />
             <SemiField label="Nomor ID" value={data.nomorId} />
-            <SemiField
-              label="Alamat"
-              value={getAlamat(data.kampung, data.rt, data.rw)}
-            />
+            <SemiField label="Alamat" value={data.alamat} />
             <SemiField label="Tempat kerja" value={data.tempatKerja} />
             <SemiField label="Alasan" value={data.alasan} />
             <SemiField

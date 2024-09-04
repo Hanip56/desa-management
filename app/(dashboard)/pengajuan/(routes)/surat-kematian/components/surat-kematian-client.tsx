@@ -13,7 +13,6 @@ import CardSkeleton from "@/app/(dashboard)/components/card-skeleton";
 import { useNavigate } from "@/hooks/use-navigate";
 import CardError from "@/app/(dashboard)/components/card-error";
 import { useReactToPrint } from "react-to-print";
-import { getAlamat } from "@/lib/utils";
 
 export const SuratKematianClient = () => {
   const [
@@ -54,7 +53,7 @@ export const SuratKematianClient = () => {
   const data: ColumnsType[] = query.data.data.map((surat) => ({
     id: surat.id,
     nama: surat.namaTerkait,
-    alamat: getAlamat(surat.kampungTerkait, surat.rtTerkait, surat.rwTerkait),
+    alamat: surat.alamatTerkait,
     jenisKelamin: surat.jenisKelaminTerkait,
     status: surat.status,
     updatedAt: surat.updatedAt,

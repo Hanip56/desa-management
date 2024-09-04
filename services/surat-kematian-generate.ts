@@ -71,7 +71,7 @@ export const generateSuratKematian = async (
     gap,
     marginX,
     page,
-    fontSize: 13,
+    fontSize: 12.5,
     tte,
   });
 
@@ -80,36 +80,28 @@ export const generateSuratKematian = async (
   pColon(`Nama`, data.namaPemohon, 3);
   pColon(`Jenis Kelamin`, getGender(data.jenisKelaminPemohon), 5);
   pColon(`No. NIK`, data.noNikPemohon, 7);
-  pColon(
-    `Alamat`,
-    `${getAlamat(data.kampungPemohon, data.rtPemohon, data.rwPemohon)}`,
-    9
-  );
-  pColon(`Hubungan Keluarga`, data.hubunganKeluargaPemohon, 11);
+  pColon(`Hubungan Keluarga`, data.hubunganKeluargaPemohon, 9);
+  pColon(`Alamat`, data.alamatPemohon, 11);
 
-  p("Menerangkan bahwa yang bernama :", 15);
-  pColon(`Nama`, data.namaTerkait, 18);
-  pColon(`Jenis Kelamin`, getGender(data.jenisKelaminTerkait), 20);
-  pColon(`No. NIK`, data.noNikTerkait, 22);
-  pColon(
-    `Alamat`,
-    `${getAlamat(data.kampungTerkait, data.rtTerkait, data.rwTerkait)}`,
-    24
-  );
+  p("Menerangkan bahwa yang bernama :", 16);
+  pColon(`Nama`, data.namaTerkait, 19);
+  pColon(`Jenis Kelamin`, getGender(data.jenisKelaminTerkait), 21);
+  pColon(`No. NIK`, data.noNikTerkait, 23);
+  pColon(`Alamat`, data.alamatTerkait, 25);
 
-  p("Telah meninggal dunia pada :", 28);
-  pColon(`Hari/Tanggal`, DateToDayAndDate(data.tanggal), 31);
-  pColon(`Waktu`, DatetoTime(data.tanggal), 33);
-  pColon(`Penyebab`, data.penyebab, 35);
-  pColon(`Tempat`, data.tempat, 37);
-  p(`Meninggal`, 39);
+  p("Telah meninggal dunia pada :", 30);
+  pColon(`Hari/Tanggal`, DateToDayAndDate(data.tanggal), 33);
+  pColon(`Waktu`, DatetoTime(data.tanggal), 35);
+  pColon(`Penyebab`, data.penyebab, 37);
+  pColon(`Tempat`, data.tempat, 39);
+  p(`Meninggal`, 41);
 
   pJustify(
     "Demikian Surat Keterangan Kematian ini kami buat dengan sebenarnya untuk",
-    43,
+    44,
     true
   );
-  p("dipergunakan sebagaimana mestinya.", 45);
+  p("dipergunakan sebagaimana mestinya.", 46);
 
   // ttd right
   ttd(

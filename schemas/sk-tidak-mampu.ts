@@ -10,11 +10,11 @@ export const skTidakMampuSchema = z.object({
   tanggalLahir: z.date({
     message: "Kolom Tanggal lahir harus diisi",
   }),
-  nik: z.string().min(1, {
-    message: "Kolom NIK harus diisi",
+  nik: z.string().length(16, {
+    message: "Kolom NIK tidak valid",
   }),
-  noKk: z.string().min(1, {
-    message: "Kolom No KK harus diisi",
+  noKk: z.string().length(16, {
+    message: "Kolom No KK tidak valid",
   }),
   pekerjaan: z.string().min(1, {
     message: "Kolom Pekerjaan harus diisi",
@@ -31,8 +31,8 @@ export const skTidakMampuSchema = z.object({
   tanggalLahirOrangTua: z.date({
     message: "Kolom Tanggal lahir harus diisi",
   }),
-  nikOrangTua: z.string().min(1, {
-    message: "Kolom NIK harus diisi",
+  nikOrangTua: z.string().length(16, {
+    message: "Kolom NIK tidak valid",
   }),
   pekerjaanOrangTua: z.string().min(1, {
     message: "Kolom Pekerjaan harus diisi",

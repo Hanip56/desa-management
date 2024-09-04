@@ -89,9 +89,7 @@ export async function POST(req: NextRequest) {
       pekerjaan,
       bagian,
       nomorId,
-      kampung,
-      rt,
-      rw,
+      alamat,
       tempatKerja,
       alasan,
       izinDariHari,
@@ -107,9 +105,7 @@ export async function POST(req: NextRequest) {
       !pekerjaan ||
       !bagian ||
       !nomorId ||
-      !kampung ||
-      !rt ||
-      !rw ||
+      !alamat ||
       !tempatKerja ||
       !alasan ||
       !izinDariHari ||
@@ -128,9 +124,7 @@ export async function POST(req: NextRequest) {
         pekerjaan,
         bagian,
         nomorId,
-        kampung,
-        rt,
-        rw,
+        alamat,
         tempatKerja,
         alasan,
         izinDariHari,

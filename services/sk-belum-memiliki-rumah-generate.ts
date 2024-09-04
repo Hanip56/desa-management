@@ -1,10 +1,5 @@
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import {
-  formatDate,
-  getAlamat,
-  getGender,
-  getStatusPerkawinan,
-} from "@/lib/utils";
+import { formatDate, getGender, getStatusPerkawinan } from "@/lib/utils";
 import { SkBelumMemilikiRumah } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
 
@@ -70,22 +65,22 @@ export const generateSkBelumMemilikiRumah = async (
   pColon(`Pekerjaan`, data.pekerjaan, 18);
   pColon(`Status Perkawinan`, getStatusPerkawinan(data.statusPerkawinan), 20);
   pColon(`Kewarganegaraan`, data.kewarganegaraan, 22);
-  pColon(`Alamat`, `${getAlamat(data.kampung, data.rt, data.rw)}`, 24);
+  pColon(`Alamat`, data.alamat, 24);
 
   pJustify(
     "Orang tersebut diatas Benar penduduk warga Desa kami dan menurut keterangan dari",
-    28,
+    29,
     true
   );
   pJustify(
     "RT RW setempat bahwa orang tersebut benar-benar belum memiliki rumah atau tempat",
-    30
+    31
   );
-  p("tinggal.", 32);
+  p("tinggal.", 33);
 
   page.drawText(`KEPERLUAN : ${data.keperluan}`, {
     x: marginX + 50,
-    y: startLine - gap * 35,
+    y: startLine - gap * 36,
     size: 13,
     font: italicBold,
     maxWidth: width - 2 * (marginX + 50),
@@ -93,10 +88,10 @@ export const generateSkBelumMemilikiRumah = async (
 
   pJustify(
     "Demikian surat keterangan ini kami buat untuk dipergunakan sebagaimana mestinya,",
-    38,
+    39,
     true
   );
-  p("atas perhatian dan kerjasamanya kami sampaikan terima kasih.", 40);
+  p("atas perhatian dan kerjasamanya kami sampaikan terima kasih.", 41);
 
   // ttd center
   ttd(

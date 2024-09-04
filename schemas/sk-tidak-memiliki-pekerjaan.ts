@@ -5,11 +5,11 @@ export const skTidakMemilikiPekerjaanSchema = z.object({
   nama: z.string().min(1, {
     message: "Kolom Nama harus diisi",
   }),
-  nik: z.string().min(1, {
-    message: "Kolom NIK harus diisi",
+  nik: z.string().length(16, {
+    message: "Kolom NIK tidak valid",
   }),
-  noKk: z.string().min(1, {
-    message: "Kolom No KK harus diisi",
+  noKk: z.string().length(16, {
+    message: "Kolom No KK tidak valid",
   }),
   tempatLahir: z.string().min(1, {
     message: "Kolom Tempat lahir harus diisi",
@@ -29,13 +29,7 @@ export const skTidakMemilikiPekerjaanSchema = z.object({
   agama: z.string().min(1, {
     message: "Kolom Agama diisi",
   }),
-  kampung: z.string().min(1, {
-    message: "Kolom Kampung harus diisi",
-  }),
-  rt: z.string().min(1, {
-    message: "Kolom RT harus diisi",
-  }),
-  rw: z.string().min(1, {
-    message: "Kolom RW harus diisi",
+  alamat: z.string().min(1, {
+    message: "Kolom Alamat harus diisi",
   }),
 });

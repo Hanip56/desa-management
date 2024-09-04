@@ -84,16 +84,12 @@ export async function POST(req: NextRequest) {
       namaPemohon,
       jenisKelaminPemohon,
       noNikPemohon,
-      kampungPemohon,
-      rtPemohon,
-      rwPemohon,
+      alamatPemohon,
       hubunganKeluargaPemohon,
       namaTerkait,
       jenisKelaminTerkait,
       noNikTerkait,
-      kampungTerkait,
-      rtTerkait,
-      rwTerkait,
+      alamatTerkait,
       tanggal,
       penyebab,
       tempat,
@@ -103,16 +99,12 @@ export async function POST(req: NextRequest) {
       !namaPemohon ||
       !jenisKelaminPemohon ||
       !noNikPemohon ||
-      !kampungPemohon ||
-      !rtPemohon ||
-      !rwPemohon ||
+      !alamatPemohon ||
       !hubunganKeluargaPemohon ||
       !namaTerkait ||
       !jenisKelaminTerkait ||
       !noNikTerkait ||
-      !kampungTerkait ||
-      !rtTerkait ||
-      !rwTerkait ||
+      !alamatTerkait ||
       !tanggal ||
       !penyebab ||
       !tempat
@@ -125,16 +117,12 @@ export async function POST(req: NextRequest) {
         namaPemohon,
         jenisKelaminPemohon,
         noNikPemohon,
-        kampungPemohon,
-        rtPemohon,
-        rwPemohon,
+        alamatPemohon,
         hubunganKeluargaPemohon,
         namaTerkait,
         jenisKelaminTerkait,
         noNikTerkait,
-        kampungTerkait,
-        rtTerkait,
-        rwTerkait,
+        alamatTerkait,
         tanggal,
         penyebab,
         tempat,

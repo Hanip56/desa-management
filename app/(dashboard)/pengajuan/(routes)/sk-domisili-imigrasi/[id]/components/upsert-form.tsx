@@ -257,7 +257,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Keperluan"
-                      maxLength={maxLengthInput}
+                      maxLength={100}
                     />
                   </FormControl>
                   <FormMessage />
@@ -278,7 +278,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       className="resize-none"
                       cols={10}
                       rows={1}
-                      maxLength={100}
+                      maxLength={120}
                     />
                   </FormControl>
                   <FormMessage />

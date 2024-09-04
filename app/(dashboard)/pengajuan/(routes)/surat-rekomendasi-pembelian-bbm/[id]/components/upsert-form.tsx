@@ -23,7 +23,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { SuratRekomendasiPembelianBbmWithUser } from "@/types";
 import { Textarea } from "@/components/ui/textarea";
-import { alamatPlaceholder } from "@/contants";
+import { alamatPlaceholder, maxLengthInput } from "@/contants";
 
 type Props = {
   initialData?: SuratRekomendasiPembelianBbmWithUser | null;
@@ -137,6 +137,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Nama"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -175,7 +176,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       {...field}
                       placeholder={alamatPlaceholder}
                       className="resize-none"
-                      maxLength={100}
+                      maxLength={120}
                     />
                   </FormControl>
                   <FormMessage />
@@ -193,6 +194,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Konsumen pengguna"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -210,6 +212,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Jenis usaha kegiatan"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -233,6 +236,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Jenis alat"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -275,6 +279,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Fungsi alat"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -292,6 +297,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="ct: 8 jam/hari"
+                      maxLength={20}
                     />
                   </FormControl>
                   <FormMessage />
@@ -311,6 +317,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="ct: 30 liter/minggu"
+                      maxLength={20}
                     />
                   </FormControl>
                   <FormMessage />

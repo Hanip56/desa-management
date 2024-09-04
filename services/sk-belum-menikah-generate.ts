@@ -69,31 +69,31 @@ export const generateSkBelumMenikah = async (
   pColon(`Pekerjaan`, data.pekerjaan, 18);
   pColon(`Status Perkawinan`, getStatusPerkawinan(data.statusPerkawinan), 20);
   pColon(`Kewarganegaraan`, data.kewarganegaraan, 22);
-  pColon(`alamat`, `${getAlamat(data.kampung, data.rt, data.rw)}`, 24);
+  pColon(`Alamat`, data.alamat, 24);
 
   pJustify(
     "Orang tersebut diatas Benar penduduk warga Desa kami, dan menurut keterangan dari",
-    28,
+    29,
     true
   );
   pJustify(
     "RT/RW setempat bahwa orang tersebut sampai dengan dikeluarkannya surat keterangan ini",
-    30
+    31
   );
-  p("benar-benar", 32);
+  p("benar-benar", 33);
   page.drawText("BELUM PERNAH MENIKAH.", {
     x: marginX + font.widthOfTextAtSize("benar-benar", 13) + 5,
-    y: startLine - gap * 32,
+    y: startLine - gap * 33,
     font: bold,
     size: 13,
   });
 
   pJustify(
     "Demikian surat Keterangan ini kami buat untuk dipergunakan sebagaimana mestinya,",
-    35,
+    36,
     true
   );
-  p("atas perhatian dan kerjasamanya kami sampaikan terima kasih.", 37);
+  p("atas perhatian dan kerjasamanya kami sampaikan terima kasih.", 38);
 
   // ttd right
   ttd(

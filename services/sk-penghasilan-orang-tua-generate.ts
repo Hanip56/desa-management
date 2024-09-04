@@ -71,7 +71,7 @@ export const generateSkPenghasilanOrangTua = async (
   pColon(`Pekerjaan`, data.pekerjaan, 18);
   pColon(`Status Perkawinan`, getStatusPerkawinan(data.statusPerkawinan), 20);
   pColon(`Kewarganegaraan`, data.kewarganegaraan, 22);
-  pColon(`Alamat`, `${getAlamat(data.kampung, data.rt, data.rw)}`, 24);
+  pColon(`Alamat`, data.alamat, 24);
 
   pJustify(
     "Menurut keterangan RT/RW setempat dan data yang ada, benar bahwa yang",
@@ -81,7 +81,7 @@ export const generateSkPenghasilanOrangTua = async (
   p("bersangkutan penduduk Desa Margaasih Kecamatan Cicalengka dan :", 32);
 
   p(
-    `Benar mempunyai penghasilan rata-rata Rp. ${formatRupiah(
+    `Benar mempunyai penghasilan rata-rata ${formatRupiah(
       data.penghasilan
     )},-/Bulan`,
     35,

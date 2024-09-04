@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Modal from "@/components/ui/modal";
+import { maxLengthInput } from "@/contants";
 import { updateSuratRekomendasiPembelianBbm } from "@/fetcher/surat-rekomendasi-pembelian-bbm-fetcher";
 import { dateToISO } from "@/lib/utils";
 import { SuratRekomendasiPembelianBbmWithUser } from "@/types";
@@ -130,6 +131,7 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
                     {...field}
                     placeholder="Tempat pengambilan"
                     disabled={disabledCondition}
+                    maxLength={maxLengthInput}
                   />
                 </FormControl>
                 <FormMessage />
@@ -148,6 +150,7 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
                     {...field}
                     placeholder="Nomor lembaga penyalur"
                     disabled={disabledCondition}
+                    maxLength={maxLengthInput}
                   />
                 </FormControl>
                 <FormMessage />
@@ -165,6 +168,7 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
                     {...field}
                     placeholder="Lokasi"
                     disabled={disabledCondition}
+                    maxLength={maxLengthInput}
                   />
                 </FormControl>
                 <FormMessage />
@@ -182,6 +186,7 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
                     {...field}
                     placeholder="Alat pembelian digunakan"
                     disabled={disabledCondition}
+                    maxLength={maxLengthInput}
                   />
                 </FormControl>
                 <FormMessage />

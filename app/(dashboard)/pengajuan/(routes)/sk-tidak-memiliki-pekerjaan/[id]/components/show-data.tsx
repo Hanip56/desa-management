@@ -1,5 +1,5 @@
 import SemiField from "@/components/semi-field";
-import { formatDate, getAlamat, getStatusPerkawinan } from "@/lib/utils";
+import { formatDate, getStatusPerkawinan } from "@/lib/utils";
 import { SkTidakMemilikiPekerjaanWithUser } from "@/types";
 
 type Props = {
@@ -33,10 +33,7 @@ const ShowData = ({ data }: Props) => {
             />
             <SemiField label="Pekerjaan" value={data.pekerjaan} />
             <SemiField label="Agama" value={data.agama} />
-            <SemiField
-              label="Alamat"
-              value={getAlamat(data.kampung, data.rt, data.rw)}
-            />
+            <SemiField label="Alamat" value={data.alamat} />
           </div>
         </div>
       </div>

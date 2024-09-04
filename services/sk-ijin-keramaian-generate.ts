@@ -56,6 +56,7 @@ export const generateSkIjinKeramaian = async (
     marginX,
     page,
     fontSize: 12,
+    lineHeight: 15,
     tte,
   });
   const listImageBytes = fs.readFileSync(
@@ -80,14 +81,14 @@ export const generateSkIjinKeramaian = async (
     `${data.tempatLahir}, ${formatDate(data.tanggalLahir)}`,
     12
   );
-  pColon("Alamat", `${getAlamat(data.kampung, data.rt, data.rw)}`, 14);
+  pColon("Acara", data.acara, 14);
   pColon(
     `Waktu dan Maksud`,
     `${DateToDayAndDate(data.waktu)}, ${data.maksud}`,
     16
   );
   pColon("Pukul", DatetoTime(data.waktu), 18);
-  pColon("Acara", data.acara, 20);
+  pColon("Alamat", data.alamat, 20);
 
   pJustify(
     "Dengan ini menerangkan bahwa pada prinsipnya tidak keberatan atas permohonan yang",

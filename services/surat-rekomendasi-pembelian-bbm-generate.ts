@@ -42,7 +42,7 @@ export const generateSuratRekomendasiPembelianBbm = async (
     gap,
     marginX,
     page,
-    lineHeight: 15,
+    lineHeight: 12,
     fontSize: 9.5,
     tte,
   });

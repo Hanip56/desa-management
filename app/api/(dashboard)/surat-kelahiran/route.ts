@@ -85,23 +85,17 @@ export async function POST(req: NextRequest) {
       jenisKelaminTerkait,
       tempatLahirTerkait,
       tanggalLahirTerkait,
-      kampungTerkait,
-      rtTerkait,
-      rwTerkait,
+      alamatTerkait,
       namaAyah,
       jenisKelaminAyah,
       agamaAyah,
-      kampungAyah,
-      rtAyah,
-      rwAyah,
+      alamatAyah,
       tempatLahirAyah,
       tanggalLahirAyah,
       namaIbu,
       jenisKelaminIbu,
       agamaIbu,
-      kampungIbu,
-      rtIbu,
-      rwIbu,
+      alamatIbu,
       tempatLahirIbu,
       tanggalLahirIbu,
     } = await req.json();
@@ -111,15 +105,11 @@ export async function POST(req: NextRequest) {
       !jenisKelaminTerkait ||
       !tempatLahirTerkait ||
       !tanggalLahirTerkait ||
-      !kampungTerkait ||
-      !rtTerkait ||
-      !rwTerkait ||
+      !alamatTerkait ||
       !namaAyah ||
       !jenisKelaminAyah ||
       !agamaAyah ||
-      !kampungAyah ||
-      !rtAyah ||
-      !rwAyah ||
+      !alamatAyah ||
       !tempatLahirAyah ||
       !tanggalLahirAyah ||
       !namaIbu ||
@@ -127,9 +117,7 @@ export async function POST(req: NextRequest) {
       !agamaIbu ||
       !tempatLahirIbu ||
       !tanggalLahirIbu ||
-      !kampungIbu ||
-      !rtIbu ||
-      !rwIbu
+      !alamatIbu
     ) {
       return new NextResponse("Required field is missing", { status: 400 });
     }
@@ -140,23 +128,17 @@ export async function POST(req: NextRequest) {
         jenisKelaminTerkait,
         tempatLahirTerkait,
         tanggalLahirTerkait,
-        kampungTerkait,
-        rtTerkait,
-        rwTerkait,
+        alamatTerkait,
         namaAyah,
         jenisKelaminAyah,
         agamaAyah,
-        kampungAyah,
-        rtAyah,
-        rwAyah,
+        alamatAyah,
         tempatLahirAyah,
         tanggalLahirAyah,
         namaIbu,
         jenisKelaminIbu,
         agamaIbu,
-        kampungIbu,
-        rtIbu,
-        rwIbu,
+        alamatIbu,
         tempatLahirIbu,
         tanggalLahirIbu,
         userId: session.user.id,

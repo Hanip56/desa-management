@@ -6,17 +6,11 @@ export const suratKematianSchema = z.object({
     message: "Kolom nama harus diisi",
   }),
   jenisKelaminPemohon: z.enum(genderEnum),
-  noNikPemohon: z.string().min(1, {
-    message: "Kolom No. NIK harus diisi",
+  noNikPemohon: z.string().length(16, {
+    message: "Kolom No. NIK tidak valid",
   }),
-  kampungPemohon: z.string().min(1, {
-    message: "Kolom kampung harus diisi",
-  }),
-  rtPemohon: z.string().min(1, {
-    message: "Kolom rt harus diisi",
-  }),
-  rwPemohon: z.string().min(1, {
-    message: "Kolom rw harus diisi",
+  alamatPemohon: z.string().min(1, {
+    message: "Kolom Alamat harus diisi",
   }),
   hubunganKeluargaPemohon: z.string().min(1, {
     message: "Kolom Hubungan keluarga harus diisi",
@@ -25,17 +19,11 @@ export const suratKematianSchema = z.object({
     message: "Kolom nama harus diisi",
   }),
   jenisKelaminTerkait: z.enum(genderEnum),
-  noNikTerkait: z.string().min(1, {
-    message: "Kolom No. NIK harus diisi",
+  noNikTerkait: z.string().length(16, {
+    message: "Kolom No. NIK tidak valid",
   }),
-  kampungTerkait: z.string().min(1, {
-    message: "Kolom kampung harus diisi",
-  }),
-  rtTerkait: z.string().min(1, {
-    message: "Kolom rt harus diisi",
-  }),
-  rwTerkait: z.string().min(1, {
-    message: "Kolom rw harus diisi",
+  alamatTerkait: z.string().min(1, {
+    message: "Kolom Alamat harus diisi",
   }),
   tanggal: z.date({
     message: "Kolom tanggal harus diisi",

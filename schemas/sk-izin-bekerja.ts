@@ -6,8 +6,8 @@ export const skIzinBekerjaSchema = z.object({
   namaLengkap: z.string().min(1, {
     message: "Kolom Nama lengkap harus diisi",
   }),
-  nik: z.string().min(1, {
-    message: "Kolom NIK harus diisi",
+  nik: z.string().length(16, {
+    message: "Kolom NIK tidak valid",
   }),
   tanggalLahir: z.date({
     message: "Kolom Tanggal lahir harus diisi",
@@ -27,14 +27,8 @@ export const skIzinBekerjaSchema = z.object({
   nomorId: z.string().min(1, {
     message: "Kolom Nomor ID harus diisi",
   }),
-  kampung: z.string().min(1, {
-    message: "Kolom Kampung harus diisi",
-  }),
-  rt: z.string().min(1, {
-    message: "Kolom RT harus diisi",
-  }),
-  rw: z.string().min(1, {
-    message: "Kolom RW harus diisi",
+  alamat: z.string().min(1, {
+    message: "Kolom Alamat harus diisi",
   }),
   tempatKerja: z.string().min(1, {
     message: "Kolom Tempat kerja harus diisi",

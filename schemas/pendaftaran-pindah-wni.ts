@@ -4,8 +4,8 @@ export const AnggotaPindahSchema = z.object({
   namaLengkap: z.string().min(1, {
     message: "Kolom Nama lengkap harus diisi",
   }),
-  nik: z.string().min(1, {
-    message: "Kolom NIK harus diisi",
+  nik: z.string().length(16, {
+    message: "Kolom NIK tidak valid",
   }),
   masaBerlakuKtp: z.date({
     message: "Kolom Masa berlaku KTP harus diisi",
@@ -19,11 +19,11 @@ export const pendaftaranPindahWniSchema = z.object({
   namaLengkapPemohon: z.string().min(1, {
     message: "Kolom Nama lengkap pemohon harus diisi",
   }),
-  nik: z.string().min(1, {
-    message: "Kolom NIK harus diisi",
+  nik: z.string().length(16, {
+    message: "Kolom NIK tidak valid",
   }),
-  noKk: z.string().min(1, {
-    message: "Kolom No KK harus diisi",
+  noKk: z.string().length(16, {
+    message: "Kolom No KK tidak valid",
   }),
   jenisPermohonan: z.string().min(1, {
     message: "Kolom Jenis permohonan harus diisi",
@@ -68,7 +68,7 @@ export const pendaftaranPindahWniSchema = z.object({
     message: "Kolom Klasifikasi kepindahan harus diisi",
   }),
   alasanPindah: z.string().min(1, {
-    message: "Kolom No KK harus diisi",
+    message: "Kolom No KK tidak valid",
   }),
   jenisKepindahan: z.string().min(1, {
     message: "Kolom Jenis kepindahan harus diisi",

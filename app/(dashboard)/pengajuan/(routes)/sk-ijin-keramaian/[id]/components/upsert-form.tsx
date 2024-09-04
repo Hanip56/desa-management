@@ -26,6 +26,8 @@ import { SkIjinKeramaianWithUser } from "@/types";
 import DatePicker from "@/components/ui/date-picker";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
 import { id } from "date-fns/locale";
+import { Textarea } from "@/components/ui/textarea";
+import { alamatPlaceholder, maxLengthInput } from "@/contants";
 
 type Props = {
   initialData?: SkIjinKeramaianWithUser | null;
@@ -42,9 +44,7 @@ const UpsertForm = ({ initialData }: Props) => {
       nik: initialData?.nik ?? "",
       tempatLahir: initialData?.tempatLahir ?? "",
       tanggalLahir: initialData?.tanggalLahir ?? undefined,
-      kampung: initialData?.kampung ?? "",
-      rt: initialData?.rt ?? "",
-      rw: initialData?.rw ?? "",
+      alamat: initialData?.alamat ?? "",
       waktu: initialData?.waktu ?? undefined,
       maksud: initialData?.maksud ?? "",
       acara: initialData?.acara ?? "",
@@ -138,6 +138,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Nama"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -175,6 +176,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Tempat lahir"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -223,6 +225,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Maksud"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
@@ -240,73 +243,32 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Acara"
+                      maxLength={maxLengthInput}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className="flex flex-col gap-1">
-              <FormField
-                control={form.control}
-                name="kampung"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Alamat</FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled={disabledCondition}
-                        {...field}
-                        placeholder="Kampung"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="flex gap-2 [&>*]:flex-1">
-                <FormField
-                  control={form.control}
-                  name="rt"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="sr-only">RT</FormLabel>
-                      <FormControl>
-                        <Input
-                          disabled={disabledCondition}
-                          {...field}
-                          placeholder="RT"
-                          type="number"
-                          min={0}
-                          onWheel={(e: any) => e.target.blur()}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="rw"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="sr-only">RW</FormLabel>
-                      <FormControl>
-                        <Input
-                          disabled={disabledCondition}
-                          {...field}
-                          placeholder="RW"
-                          type="number"
-                          min={0}
-                          onWheel={(e: any) => e.target.blur()}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
+            <FormField
+              control={form.control}
+              name="alamat"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Alamat</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      disabled={disabledCondition}
+                      {...field}
+                      placeholder={alamatPlaceholder}
+                      className="resize-none"
+                      maxLength={120}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
         </div>
         <Button disabled={disabledCondition} type="submit" size="lg">

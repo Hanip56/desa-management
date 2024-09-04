@@ -73,25 +73,25 @@ export const generateSkTidakMemilikiPekerjaan = async (
   pColon(`Status Perkawinan`, getStatusPerkawinan(data.statusPerkawinan), 18);
   pColon(`Pekerjaan`, data.pekerjaan, 20);
   pColon(`Agama`, data.agama, 22);
-  pColon(`Alamat`, `${getAlamat(data.kampung, data.rt, data.rw)}`, 24);
+  pColon(`Alamat`, data.alamat, 24);
 
   pJustify(
     "Orang tersebut diatas Benar penduduk warga Desa kami dan menurut keterangan dari",
-    28,
+    29,
     true
   );
   pJustify(
     "RT RW setempat bahwa orang tersebut sampai dikeluarkannya surat keterangan ini",
-    30
+    31
   );
-  p("benar-benar tidak memiliki pekerjaan.", 32);
+  p("benar-benar tidak memiliki pekerjaan.", 33);
 
   pJustify(
     "Demikian surat keterangan ini kami buat dengan keadaan yang sebenarnya agar dapat,",
-    35,
+    36,
     true
   );
-  p("dipergunakan dengan sebagaimana mestinya.", 37);
+  p("dipergunakan dengan sebagaimana mestinya.", 38);
 
   ttd(
     635,
