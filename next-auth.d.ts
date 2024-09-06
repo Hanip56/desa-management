@@ -5,6 +5,8 @@ export type ExtendedUser = DefaultSession["user"] & {
   username: string;
   nomorWa: string;
   role: "USER" | "ADMIN" | "SUPERADMIN";
+  ktpUrl?: string | null;
+  kkUrl?: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -20,6 +22,8 @@ declare module "next-auth" {
     username: string;
     nomorWa: string;
     role: "USER" | "ADMIN" | "SUPERADMIN";
+    ktpUrl?: string | null;
+    kkUrl?: string | null;
     createdAt: Date;
     updatedAt: Date;
   }
@@ -34,6 +38,8 @@ declare module "next-auth/jwt" {
       username: string;
       nomorWa: string;
       role: "USER" | "ADMIN" | "SUPERADMIN";
+      ktpUrl?: string | null;
+      kkUrl?: string | null;
       createdAt: Date;
       updatedAt: Date;
     };

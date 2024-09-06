@@ -50,6 +50,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (session?.nomorWa) {
           token.user.nomorWa = session.nomorWa;
         }
+        if (session?.ktpUrl) {
+          token.user.ktpUrl = session.ktpUrl;
+        }
+        if (session?.kkUrl) {
+          token.user.kkUrl = session.kkUrl;
+        }
 
         return token;
       }
@@ -62,6 +68,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           username: user.username,
           id: user.id || "",
           nomorWa: user.nomorWa || "",
+          ktpUrl: user.ktpUrl || "",
+          kkUrl: user.kkUrl || "",
         };
       }
 

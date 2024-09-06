@@ -13,7 +13,7 @@ type Props = {
 
 const ShowData = ({ data }: Props) => {
   return (
-    <div className="sm:p-6 sm:border">
+    <div className="sm:p-6 sm:border rounded-br-2xl rounded-bl-2xl">
       <div className="p-4 bg-muted">
         <h2 className="text-center text-lg font-semibold">Data Formulir</h2>
       </div>

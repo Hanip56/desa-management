@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardHeader } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
@@ -22,7 +21,7 @@ const HeaderHasilPengajuan = ({
 }: Props) => {
   return (
     <CardHeader>
-      <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between rounded-2xl border border-slate-300 p-6">
+      <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between rounded-tr-2xl rounded-tl-2xl border border-slate-300 p-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <span className="font-semibold">Status :</span>

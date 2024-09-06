@@ -164,3 +164,8 @@ export async function resizeImageBuffer(
   // Get the resized image as a buffer in PNG format
   return canvas.toBuffer("image/png");
 }
+
+export function reloadSession() {
+  const event = new Event("visibilitychange");
+  document.dispatchEvent(event);
+}

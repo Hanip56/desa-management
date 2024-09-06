@@ -25,7 +25,7 @@ export const masukSchema = z.object({
     message: "Kolom nomor WA harus diisi",
   }),
   password: z.string().min(1, {
-    message: "Kolom password harus diisi",
+    message: "Kolom kata sandi harus diisi",
   }),
 });
 
@@ -34,10 +34,13 @@ export const daftarSchema = z.object({
     message: "Kolom nama harus diisi",
   }),
   nomorWa: z.string().regex(/^(\+62|62|0)8[1-9][0-9]{6,9}$/, {
-    message: "Nomor WA tidak valid",
+    message: "Kolom nomor WA tidak valid",
   }),
   password: z.string().min(6, {
-    message: "Kolom password harus diisi minimal 6 karakter",
+    message: "Kolom kata sandi harus diisi minimal 6 karakter",
+  }),
+  passwordConfirmation: z.string().min(1, {
+    message: "Kolom konfirmasi kata sandi harus diisi",
   }),
 });
 

@@ -79,11 +79,11 @@ const MasukForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Kata sandi</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Masukan password"
+                    placeholder="Masukan kata sandi"
                     type="password"
                     disabled={isPending}
                   />

@@ -34,12 +34,6 @@ export async function PUT(
 
       const isMatchPassword = await bcrypt.compare(oldPassword, user.password);
 
-      console.log({
-        oldPassword,
-        userPassword: user.password,
-        isMatchPassword,
-      });
-
       if (!isMatchPassword) {
         return new NextResponse("Old password is not valid", { status: 400 });
       }

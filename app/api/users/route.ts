@@ -1,5 +1,9 @@
 import { auth } from "@/auth";
 import prisma from "@/db/prisma";
+import {
+  deleteMultipleFilesCloudinary,
+  uploadFileToCloudinary,
+} from "@/lib/server-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET ALL USERS
@@ -54,6 +58,62 @@ export async function GET(req: NextRequest) {
     });
   } catch (error) {
     console.log("[GET_ALL_USERS]", error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}
+
+// PATCH USER
+export async function PATCH(req: NextRequest) {
+  try {
+    const session = await auth();
+
+    if (!session) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: session.user.id,
+      },
+    });
+
+    if (!user) {
+      return new NextResponse("Unathorized", { status: 401 });
+    }
+
+    const formData = await req.formData();
+    const ktpFile = formData.get("ktpFile") as File | null;
+    const kkFile = formData.get("kkFile") as File | null;
+
+    if (!ktpFile || !kkFile) {
+      return new NextResponse("No files provided", { status: 204 });
+    }
+
+    const [ktpUploadResult, kkUploadResult] = await Promise.all([
+      uploadFileToCloudinary(ktpFile, "ktp"),
+      uploadFileToCloudinary(kkFile, "kk"),
+    ]);
+
+    // update user kk & ktp
+    const updatedUser = await prisma.user.update({
+      where: { id: session.user.id },
+      data: {
+        ktpUrl: ktpUploadResult?.public_id,
+        kkUrl: kkUploadResult?.public_id,
+      },
+    });
+
+    // delete old image
+    if (user.ktpUrl && user.kkUrl) {
+      await deleteMultipleFilesCloudinary([user.kkUrl, user.ktpUrl]);
+    }
+
+    return NextResponse.json(
+      { ...updatedUser, password: undefined },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("[PATCH_USER]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

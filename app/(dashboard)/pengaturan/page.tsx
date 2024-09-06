@@ -4,7 +4,6 @@ import PengaturanClient from "./components/pengaturan-client";
 import { redirect } from "next/navigation";
 import prisma from "@/db/prisma";
 import { Setting } from "@prisma/client";
-import { ByteaToFile } from "@/lib/utils";
 
 export type SettingClient = Omit<Setting, "tte"> & {
   tte: string | undefined;

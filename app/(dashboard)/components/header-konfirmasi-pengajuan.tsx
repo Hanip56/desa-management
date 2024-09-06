@@ -32,7 +32,7 @@ const HeaderKonfirmasiPengajuan = ({
 }: Props) => {
   return (
     <CardHeader>
-      <div className="flex flex-col sm:flex-row gap-5 sm:items-center justify-between border border-slate-300 rounded-2xl p-6">
+      <div className="flex flex-col sm:flex-row gap-5 sm:items-center justify-between border border-slate-300 rounded-tr-2xl rounded-tl-2xl p-6">
         <div className="space-y-2">
           {status !== "DIPROSES" && (
             <div className="flex items-center gap-2">
@@ -94,7 +94,7 @@ const HeaderKonfirmasiPengajuan = ({
           </div>
         )}
         {status === "DITERIMA" && (
-          <div className="flex flex-col sm:flex-row self-end gap-2 items-center mt-8">
+          <div className="flex w-full sm:w-fit flex-col sm:flex-row self-end gap-2 items-center mt-8">
             <Button
               className="w-full sm:w-fit bg-destructive/10 text-red-600 hover:text-primary-foreground"
               variant="destructive"

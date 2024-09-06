@@ -48,6 +48,8 @@ type UpdateParams = {
   nomorWa?: string;
   password?: string;
   oldPassword?: string;
+  ktpUrl?: string;
+  kkUrl?: string;
   userId: string;
 };
 
@@ -65,6 +67,39 @@ export const updateUser = async ({
       password,
       oldPassword,
     });
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(`Axios error: ${error.message}`);
+    } else {
+      throw new Error(`Unexpected error: ${error}`);
+    }
+  }
+};
+
+export const patchUser = async ({
+  ktpFile,
+  kkFile,
+}: {
+  ktpFile: File;
+  kkFile: File;
+}) => {
+  try {
+    const formData = new FormData();
+    const fields = {
+      ktpFile,
+      kkFile,
+    };
+
+    Object.keys(fields).forEach((key) => {
+      const field = fields[key as keyof typeof fields];
+      if (field) {
+        formData.append(key, field);
+      }
+    });
+
+    const response = await axiosInstance.patch<User>(`/users`, formData);
 
     return response.data;
   } catch (error) {

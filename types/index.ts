@@ -22,6 +22,8 @@ export type UserType = {
   username: string;
   nomorWa: string;
   role: "USER" | "ADMIN" | "SUPERADMIN";
+  ktpUrl?: string;
+  kkUrl?: string;
   createdAt: Date;
   updatedAt: Date;
 };

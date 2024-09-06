@@ -30,99 +30,108 @@ const NavMenu = () => {
   const { data: session } = useSession();
   const pathname = usePathname();
 
-  const routes: Route[] = [
-    {
-      label: "Beranda",
-      href: "/",
-    },
-    {
-      label: "Pengajuan",
-      // notif: true,
-      sub: [
-        {
-          label: "Surat kelahiran",
-          href: "/pengajuan/surat-kelahiran",
-        },
-        {
-          label: "Surat kematian",
-          href: "/pengajuan/surat-kematian",
-        },
-        {
-          label: "SK belum menikah",
-          href: "/pengajuan/sk-belum-menikah",
-        },
-        {
-          label: "SK ijin keramaian",
-          href: "/pengajuan/sk-ijin-keramaian",
-        },
-        {
-          label: "SK penghasilan orang tua",
-          href: "/pengajuan/sk-penghasilan-orang-tua",
-        },
-        {
-          label: "SK izin bekerja",
-          href: "/pengajuan/sk-izin-bekerja",
-        },
-        {
-          label: "SK belum memiliki rumah",
-          href: "/pengajuan/sk-belum-memiliki-rumah",
-        },
-        {
-          label: "SK tidak memiliki pekerjaan",
-          href: "/pengajuan/sk-tidak-memiliki-pekerjaan",
-        },
-        {
-          label: "SK usaha",
-          href: "/pengajuan/sk-usaha",
-        },
-        {
-          label: "SK tidak mampu",
-          href: "/pengajuan/sk-tidak-mampu",
-        },
-        {
-          label: "SK domisili sementara",
-          href: "/pengajuan/sk-domisili-sementara",
-        },
-        {
-          label: "SK domisili imigrasi",
-          href: "/pengajuan/sk-domisili-imigrasi",
-        },
-        {
-          label: "SK domisili lembaga",
-          href: "/pengajuan/sk-domisili-lembaga",
-        },
-        {
-          label: "Pendaftaran pindah WNI",
-          href: "/pengajuan/pendaftaran-pindah-wni",
-        },
-        {
-          label: "Surat rekomendasi pembelian BBM",
-          href: "/pengajuan/surat-rekomendasi-pembelian-bbm",
-        },
-        {
-          label: "Persyaratan buat SPPT (OP BARU)",
-          href: "/pengajuan/persyaratan-buat-sppt",
-        },
-        {
-          label: "Persyaratan mutasi",
-          href: "/pengajuan/persyaratan-mutasi",
-        },
-        {
-          label: "Persyaratan aktivasi",
-          href: "/pengajuan/persyaratan-aktivasi",
-        },
-        {
-          label: "Persyaratan fatwa-waris",
-          href: "/pengajuan/persyaratan-fatwa-waris",
-        },
-      ],
-    },
-    {
-      label: "Profil",
-      href: "/profil",
-    },
-  ];
+  const routes: Route[] = [];
 
+  // hide the routes when ktpUrl & kkUrl doesnt valid
+  if (
+    session?.user.role === "ADMIN" ||
+    (session?.user.ktpUrl && session.user.kkUrl)
+  ) {
+    routes.push(
+      {
+        label: "Beranda",
+        href: "/",
+      },
+      {
+        label: "Pengajuan",
+        // notif: true,
+        sub: [
+          {
+            label: "Surat kelahiran",
+            href: "/pengajuan/surat-kelahiran",
+          },
+          {
+            label: "Surat kematian",
+            href: "/pengajuan/surat-kematian",
+          },
+          {
+            label: "SK belum menikah",
+            href: "/pengajuan/sk-belum-menikah",
+          },
+          {
+            label: "SK ijin keramaian",
+            href: "/pengajuan/sk-ijin-keramaian",
+          },
+          {
+            label: "SK penghasilan orang tua",
+            href: "/pengajuan/sk-penghasilan-orang-tua",
+          },
+          {
+            label: "SK izin bekerja",
+            href: "/pengajuan/sk-izin-bekerja",
+          },
+          {
+            label: "SK belum memiliki rumah",
+            href: "/pengajuan/sk-belum-memiliki-rumah",
+          },
+          {
+            label: "SK tidak memiliki pekerjaan",
+            href: "/pengajuan/sk-tidak-memiliki-pekerjaan",
+          },
+          {
+            label: "SK usaha",
+            href: "/pengajuan/sk-usaha",
+          },
+          {
+            label: "SK tidak mampu",
+            href: "/pengajuan/sk-tidak-mampu",
+          },
+          {
+            label: "SK domisili sementara",
+            href: "/pengajuan/sk-domisili-sementara",
+          },
+          {
+            label: "SK domisili imigrasi",
+            href: "/pengajuan/sk-domisili-imigrasi",
+          },
+          {
+            label: "SK domisili lembaga",
+            href: "/pengajuan/sk-domisili-lembaga",
+          },
+          {
+            label: "Pendaftaran pindah WNI",
+            href: "/pengajuan/pendaftaran-pindah-wni",
+          },
+          {
+            label: "Surat rekomendasi pembelian BBM",
+            href: "/pengajuan/surat-rekomendasi-pembelian-bbm",
+          },
+          {
+            label: "Persyaratan buat SPPT (OP BARU)",
+            href: "/pengajuan/persyaratan-buat-sppt",
+          },
+          {
+            label: "Persyaratan mutasi",
+            href: "/pengajuan/persyaratan-mutasi",
+          },
+          {
+            label: "Persyaratan aktivasi",
+            href: "/pengajuan/persyaratan-aktivasi",
+          },
+          {
+            label: "Persyaratan fatwa-waris",
+            href: "/pengajuan/persyaratan-fatwa-waris",
+          },
+        ],
+      },
+      {
+        label: "Profil",
+        href: "/profil",
+      }
+    );
+  }
+
+  // routes just for admin
   if (session?.user.role !== "USER") {
     routes.push(
       {

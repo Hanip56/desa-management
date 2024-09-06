@@ -7,6 +7,7 @@ import PersetujuanDialog from "./persetujuan-dialog";
 import { useState } from "react";
 import HeaderKonfirmasiPengajuan from "@/app/(dashboard)/components/header-konfirmasi-pengajuan";
 import ShowData from "./show-data";
+import ShowUserData from "@/app/(dashboard)/components/show-user-data";
 import HeaderHasilPengajuan from "@/app/(dashboard)/components/header-hasil-pengajuan";
 import { useSession } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -137,8 +138,16 @@ const ClientComp = ({ initialData }: Props) => {
         <CardContent className="mt-8">
           {(initialData && initialData.status !== "DIPROSES") ||
           (initialData && session?.user.role !== "USER") ? (
-            // after 'diproses'
-            <ShowData data={initialData} />
+            // after 'diproses' for user or always for admin
+            <>
+              {session?.user.role !== "USER" && (
+                <ShowUserData
+                  kkUrl={initialData.user.kkUrl}
+                  ktpUrl={initialData.user.ktpUrl}
+                />
+              )}
+              <ShowData data={initialData} />
+            </>
           ) : (
             // before 'diproses'
             <UpsertForm initialData={initialData} />

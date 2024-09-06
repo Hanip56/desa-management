@@ -1,8 +1,11 @@
 import Header from "@/app/(dashboard)/components/header";
 import ClientComp from "./components/client-comp";
 import prisma from "@/db/prisma";
+import { getSignedUrl } from "@/lib/server-utils";
+import { auth } from "@/auth";
 
 const DynamicPage = async ({ params }: { params: { id: string } }) => {
+  const session = await auth();
   let initialData: any;
   let skBelumMemilikiRumah = await prisma.skBelumMemilikiRumah.findUnique({
     where: { id: params.id },
@@ -13,6 +16,8 @@ const DynamicPage = async ({ params }: { params: { id: string } }) => {
           username: true,
           nomorWa: true,
           role: true,
+          ktpUrl: true,
+          kkUrl: true,
           createdAt: true,
           updatedAt: true,
         },
@@ -24,7 +29,17 @@ const DynamicPage = async ({ params }: { params: { id: string } }) => {
     initialData = {
       ...skBelumMemilikiRumah,
       User: undefined,
-      user: skBelumMemilikiRumah.User,
+      user: {
+        ...skBelumMemilikiRumah.User,
+        ktpUrl:
+          skBelumMemilikiRumah.User.ktpUrl && session?.user.role !== "USER"
+            ? getSignedUrl(skBelumMemilikiRumah.User.ktpUrl)
+            : undefined,
+        kkUrl:
+          skBelumMemilikiRumah.User.kkUrl && session?.user.role !== "USER"
+            ? getSignedUrl(skBelumMemilikiRumah.User.kkUrl)
+            : undefined,
+      },
     };
   }
 

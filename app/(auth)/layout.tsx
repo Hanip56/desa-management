@@ -5,7 +5,7 @@ import React from "react";
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="w-full h-full bg-emerald-600 flex flex-col lg:flex-row">
-      <div className="max-w-screen-sm lg:basis-[40%] py-8 px-12 flex flex-col">
+      <div className="max-w-screen-sm lg:basis-[40%] py-6 px-6 sm:px-12 flex flex-col">
         <div className="text-white">
           <Logo />
         </div>

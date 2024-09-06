@@ -29,10 +29,15 @@ const DaftarForm = () => {
       nama: "",
       nomorWa: "",
       password: "",
+      passwordConfirmation: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof daftarSchema>) => {
+    if (values.password !== values.passwordConfirmation) {
+      setError("Kolom konfirmasi password tidak sama");
+      return;
+    }
     setError("");
 
     const body = {
@@ -104,7 +109,7 @@ const DaftarForm = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Masukan nomor Wa"
+                    placeholder="Masukan nomor WA"
                     type="number"
                     min={0}
                     onWheel={(e: any) => e.target.blur()}
@@ -115,24 +120,44 @@ const DaftarForm = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="Masukan password"
-                    type="password"
-                    disabled={isLoading}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex flex-col sm:flex-row gap-2 [&>*]:flex-1">
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Kata sandi</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Masukan kata sandi"
+                      type="password"
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="passwordConfirmation"
+              render={({ field }) => (
+                <FormItem className="sm:pt-6">
+                  <FormLabel className="sr-only">Kata sandi</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Konfirmasi kata sandi"
+                      type="password"
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <FormError message={error} />
         </div>
         <Button

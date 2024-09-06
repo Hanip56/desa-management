@@ -1,8 +1,11 @@
 import Header from "@/app/(dashboard)/components/header";
 import ClientComp from "./components/client-comp";
 import prisma from "@/db/prisma";
+import { getSignedUrl } from "@/lib/server-utils";
+import { auth } from "@/auth";
 
 const DynamicPage = async ({ params }: { params: { id: string } }) => {
+  const session = await auth();
   let initialData: any;
   let skDomisiliImigrasi = await prisma.skDomisiliImigrasi.findUnique({
     where: { id: params.id },
@@ -13,6 +16,8 @@ const DynamicPage = async ({ params }: { params: { id: string } }) => {
           username: true,
           nomorWa: true,
           role: true,
+          ktpUrl: true,
+          kkUrl: true,
           createdAt: true,
           updatedAt: true,
         },
@@ -24,7 +29,17 @@ const DynamicPage = async ({ params }: { params: { id: string } }) => {
     initialData = {
       ...skDomisiliImigrasi,
       User: undefined,
-      user: skDomisiliImigrasi.User,
+      user: {
+        ...skDomisiliImigrasi.User,
+        ktpUrl:
+          skDomisiliImigrasi.User.ktpUrl && session?.user.role !== "USER"
+            ? getSignedUrl(skDomisiliImigrasi.User.ktpUrl)
+            : undefined,
+        kkUrl:
+          skDomisiliImigrasi.User.kkUrl && session?.user.role !== "USER"
+            ? getSignedUrl(skDomisiliImigrasi.User.kkUrl)
+            : undefined,
+      },
     };
   }
 

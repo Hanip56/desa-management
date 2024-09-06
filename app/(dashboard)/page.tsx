@@ -1,11 +1,5 @@
 import { getCurrentUser } from "@/lib/auth";
 import Image from "next/image";
-import { Circle, Minus, Newspaper, Plus } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import { suratList } from "@/contants";
-import { Button } from "@/components/ui/button";
 import UserDashboard from "./components/user-dashboard";
 import { Suspense } from "react";
 import MainDashboard, {
@@ -19,18 +13,17 @@ export default async function Home() {
     <main>
       <div className="flex flex-col md:flex-row items-center h-[18.3rem] md:h-[17.3rem]">
         <div className="text-white flex-1 text-center md:text-start pb-8">
-          <h1 className="text-2xl md:text-4xl font-bold mb-2">
+          <p className="hidden sm:inline font-medium mb-4 text-lg">
+            DESA MARGAASIH
+          </p>
+          <h1 className="text-xl sm:text-2xl md:text-4xl font-bold mb-2 sm:mb-3">
             MAJU MANDIRI <span className="text-yellow-500">SINERGI</span>
           </h1>
-          <p className="whitespace-pre-line text-base md:text-lg md:tracking-wider font-light">
-            Selamat datang di aplikasi pengelolaan surat{" "}
-            <span className="inline md:hidden">Desa Margaasih</span>
-          </p>
-          <p className="hidden md:inline whitespace-pre-line text-base md:text-lg md:tracking-wider font-light">
-            Desa Margaasih
+          <p className="whitespace-pre-line text-sm sm:text-base md:tracking-wider font-light">
+            Selamat datang sky, di aplikasi pengelolaan surat Desa Margaasih
           </p>
         </div>
-        <div className="w-full self-end basis-[40%]">
+        <div className="relative -z-10 w-full self-end basis-[40%]">
           <Image
             src="/kades-&-istri.png"
             alt="Kades bersama istrinya"
