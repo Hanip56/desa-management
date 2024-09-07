@@ -56,11 +56,11 @@ export const columns = (toggleSortDate: () => void) => {
       accessorKey: "role",
       header: "Role",
     },
-    // {
-    //   id: "actions",
-    //   header: "",
-    //   cell: ({ row }) => <CellAction data={row.original} />,
-    // },
+    {
+      id: "actions",
+      header: "",
+      cell: ({ row }) => <CellAction data={row.original} />,
+    },
   ];
 
   return columns;

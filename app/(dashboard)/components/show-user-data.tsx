@@ -1,3 +1,5 @@
+"use client";
+
 import NextJsImage from "@/components/nextjs-image";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -10,9 +12,11 @@ import "yet-another-react-lightbox/styles.css";
 const ShowUserData = ({
   ktpUrl,
   kkUrl,
+  title = "Data pemohon",
 }: {
   ktpUrl: string | undefined;
   kkUrl: string | undefined;
+  title?: string;
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -36,7 +40,7 @@ const ShowUserData = ({
       />
       <div className="sm:p-6 sm:border mb-6">
         <div className="p-4 bg-muted flex flex-col sm:flex-row gap-2 justify-center items-center">
-          <h2 className="text-center text-lg font-semibold">Data pemohon</h2>
+          <h2 className="text-center text-lg font-semibold">{title}</h2>
           <Button
             size="sm"
             variant="outline"

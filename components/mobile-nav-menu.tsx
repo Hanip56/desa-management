@@ -20,6 +20,7 @@ import {
 import { useEffect, useState } from "react";
 import Logo from "./logo";
 import MobileLogoutBtn from "./mobile-logout-btn";
+import { useSession } from "next-auth/react";
 
 const LinkItem = ({
   href,
@@ -45,6 +46,7 @@ const LinkItem = ({
 );
 
 const MobileNavMenu = ({ routes }: { routes: Route[] }) => {
+  const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -57,6 +59,12 @@ const MobileNavMenu = ({ routes }: { routes: Route[] }) => {
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  if (
+    session?.user.role === "USER" &&
+    (!session.user.ktpUrl || !session.user.kkUrl)
+  )
+    return;
 
   return (
     <Sheet open={open} onOpenChange={handleChange}>

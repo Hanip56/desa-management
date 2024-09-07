@@ -78,6 +78,41 @@ export const updateUser = async ({
   }
 };
 
+type CreateParams = {
+  username: string;
+  nomorWa: string;
+  password: string;
+  role: string;
+};
+
+export const createUser = async ({
+  username,
+  nomorWa,
+  password,
+  role,
+}: CreateParams) => {
+  try {
+    const response = await axiosInstance.post<User>(`/users`, {
+      username,
+      nomorWa,
+      password,
+      role,
+    });
+
+    return response.data;
+  } catch (error) {
+    if ((error as any)?.response?.data) {
+      throw new Error(`API error: ${(error as any)?.response?.data}`);
+    }
+
+    if (axios.isAxiosError(error)) {
+      throw new Error(`Axios error: ${error.message}`);
+    } else {
+      throw new Error(`Unexpected error: ${error}`);
+    }
+  }
+};
+
 export const patchUser = async ({
   ktpFile,
   kkFile,
@@ -100,6 +135,20 @@ export const patchUser = async ({
     });
 
     const response = await axiosInstance.patch<User>(`/users`, formData);
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(`Axios error: ${error.message}`);
+    } else {
+      throw new Error(`Unexpected error: ${error}`);
+    }
+  }
+};
+
+export const deleteUser = async ({ userId }: { userId: string }) => {
+  try {
+    const response = await axiosInstance.delete(`/users/${userId}`);
 
     return response.data;
   } catch (error) {

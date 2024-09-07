@@ -24,7 +24,7 @@ const Profil = async () => {
 
   return (
     <main>
-      <Header title="Profil" subtitle="Aplikasi pengelolaan desa Margaasih" />
+      <Header title="Profil" withBreadcrumb />
 
       <ProfilClient ktpUrl={ktpUrl} kkUrl={kkUrl} />
     </main>

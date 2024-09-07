@@ -26,10 +26,7 @@ const Pengaturan = async () => {
 
   return (
     <main>
-      <Header
-        title="Pengaturan"
-        subtitle="Aplikasi pengelolaan desa Margaasih"
-      />
+      <Header title="Pengaturan" withBreadcrumb />
 
       <PengaturanClient setting={setting} />
     </main>

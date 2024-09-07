@@ -20,7 +20,8 @@ export default async function Home() {
             MAJU MANDIRI <span className="text-yellow-500">SINERGI</span>
           </h1>
           <p className="whitespace-pre-line text-sm sm:text-base md:tracking-wider font-light">
-            Selamat datang sky, di aplikasi pengelolaan surat Desa Margaasih
+            Selamat datang {user?.username}, di aplikasi pengelolaan surat Desa
+            Margaasih
           </p>
         </div>
         <div className="relative -z-10 w-full self-end basis-[40%]">

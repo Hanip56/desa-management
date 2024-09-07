@@ -58,3 +58,52 @@ export async function PUT(
     return new NextResponse("Internal error", { status: 500 });
   }
 }
+
+// DELETE USER
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const session = await auth();
+
+    if (!session) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    if (session.user.role === "USER") {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: params.id,
+      },
+    });
+
+    if (!user) {
+      return new NextResponse("User not found", { status: 404 });
+    }
+
+    if (user.role === "SUPERADMIN") {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
+
+    if (user.role === session.user.role) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
+
+    await prisma.user.delete({
+      where: {
+        id: params.id,
+      },
+    });
+
+    return NextResponse.json(`User with id:${params.id} has been deleted`, {
+      status: 200,
+    });
+  } catch (error) {
+    console.log("[DELETE_USER]", error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}

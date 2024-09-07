@@ -5,6 +5,7 @@ import {
   uploadFileToCloudinary,
 } from "@/lib/server-utils";
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
 
 // GET ALL USERS
 export async function GET(req: NextRequest) {
@@ -58,6 +59,54 @@ export async function GET(req: NextRequest) {
     });
   } catch (error) {
     console.log("[GET_ALL_USERS]", error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}
+
+// CREATE USER
+export async function POST(req: NextRequest) {
+  try {
+    const session = await auth();
+
+    if (!session) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    if (session.user.role !== "SUPERADMIN") {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
+
+    const { username, nomorWa, password, role } = await req.json();
+
+    if (!username || !nomorWa || !password || !role) {
+      return new NextResponse(
+        "Required field is missing; *username *nomorWa *password *role",
+        { status: 400 }
+      );
+    }
+
+    const userExist = await prisma.user.findUnique({
+      where: { nomorWa: nomorWa },
+    });
+
+    if (userExist) {
+      return new NextResponse("Nomor WA sudah digunakan", { status: 400 });
+    }
+
+    const hashPass = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        username,
+        nomorWa,
+        password: hashPass,
+        role,
+      },
+    });
+
+    return NextResponse.json({ ...user, password: undefined });
+  } catch (error) {
+    console.log("[POST_USERS]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

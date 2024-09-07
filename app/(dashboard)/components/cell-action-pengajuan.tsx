@@ -35,7 +35,7 @@ const CellActionPengajuan = ({ handleDelete, id, status }: Props) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {(session?.user.role === "ADMIN" || status !== "DIPROSES") && (
+        {(session?.user.role !== "USER" || status !== "DIPROSES") && (
           <DropdownMenuItem asChild>
             <Link href={`${pengajuan}/${id}`} className="flex items-center">
               <ScanSearch className="mr-2 size-4" /> Lihat Detail

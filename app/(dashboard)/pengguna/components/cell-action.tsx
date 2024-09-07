@@ -7,12 +7,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, Trash } from "lucide-react";
+import { MoreHorizontal, ScanSearch, Trash } from "lucide-react";
 import { ColumnsType } from "./columns";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteSuratKematian } from "@/fetcher/surat-kematian-fetcher";
 import { toast } from "sonner";
+import { deleteUser } from "@/fetcher/user-fetcher";
+import Link from "next/link";
 
 type CellActionProps = {
   data: ColumnsType;
@@ -22,22 +23,22 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const queryClient = useQueryClient();
   const [ConfirmationDialog, confirm] = useConfirm(
     "Apa anda yakin?",
-    "Anda akan membatalkan pengajuan ini"
+    "Anda akan menghapus pengguna ini"
   );
 
   const deleteMutation = useMutation({
-    mutationFn: deleteSuratKematian,
+    mutationFn: deleteUser,
     onSuccess: (data) => {
-      toast("Data berhasil dibatalkan.", {
+      toast("Pengguna berhasil dihapus.", {
         className: "text-emerald-600 font-semibold",
       });
 
       queryClient.invalidateQueries({
-        queryKey: ["surat-kematians"],
+        queryKey: ["users"],
       });
     },
     onError: (error) => {
-      toast("Data gagal dibatalkan.", {
+      toast("Pengguna gagal dihapus.", {
         className: "text-rose-600 font-semibold",
       });
       console.log(error);
@@ -50,7 +51,7 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
     if (!ok) return;
 
     deleteMutation.mutate({
-      id: data.id,
+      userId: data.id,
     });
   };
 
@@ -65,6 +66,11 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          <DropdownMenuItem asChild>
+            <Link href={`pengguna/${data.id}`} className="flex items-center">
+              <ScanSearch className="mr-2 size-4" /> Lihat Detail
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={handleDelete}>
             <Trash className="mr-2 size-4" /> Hapus
           </DropdownMenuItem>

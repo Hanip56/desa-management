@@ -12,7 +12,7 @@ const Pengguna = async () => {
 
   return (
     <main>
-      <Header title="Pengguna" subtitle="Aplikasi pengelolaan desa Margaasih" />
+      <Header title="Pengguna" withBreadcrumb />
 
       <PenggunaClient />
     </main>

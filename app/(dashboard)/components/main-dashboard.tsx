@@ -30,8 +30,6 @@ export default async function MainDashboard() {
     pendaftaranPindahWniCount,
   } = await getCountedPengajuan();
 
-  console.log({ total, totalDiproses, totalDiterima });
-
   return (
     <>
       <div className="-mt-8">

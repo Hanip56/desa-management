@@ -12,8 +12,10 @@ import CardError from "../../components/card-error";
 import { columns, ColumnsType } from "./columns";
 import { DataTable } from "@/components/data-table";
 import { useNavigate } from "@/hooks/use-navigate";
+import { useSession } from "next-auth/react";
 
 const PenggunaClient = () => {
+  const { data: session } = useSession();
   const [
     page,
     handleNext,
@@ -56,11 +58,13 @@ const PenggunaClient = () => {
         <div className="text-center md:text-start">
           <CardTitle className="text-xl">Daftar Pengguna</CardTitle>
         </div>
-        {/* <Button asChild className="w-full md:w-fit">
-          <Link href="surat-kematian/formulir">
-            <Plus className="w-5 h-5 mr-2 " /> Buat pengguna
-          </Link>
-        </Button> */}
+        {session?.user.role === "SUPERADMIN" && (
+          <Button asChild className="w-full md:w-fit">
+            <Link href="pengguna/formulir">
+              <Plus className="w-5 h-5 mr-2 " /> Buat pengguna
+            </Link>
+          </Button>
+        )}
       </CardHeader>
       <CardContent>
         <DataTable
