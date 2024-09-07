@@ -17,22 +17,22 @@ export const DataGrid = ({ data1, data2, data3 }: Props) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8">
       <DataCard
-        title="Pengajuan"
+        title="Masuk"
         value={data1}
         icon={HiDocumentArrowDown}
+        variant="default"
+      />
+      <DataCard
+        title="Diproses"
+        value={data2}
+        icon={HiDocumentMinus}
         variant="warning"
       />
       <DataCard
-        title="Penyetujuan"
-        value={data2}
+        title="Diterima"
+        value={data3}
         icon={HiDocumentCheck}
         variant="success"
-      />
-      <DataCard
-        title="Penolakan"
-        value={data3}
-        icon={HiDocumentMinus}
-        variant="danger"
       />
     </div>
   );

@@ -3,79 +3,39 @@ import { DataCardLoading } from "./data-card";
 import { DataGrid } from "./data-grid";
 import LatestPengajuan, { LatestPengajuanSkeleton } from "./latest-pengajuan";
 import PengajuanChart from "./pengajuan-chart";
-import prisma from "@/db/prisma";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Suspense } from "react";
+import { getCountedPengajuan } from "@/lib/server-utils";
 
 export default async function MainDashboard() {
-  const suratKelahiranMasuk = await prisma.suratKelahiran.count();
-  const suratKematianMasuk = await prisma.suratKematian.count();
-  const skBelumMenikahMasuk = await prisma.skBelumMenikah.count();
-  const skPenghasilanOrangTuaMasuk = await prisma.skPenghasilanOrangTua.count();
-  const skIjinKeramaianMasuk = await prisma.skIjinKeramaian.count();
+  const {
+    total,
+    totalDiproses,
+    totalDiterima,
 
-  const suratKelahiranDiterima = await prisma.suratKelahiran.count({
-    where: { status: "DITERIMA" },
-  });
-  const suratKematianDiterima = await prisma.suratKematian.count({
-    where: { status: "DITERIMA" },
-  });
-  const skBelumMenikahDiterima = await prisma.skBelumMenikah.count({
-    where: { status: "DITERIMA" },
-  });
-  const skPenghasilanOrangTuaDiterima =
-    await prisma.skPenghasilanOrangTua.count({
-      where: { status: "DITERIMA" },
-    });
-  const skIjinKeramaianDiterima = await prisma.skIjinKeramaian.count({
-    where: { status: "DITERIMA" },
-  });
+    suratKelahiranCount,
+    suratKematianCount,
+    skBelumMenikahCount,
+    skIjinKeramaianCount,
+    skPenghasilanOrangTuaCount,
+    skIzinBekerjaCount,
+    skBelumMemilikiRumahCount,
+    skTidakMemilikiPekerjaanCount,
+    skUsahaCount,
+    skDomisiliLembagaCount,
+    skDomisiliImigrasiCount,
+    skDomisiliSementaraCount,
+    skTidakMampuCount,
+    suratRekomendasiPembelianBbmCount,
+    pendaftaranPindahWniCount,
+  } = await getCountedPengajuan();
 
-  const suratKelahiranDitolak = await prisma.suratKelahiran.count({
-    where: { status: "DITOLAK" },
-  });
-  const suratKematianDitolak = await prisma.suratKematian.count({
-    where: { status: "DITOLAK" },
-  });
-  const skBelumMenikahDitolak = await prisma.skBelumMenikah.count({
-    where: { status: "DITOLAK" },
-  });
-  const skPenghasilanOrangTuaDitolak = await prisma.skPenghasilanOrangTua.count(
-    {
-      where: { status: "DITOLAK" },
-    }
-  );
-  const skIjinKeramaianDitolak = await prisma.skIjinKeramaian.count({
-    where: { status: "DITOLAK" },
-  });
-
-  const jumlahSuratMasuk =
-    suratKelahiranMasuk +
-    suratKematianMasuk +
-    skBelumMenikahMasuk +
-    skPenghasilanOrangTuaMasuk +
-    skIjinKeramaianMasuk;
-  const jumlahSuratDiterima =
-    suratKelahiranDiterima +
-    suratKematianDiterima +
-    skBelumMenikahDiterima +
-    skPenghasilanOrangTuaDiterima +
-    skIjinKeramaianDiterima;
-  const jumlahSuratDitolak =
-    suratKelahiranDitolak +
-    suratKematianDitolak +
-    skBelumMenikahDitolak +
-    skPenghasilanOrangTuaDitolak +
-    skIjinKeramaianDitolak;
+  console.log({ total, totalDiproses, totalDiterima });
 
   return (
     <>
       <div className="-mt-8">
-        <DataGrid
-          data1={jumlahSuratMasuk}
-          data2={jumlahSuratDiterima}
-          data3={jumlahSuratDitolak}
-        />
+        <DataGrid data1={total} data2={totalDiproses} data3={totalDiterima} />
       </div>
 
       <div className="w-full flex items-start flex-col md:flex-row gap-4">
@@ -86,11 +46,23 @@ export default async function MainDashboard() {
         </div>
         <div className="w-full md:w-80 h-full">
           <PengajuanChart
-            suratKelahiranCount={suratKelahiranMasuk}
-            skBelumMenikahCount={skBelumMenikahMasuk}
-            skIjinKeramaianCount={skIjinKeramaianMasuk}
-            skPenghasilanOrangTuaCount={skPenghasilanOrangTuaMasuk}
-            suratKematianCount={suratKematianMasuk}
+            suratKelahiranCount={suratKelahiranCount}
+            suratKematianCount={suratKematianCount}
+            skBelumMenikahCount={skBelumMenikahCount}
+            skIjinKeramaianCount={skIjinKeramaianCount}
+            skPenghasilanOrangTuaCount={skPenghasilanOrangTuaCount}
+            skIzinBekerjaCount={skIzinBekerjaCount}
+            skBelumMemilikiRumahCount={skBelumMemilikiRumahCount}
+            skTidakMemilikiPekerjaanCount={skTidakMemilikiPekerjaanCount}
+            skUsahaCount={skUsahaCount}
+            skDomisiliLembagaCount={skDomisiliLembagaCount}
+            skDomisiliImigrasiCount={skDomisiliImigrasiCount}
+            skDomisiliSementaraCount={skDomisiliSementaraCount}
+            skTidakMampuCount={skTidakMampuCount}
+            suratRekomendasiPembelianBbmCount={
+              suratRekomendasiPembelianBbmCount
+            }
+            pendaftaranPindahWniCount={pendaftaranPindahWniCount}
           />
         </div>
       </div>

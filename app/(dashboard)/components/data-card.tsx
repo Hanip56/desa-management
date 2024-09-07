@@ -68,7 +68,7 @@ export const DataCard = ({
           +<CountUp preserveValue start={0} end={value} />
         </h3>
         <p className={"text-muted-foreground text-sm line-clamp-1"}>
-          diperoleh dari bulan ini
+          Perolehan data yang masuk
         </p>
       </CardContent>
     </Card>
