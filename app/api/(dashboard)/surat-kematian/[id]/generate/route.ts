@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import { generateSuratKematian } from "@/services/surat-kematian-generate";
 import { NextRequest, NextResponse } from "next/server";
@@ -6,6 +7,14 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = await auth();
+  const mobileAppSecret =
+    req.nextUrl.searchParams.get("mobile-app-secret") || "";
+
+  if (!session && mobileAppSecret !== process.env.MOBILE_APP_SECRET) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
   try {
     const suratKematian = await prisma.suratKematian.findUnique({
       where: { id: params.id },

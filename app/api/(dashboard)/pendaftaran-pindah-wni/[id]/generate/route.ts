@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import { generatePendaftaranPindahWni } from "@/services/pendaftaran-pindah-wni-generate";
 import { PendaftaranPindahWni } from "@prisma/client";
@@ -7,6 +8,13 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = await auth();
+  const mobileAppSecret =
+    req.nextUrl.searchParams.get("mobile-app-secret") || "";
+
+  if (!session && mobileAppSecret !== process.env.MOBILE_APP_SECRET) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
   try {
     const pendaftaranPindahWni = await prisma.pendaftaranPindahWni.findUnique({
       where: { id: params.id },
