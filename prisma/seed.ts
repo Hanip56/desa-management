@@ -29,21 +29,21 @@ async function main() {
   });
 
   const sky = await prisma.user.upsert({
-    where: { nomorWa: "0123456789" },
+    where: { nomorWa: "08123456789" },
     update: {},
     create: {
-      nomorWa: "0123456789",
+      nomorWa: "08123456789",
       username: "Sky",
       password: hashPass,
-      role: "ADMIN",
+      role: "SUPERADMIN",
     },
   });
 
   const alice = await prisma.user.upsert({
-    where: { nomorWa: "09876543211" },
+    where: { nomorWa: "08876543211" },
     update: {},
     create: {
-      nomorWa: "09876543211",
+      nomorWa: "08876543211",
       username: "Alice",
       password: hashPass,
       role: "USER",
@@ -65,10 +65,10 @@ async function main() {
     },
   });
   const bob = await prisma.user.upsert({
-    where: { nomorWa: "09876543212" },
+    where: { nomorWa: "08876543212" },
     update: {},
     create: {
-      nomorWa: "09876543212",
+      nomorWa: "08876543212",
       username: "Bob",
       password: hashPass,
       suratKematians: {
@@ -90,10 +90,10 @@ async function main() {
   });
 
   const wise = await prisma.user.upsert({
-    where: { nomorWa: "09876543213" },
+    where: { nomorWa: "08876543213" },
     update: {},
     create: {
-      nomorWa: "09876543213",
+      nomorWa: "08876543213",
       username: "Wise",
       password: hashPass,
       suratKelahirans: {

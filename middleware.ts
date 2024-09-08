@@ -6,13 +6,18 @@ import {
   generateRouteAffix,
 } from "./routes";
 
-export default auth((req) => {
+export default auth(async (req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
   const isAuthRoutes = authRoutes.includes(nextUrl.pathname);
   const isApiRoutes = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isGenerateRoutes = nextUrl.pathname.endsWith(generateRouteAffix);
+
+  // route for check if user exist in DB
+  if (nextUrl.pathname === "/api/users/check") {
+    return;
+  }
 
   if (isGenerateRoutes) {
     return;
@@ -32,6 +37,17 @@ export default auth((req) => {
 
   if (!isLoggedIn) {
     return Response.redirect(new URL("/masuk", nextUrl));
+  }
+
+  // check if user exist in DB every api request
+  if (nextUrl.pathname !== "/logout") {
+    const checkUserResponse = await fetch(
+      `${nextUrl.origin}/api/users/check?id=${req.auth?.user.id}`
+    );
+
+    if (checkUserResponse.status === 404) {
+      return Response.redirect(new URL("/logout", nextUrl));
+    }
   }
 
   return;
