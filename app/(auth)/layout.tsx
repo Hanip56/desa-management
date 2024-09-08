@@ -19,7 +19,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
               <div className="relative">
                 <div className="absolute h-[5%] w-full bottom-0 bg-gradient-to-b from-transparent to-emerald-600" />
                 <Image
-                  src="/Bupati.png"
+                  src="/bupati.png"
                   alt="dokumen"
                   width={1000}
                   height={1000}

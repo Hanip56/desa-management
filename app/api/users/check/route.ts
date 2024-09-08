@@ -1,12 +1,9 @@
-import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
     const userId = req.nextUrl.searchParams.get("id");
-
-    console.log("checked");
 
     if (!userId) {
       return new NextResponse("userId not found", { status: 400 });
