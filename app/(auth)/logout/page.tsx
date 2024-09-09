@@ -5,10 +5,7 @@ import React, { useEffect } from "react";
 
 const LogoutPage = () => {
   useEffect(() => {
-    signOut({
-      redirect: true,
-      callbackUrl: "/masuk",
-    });
+    signOut();
   }, []);
 
   return <div></div>;

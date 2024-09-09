@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import Modal from "@/components/ui/modal";
 import { patchUser } from "@/fetcher/user-fetcher";
-import { reloadSession } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Plus, Trash } from "lucide-react";
@@ -83,8 +82,6 @@ const UploadDocumentDialog = ({ open, handleClose }: Props) => {
       handleClose();
       update({ ktpUrl: data.ktpUrl, kkUrl: data.kkUrl });
       form.reset();
-      reloadSession();
-      router.refresh();
     },
     onError: (error) => {
       toast("Dokumen gagal diunggah.", {

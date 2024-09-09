@@ -82,6 +82,11 @@ export async function PUT(
       return new NextResponse("Forbidden", { status: 403 });
     }
 
+    // if status 'diterima' user cannot edit
+    if (session.user.role === "USER" && skUsaha.status === "DITERIMA") {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
+
     const body = await req.json();
 
     // disabled some field when update

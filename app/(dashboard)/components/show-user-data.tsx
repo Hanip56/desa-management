@@ -12,7 +12,7 @@ import "yet-another-react-lightbox/styles.css";
 const ShowUserData = ({
   ktpUrl,
   kkUrl,
-  title = "Data pemohon",
+  title = "Dokumen pemohon",
 }: {
   ktpUrl: string | undefined;
   kkUrl: string | undefined;
