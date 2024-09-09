@@ -54,7 +54,7 @@ const ShowData = ({ data }: Props) => {
               label="Hari/Tanggal"
               value={DateToDayAndDate(data.tanggal)}
             />
-            <SemiField label="Waktu" value={DatetoTime(data.tanggal)} />
+            <SemiField label="Waktu" value={`${DatetoTime(data.tanggal)}`} />
             <SemiField label="Penyebab" value={data.penyebab} />
             <SemiField label="Tempat" value={data.tempat} />
           </div>

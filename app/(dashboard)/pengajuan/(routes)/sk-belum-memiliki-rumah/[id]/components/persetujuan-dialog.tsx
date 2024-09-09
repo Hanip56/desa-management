@@ -40,10 +40,12 @@ const formSchema = z.object({
 const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
   const router = useRouter();
   const queryClient = useQueryClient();
+
+  const noSuratDefault = `S.41/.../PEM/${new Date().getFullYear()}`;
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      noSurat: "S.41/.../PEM/2024",
+      noSurat: noSuratDefault,
       tanggal: undefined,
     },
   });
@@ -106,7 +108,7 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="S.21/.../PEM/2024"
+                    placeholder={noSuratDefault}
                     disabled={disabledCondition}
                   />
                 </FormControl>

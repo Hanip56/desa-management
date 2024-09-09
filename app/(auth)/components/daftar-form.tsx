@@ -64,7 +64,7 @@ const DaftarForm = () => {
             toast("Daftar telah berhasil!", {
               className: "text-emerald-600 font-semibold",
               description:
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero neque ducimus doloremque.",
+                "Selamat datang di aplikasi pengelolaan surat desa margaasih, silahkan masukan dokumen anda terlebih dahulu.",
               descriptionClassName: "text-slate-600",
             });
             window.location.href = "/";

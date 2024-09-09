@@ -87,7 +87,7 @@ export const generateSkIjinKeramaian = async (
     `${DateToDayAndDate(data.waktu)}, ${data.maksud}`,
     16
   );
-  pColon("Pukul", DatetoTime(data.waktu), 18);
+  pColon("Pukul", `${DatetoTime(data.waktu)}`, 18);
   pColon("Alamat", data.alamat, 20);
 
   pJustify(

@@ -12,7 +12,11 @@ type PendaftaranPindahWniWithAnggotaForDB = Omit<
   "tanggalPembuatan" | "anggotaPindah"
 > & {
   tanggalPembuatan: string;
-  anggotaPindah: Partial<AnggotaPindahWni>[];
+  anggotaPindah: Partial<
+    Omit<AnggotaPindahWni, "masaBerlakuKtp"> & {
+      masaBerlakuKtp: string;
+    }
+  >[];
 };
 
 type GetAllParams = {

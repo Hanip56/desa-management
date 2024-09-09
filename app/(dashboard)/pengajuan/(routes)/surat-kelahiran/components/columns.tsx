@@ -42,7 +42,7 @@ export const columns = (toggleSortDate: () => void) => {
     },
     {
       accessorKey: "nama",
-      header: "Nama",
+      header: "Nama (yg lahir)",
     },
     {
       accessorKey: "alamat",

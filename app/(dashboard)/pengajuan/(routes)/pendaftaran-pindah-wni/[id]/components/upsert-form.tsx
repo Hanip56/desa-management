@@ -37,6 +37,7 @@ import { useState } from "react";
 import ListAnggotaPindah from "./list-anggota-pindah";
 import { Plus } from "lucide-react";
 import { maxLengthInput } from "@/contants";
+import { dateTimeToISO } from "@/lib/utils";
 
 type Props = {
   initialData?: PendaftaranPindahWniWithUser | null;
@@ -121,18 +122,22 @@ const UpsertForm = ({ initialData }: Props) => {
   const onSubmit = async (
     values: z.infer<typeof pendaftaranPindahWniSchema>
   ) => {
+    const body = {
+      ...values,
+      anggotaPindah: values.anggotaPindah.map((anggota) => ({
+        ...anggota,
+        masaBerlakuKtp: dateTimeToISO(anggota.masaBerlakuKtp),
+      })),
+    };
+
     if (initialData) {
       updateMutation.mutate({
-        body: {
-          ...values,
-        },
+        body,
         id: initialData.id,
       });
     } else {
       createMutation.mutate({
-        body: {
-          ...values,
-        },
+        body,
       });
     }
   };

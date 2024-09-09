@@ -106,6 +106,7 @@ const UpsertForm = ({ initialData }: Props) => {
         body: {
           ...values,
           tanggalLahir: dateTimeToISO(values.tanggalLahir),
+          tanggalLahirOrangTua: dateTimeToISO(values.tanggalLahirOrangTua),
         },
         id: initialData.id,
       });
@@ -114,6 +115,7 @@ const UpsertForm = ({ initialData }: Props) => {
         body: {
           ...values,
           tanggalLahir: dateTimeToISO(values.tanggalLahir),
+          tanggalLahirOrangTua: dateTimeToISO(values.tanggalLahirOrangTua),
         },
       });
     }

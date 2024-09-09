@@ -24,14 +24,15 @@ const ShowData = ({ data }: Props) => {
               value={formatDate(data.tanggalLahir)}
             />
             <SemiField label="jabatan" value={data.jabatan} />
+            <SemiField label="Alamat" value={data.alamat} />
           </div>
         </div>
         {/* keterangan lembaga */}
         <div>
           <h2 className="text-xl font-medium mb-5">Keterangan lembaga</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-x-6 md:gap-y-4">
-            <SemiField label="Nama lembaga" value={data.alamat} />
-            <SemiField label="Alamat lembaga" value={data.alamat} />
+            <SemiField label="Nama lembaga" value={data.namaLembaga} />
+            <SemiField label="Alamat lembaga" value={data.alamatLembaga} />
           </div>
         </div>
       </div>

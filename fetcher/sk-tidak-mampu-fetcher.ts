@@ -6,9 +6,10 @@ import { SkTidakMampuWithUser } from "@/types";
 
 type SkTidakMampuForDB = Omit<
   SkTidakMampu,
-  "tanggalLahir" | "tanggalPembuatan" | ""
+  "tanggalLahir" | "tanggalPembuatan" | "tanggalLahirOrangTua"
 > & {
   tanggalLahir: string;
+  tanggalLahirOrangTua: string;
   tanggalPembuatan: string;
 };
 

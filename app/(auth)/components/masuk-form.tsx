@@ -41,7 +41,7 @@ const MasukForm = () => {
           toast("Selamat datang kembali!", {
             className: "text-emerald-600 font-semibold",
             description:
-              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero neque ducimus doloremque.",
+              "Aplikasi pengelolaan surat desa Margaasih, Buat surat pengajuan secara online.",
             descriptionClassName: "text-slate-600",
           });
           window.location.href = "/";

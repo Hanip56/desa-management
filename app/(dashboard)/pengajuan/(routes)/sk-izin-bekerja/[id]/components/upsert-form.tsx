@@ -106,6 +106,7 @@ const UpsertForm = ({ initialData }: Props) => {
   const onSubmit = async (values: z.infer<typeof skIzinBekerjaSchema>) => {
     const body = {
       ...values,
+      waktuIzin: undefined,
       tanggalLahir: dateTimeToISO(values.tanggalLahir),
       izinDariHari: dateTimeToISO(values.waktuIzin.from),
       izinSampaiHari: values.waktuIzin.to

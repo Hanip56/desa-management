@@ -91,7 +91,7 @@ export const generateSuratKematian = async (
 
   p("Telah meninggal dunia pada :", 30);
   pColon(`Hari/Tanggal`, DateToDayAndDate(data.tanggal), 33);
-  pColon(`Waktu`, DatetoTime(data.tanggal), 35);
+  pColon(`Waktu`, `${DatetoTime(data.tanggal)}`, 35);
   pColon(`Penyebab`, data.penyebab, 37);
   pColon(`Tempat`, data.tempat, 39);
   p(`Meninggal`, 41);
