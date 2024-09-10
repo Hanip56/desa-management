@@ -36,33 +36,33 @@ export const latestPengajuanColumn: ColumnDef<Info>[] = [
 const LatestPengajuan = async () => {
   const latestRecords: any = await prisma.$queryRaw`
   SELECT * FROM (
-    SELECT id,'Surat kelahiran' as jenis, "status", "createdAt" FROM "SuratKelahiran"
+    SELECT id,'Surat kelahiran' as jenis, "status", "createdAt" FROM "SuratKelahiran" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Surat kematian' as jenis, "status", "createdAt" FROM "SuratKematian"
+    SELECT id,'Surat kematian' as jenis, "status", "createdAt" FROM "SuratKematian" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Sk ijin keramain' as jenis, "status", "createdAt" FROM "SkIjinKeramaian"
+    SELECT id,'Sk ijin keramain' as jenis, "status", "createdAt" FROM "SkIjinKeramaian" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Sk belum menikah' as jenis, "status", "createdAt" FROM "SkBelumMenikah"
+    SELECT id,'Sk belum menikah' as jenis, "status", "createdAt" FROM "SkBelumMenikah" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Sk penghasilan orang tua' as jenis, "status", "createdAt" FROM "SkPenghasilanOrangTua"
+    SELECT id,'Sk penghasilan orang tua' as jenis, "status", "createdAt" FROM "SkPenghasilanOrangTua" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Sk izin bekerja' as jenis, "status", "createdAt" FROM "SkIzinBekerja"
+    SELECT id,'Sk izin bekerja' as jenis, "status", "createdAt" FROM "SkIzinBekerja" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Sk belum memiliki rumah' as jenis, "status", "createdAt" FROM "SkBelumMemilikiRumah"
+    SELECT id,'Sk belum memiliki rumah' as jenis, "status", "createdAt" FROM "SkBelumMemilikiRumah" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Sk tidak memiliki pekerjaan' as jenis, "status", "createdAt" FROM "SkTidakMemilikiPekerjaan"
+    SELECT id,'Sk tidak memiliki pekerjaan' as jenis, "status", "createdAt" FROM "SkTidakMemilikiPekerjaan" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Sk usaha' as jenis, "status", "createdAt" FROM "SkUsaha"
+    SELECT id,'Sk usaha' as jenis, "status", "createdAt" FROM "SkUsaha" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Sk domisili lembaga' as jenis, "status", "createdAt" FROM "SkDomisiliLembaga"
+    SELECT id,'Sk domisili lembaga' as jenis, "status", "createdAt" FROM "SkDomisiliLembaga" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Sk domisili imigrasi' as jenis, "status", "createdAt" FROM "SkDomisiliImigrasi"
+    SELECT id,'Sk domisili imigrasi' as jenis, "status", "createdAt" FROM "SkDomisiliImigrasi" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Sk domisili sementara' as jenis, "status", "createdAt" FROM "SkDomisiliSementara"
+    SELECT id,'Sk domisili sementara' as jenis, "status", "createdAt" FROM "SkDomisiliSementara" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Sk tidak mampu' as jenis, "status", "createdAt" FROM "SkTidakMampu"
+    SELECT id,'Sk tidak mampu' as jenis, "status", "createdAt" FROM "SkTidakMampu" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Surat rekomendasi pembelian bbm' as jenis, "status", "createdAt" FROM "SuratRekomendasiPembelianBbm"
+    SELECT id,'Surat rekomendasi pembelian bbm' as jenis, "status", "createdAt" FROM "SuratRekomendasiPembelianBbm" WHERE "status" = 'DIPROSES'
     UNION ALL
     SELECT id,'Pendaftaran pindah wni' as jenis, "status", "createdAt" FROM "PendaftaranPindahWni"
   ) AS combined
@@ -83,7 +83,7 @@ const LatestPengajuan = async () => {
   return (
     <Card className="w-full h-full">
       <CardHeader>
-        <CardTitle>Pengajuan terbaru</CardTitle>
+        <CardTitle>Pengajuan diproses terbaru</CardTitle>
       </CardHeader>
       <CardContent>
         <DataTableSimple columns={latestPengajuanColumn} data={data} />

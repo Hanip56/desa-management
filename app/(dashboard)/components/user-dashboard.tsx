@@ -68,13 +68,13 @@ const PengajuanBeranda = () => {
                       <Image
                         src={
                           surat.type === "online"
-                            ? "/document-icon.png"
+                            ? "/document-icon-color.png"
                             : "/document-icon-bw.png"
                         }
                         alt="document icon"
                         width={500}
                         height={500}
-                        className="size-20 sm:size-28 md:size-40 object-contain"
+                        className="size-20 sm:size-28 md:size-32 object-contain"
                       />
                       <p className="font-medium text-center text-xs sm:text-base">
                         {surat.name}

@@ -18,21 +18,21 @@ import {
 } from "@/components/ui/chart";
 
 const chartColors = [
-  "#1f77b4", // Blue
-  "#ff7f0e", // Orange
-  "#2ca02c", // Green
-  "#d62728", // Red
-  "#9467bd", // Purple
-  "#8c564b", // Brown
-  "#e377c2", // Pink
-  "#7f7f7f", // Gray
-  "#bcbd22", // Olive
-  "#17becf", // Teal
-  "#e41a1c", // Red
-  "#377eb8", // Blue
-  "#4daf4a", // Green
-  "#ff9933", // Orange
-  "#a65628", // Brown
+  "#E76E50",
+  "#2A9D90",
+  "#F4A462",
+  "#E8C468",
+  "#264552",
+  "#F5D4A2",
+  "#A8DADC",
+  "#457B9D",
+  "#FFB4A2",
+  "#B5838D",
+  "#6A994E",
+  "#F2E8CF",
+  "#C6DEF1",
+  "#E63946",
+  "#1D3557",
 ];
 
 const chartConfig = {

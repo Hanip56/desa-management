@@ -282,9 +282,7 @@ const UpsertForm = ({ initialData }: Props) => {
           </div>
         </div>
         <div>
-          <h2 className="text-xl font-medium mb-6">
-            Keterangan orang tua (Ayah / Ibu)
-          </h2>
+          <h2 className="text-xl font-medium mb-6">Keterangan orang tua</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-x-6 md:gap-y-4">
             <FormField
               control={form.control}

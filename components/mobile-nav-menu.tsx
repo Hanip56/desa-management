@@ -40,7 +40,7 @@ const LinkItem = ({
           : "text-gray-600 hover:text-emerald-700"
       )}
     >
-      <span className="text-sm">{label}</span>
+      <span className="text-xs">{label}</span>
     </div>
   </Link>
 );
@@ -91,14 +91,14 @@ const MobileNavMenu = ({ routes }: { routes: Route[] }) => {
                       : "text-black hover:text-emerald-700"
                   )}
                 >
-                  <span className="text-sm">{route.label}</span>
+                  <span className="text-xs">{route.label}</span>
                 </div>
               </Link>
             ) : (
               <Accordion type="single" collapsible key={route.label}>
                 <AccordionItem
                   value="item-1"
-                  className="border-none py-1 px-4 text-sm text-black hover:text-black"
+                  className="border-none py-1 px-4 text-xs text-black hover:text-black"
                 >
                   <AccordionTrigger className="hover:no-underline hover:text-emerald-700 font-medium">
                     {route.label}
