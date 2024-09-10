@@ -8,7 +8,8 @@ export const generateSkDomisiliImigrasi = async (
   dataCb: (chunk: Uint8Array) => void,
   endCb: () => void,
   namaKepalaDesa?: string,
-  tte?: Uint8Array
+  tte?: Uint8Array,
+  namaCamat?: string | null
 ) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([595, 842]); // A4 size (595x842 points)
@@ -99,6 +100,15 @@ export const generateSkDomisiliImigrasi = async (
     indent + 10
   );
   p("berkepentingan menjadi tahu dan untuk dijadikan bahan seperlunya.", 41);
+
+  ttd(
+    635,
+    "left",
+    `Melihat:`,
+    "Camat Cicalengka",
+    namaCamat ?? "_________________",
+    ""
+  );
 
   ttd(
     635,

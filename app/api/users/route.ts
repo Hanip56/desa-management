@@ -36,12 +36,14 @@ export async function GET(req: NextRequest) {
     let total_items = await prisma.user.count({
       where: {
         id: { contains: search as string, mode: "insensitive" },
+        hidden: false,
       },
     });
 
     const users = await prisma.user.findMany({
       where: {
         id: { contains: search as string, mode: "insensitive" },
+        hidden: false,
       },
       take: limit,
       skip: (page - 1) * limit,

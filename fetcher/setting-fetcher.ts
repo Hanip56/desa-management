@@ -5,6 +5,8 @@ import axios from "axios";
 type UpdateSettingParams = {
   namaKepalaDesa?: string;
   tte?: string;
+  namaCamat?: string;
+  noRegCamat?: string;
   namaBabinsa?: string;
   pangkatBabinsa: string;
   nrpBabinsa: string;
@@ -18,6 +20,8 @@ type UpdateSettingParams = {
 export const updateSetting = async ({
   namaKepalaDesa,
   tte,
+  namaCamat,
+  noRegCamat,
   namaBabinsa,
   jabatanBabinsa,
   jabatanBhabinkamtibmas,
@@ -32,6 +36,8 @@ export const updateSetting = async ({
     const fields = {
       namaKepalaDesa,
       tte,
+      namaCamat,
+      noRegCamat,
       namaBabinsa,
       jabatanBabinsa,
       jabatanBhabinkamtibmas,

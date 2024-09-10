@@ -60,7 +60,9 @@ export async function GET(
       (chunk) => writer.write(chunk),
       () => writer.close(),
       setting?.namaKepalaDesa,
-      tte8
+      tte8,
+      setting?.namaCamat,
+      setting?.noRegCamat
     );
 
     return new NextResponse(readable, {

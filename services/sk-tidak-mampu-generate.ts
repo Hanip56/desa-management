@@ -8,7 +8,9 @@ export const generateSkTidakMampu = async (
   dataCb: (chunk: Uint8Array) => void,
   endCb: () => void,
   namaKepalaDesa?: string,
-  tte?: Uint8Array
+  tte?: Uint8Array,
+  namaCamat?: string | null,
+  noRegCamat?: string | null
 ) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([595, 842]); // A4 size (595x842 points)
@@ -107,9 +109,9 @@ export const generateSkTidakMampu = async (
   ttd(
     660,
     "left",
-    `No. Reg. ${data.noRegCamat ?? "......................."}`,
+    `No Reg. ${noRegCamat ?? "......................."}`,
     "Camat Cicalengka",
-    "",
+    namaCamat ?? "____________________",
     "",
     true
   );

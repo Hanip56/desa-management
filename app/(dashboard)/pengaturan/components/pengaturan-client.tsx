@@ -11,6 +11,7 @@ import { SettingClient } from "../page";
 import { base64ToFile } from "@/lib/utils";
 import EditBabinsaDialog from "./edit-babinsa-dialog";
 import EditBhabinkamtibmasDialog from "./edit-bhabinkamtibmas-dialog";
+import EditCamatDialog from "./edit-camat-dialog";
 
 type Props = {
   setting: SettingClient | null;
@@ -19,6 +20,7 @@ type Props = {
 const PengaturanClient = ({ setting }: Props) => {
   const [openEditNama, setOpenEditNama] = useState(false);
   const [openEditTte, setOpenEditTte] = useState(false);
+  const [openEditCamat, setOpenEditCamat] = useState(false);
   const [openEditBabinsa, setOpenEditBabinsa] = useState(false);
   const [openEditBhabinkamtibmas, setOpenEditBhabinkamtibmas] = useState(false);
   const [ttePreview, setTtePreview] = useState<File>();
@@ -52,6 +54,11 @@ const PengaturanClient = ({ setting }: Props) => {
             setting={setting}
             open={openEditTte}
             handleClose={() => setOpenEditTte(false)}
+          />
+          <EditCamatDialog
+            setting={setting}
+            open={openEditCamat}
+            handleClose={() => setOpenEditCamat(false)}
           />
           <EditBabinsaDialog
             setting={setting}
@@ -102,6 +109,19 @@ const PengaturanClient = ({ setting }: Props) => {
                 edit tte kepala desa
               </Button>
             </li>
+            <div className="p-4"></div>
+            <ListSetting
+              label="Nama Camat"
+              value={setting?.namaCamat ?? "-"}
+              actionLabel="edit camat"
+              action={() => setOpenEditCamat(true)}
+            />
+
+            <ListSetting
+              label="No Reg Camat"
+              value={setting?.noRegCamat ?? "-"}
+            />
+
             <div className="p-4"></div>
             <ListSetting
               label="Nama Babinsa"

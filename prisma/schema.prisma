@@ -46,6 +46,7 @@ model User {
   ktpUrl       String?
   kkUrl        String?
   refreshToken String?
+  hidden       Boolean  @default(false)
 
   suratKelahirans              SuratKelahiran[]
   suratKematians               SuratKematian[]
@@ -71,6 +72,9 @@ model Setting {
   id             String @id @default(uuid())
   namaKepalaDesa String
   tte            Bytes?
+
+  namaCamat  String?
+  noRegCamat String?
 
   namaBabinsa    String
   pangkatBabinsa String
@@ -354,7 +358,6 @@ model SkDomisiliImigrasi {
   alamat           String
   keperluan        String
 
-  namaCamat        String?
   status           Status    @default(DIPROSES)
   pesanDitolak     String?
   noSurat          String?
@@ -409,8 +412,6 @@ model SkTidakMampu {
   alamatOrangTua       String
   keperluan            String
 
-  noRegCamat       String?
-  namaCamat        String?
   status           Status    @default(DIPROSES)
   pesanDitolak     String?
   noSurat          String?

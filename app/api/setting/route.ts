@@ -37,6 +37,8 @@ export async function PUT(req: NextRequest) {
 
     const formData = await req.formData();
     const namaKepalaDesa = formData.get("namaKepalaDesa") as string | null;
+    const namaCamat = formData.get("namaCamat") as string | null;
+    const noRegCamat = formData.get("noRegCamat") as string | null;
     const namaBabinsa = formData.get("namaBabinsa") as string | null;
     const pangkatBabinsa = formData.get("pangkatBabinsa") as string | null;
     const nrpBabinsa = formData.get("nrpBabinsa") as string | null;
@@ -69,6 +71,8 @@ export async function PUT(req: NextRequest) {
       },
       data: {
         namaKepalaDesa: namaKepalaDesa ?? undefined,
+        namaCamat: namaCamat ?? undefined,
+        noRegCamat: noRegCamat ?? undefined,
         namaBabinsa: namaBabinsa ?? undefined,
         pangkatBabinsa: pangkatBabinsa ?? undefined,
         nrpBabinsa: nrpBabinsa ?? undefined,

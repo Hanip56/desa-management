@@ -34,10 +34,10 @@ const LinkItem = ({
   <Link href={href ?? ""} key={href}>
     <div
       className={cn(
-        "py-3 px-4 flex gap-2 items-center font-semibold transition",
+        "py-3 px-4 flex gap-2 items-center transition",
         pathname === href
           ? "text-black"
-          : "text-gray-400 hover:text-emerald-700"
+          : "text-gray-600 hover:text-emerald-700"
       )}
     >
       <span className="text-sm">{label}</span>
@@ -85,10 +85,10 @@ const MobileNavMenu = ({ routes }: { routes: Route[] }) => {
               <Link href={route.href ?? ""} key={route.href}>
                 <div
                   className={cn(
-                    "py-3 px-4 flex gap-2 items-center font-semibold transition",
+                    "py-3 px-4 flex gap-2 items-center transition font-medium",
                     pathname === route.href
                       ? "ring-1 ring-emerald-600 text-emerald-700 shadow-sm rounded-md"
-                      : "text-gray-400 hover:text-emerald-700"
+                      : "text-black hover:text-emerald-700"
                   )}
                 >
                   <span className="text-sm">{route.label}</span>
@@ -98,9 +98,9 @@ const MobileNavMenu = ({ routes }: { routes: Route[] }) => {
               <Accordion type="single" collapsible key={route.label}>
                 <AccordionItem
                   value="item-1"
-                  className="border-none py-1 px-4 text-sm text-gray-400 hover:text-black"
+                  className="border-none py-1 px-4 text-sm text-black hover:text-black"
                 >
-                  <AccordionTrigger className="hover:no-underline hover:text-emerald-700">
+                  <AccordionTrigger className="hover:no-underline hover:text-emerald-700 font-medium">
                     {route.label}
                   </AccordionTrigger>
                   <AccordionContent>
