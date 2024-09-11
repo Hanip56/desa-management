@@ -2,10 +2,13 @@ import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import {
   deleteMultipleFilesCloudinary,
-  uploadFileToCloudinary,
+  deleteMultipleLocalFiles,
+  uploadFileToLocal,
 } from "@/lib/server-utils";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import path from "path";
+import { cwd } from "process";
 
 // GET ALL USERS
 export async function GET(req: NextRequest) {
@@ -113,7 +116,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// PATCH USER
+// PATCH USER / UPLOAD KTP KK
 export async function PATCH(req: NextRequest) {
   try {
     const session = await auth();
@@ -140,23 +143,26 @@ export async function PATCH(req: NextRequest) {
       return new NextResponse("No files provided", { status: 204 });
     }
 
-    const [ktpUploadResult, kkUploadResult] = await Promise.all([
-      uploadFileToCloudinary(ktpFile, "ktp"),
-      uploadFileToCloudinary(kkFile, "kk"),
+    const [ktpUploadFilename, kkUploadFileName] = await Promise.all([
+      uploadFileToLocal(ktpFile, "ktp", session.user.id),
+      uploadFileToLocal(kkFile, "kk", session.user.id),
     ]);
 
     // update user kk & ktp
     const updatedUser = await prisma.user.update({
       where: { id: session.user.id },
       data: {
-        ktpUrl: ktpUploadResult?.public_id,
-        kkUrl: kkUploadResult?.public_id,
+        ktpUrl: ktpUploadFilename,
+        kkUrl: kkUploadFileName,
       },
     });
 
     // delete old image
     if (user.ktpUrl && user.kkUrl) {
-      await deleteMultipleFilesCloudinary([user.kkUrl, user.ktpUrl]);
+      const ktpPath = path.join(cwd(), "uploads", "ktp", user.ktpUrl);
+      const kkPath = path.join(cwd(), "uploads", "kk", user.kkUrl);
+
+      await deleteMultipleLocalFiles([ktpPath, kkPath]);
     }
 
     return NextResponse.json(

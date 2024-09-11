@@ -60,6 +60,7 @@ const ShowUserData = ({
               width={2000}
               height={2000}
               className="object-contain w-full h-60"
+              unoptimized
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -70,6 +71,7 @@ const ShowUserData = ({
               width={2000}
               height={2000}
               className="object-contain w-full h-60"
+              unoptimized
             />
           </div>
         </div>

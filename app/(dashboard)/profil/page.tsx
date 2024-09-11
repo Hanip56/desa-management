@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import Header from "../components/header";
 import ProfilClient from "./components/profil-client";
 import { redirect } from "next/navigation";
-import { getSignedUrl } from "@/lib/server-utils";
+import { getUrl } from "@/lib/server-utils";
 
 const Profil = async () => {
   const session = await auth();
@@ -15,11 +15,11 @@ const Profil = async () => {
   }
 
   const ktpUrl = session?.user.ktpUrl
-    ? getSignedUrl(session.user.ktpUrl)
+    ? getUrl(session.user.ktpUrl, "ktp")
     : undefined;
 
   const kkUrl = session?.user.kkUrl
-    ? getSignedUrl(session.user.kkUrl)
+    ? getUrl(session.user.kkUrl, "kk")
     : undefined;
 
   return (

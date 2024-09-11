@@ -67,6 +67,7 @@ const ProfilClient = ({ ktpUrl, kkUrl }: Props) => {
                       alt="ktp"
                       width={500}
                       height={500}
+                      unoptimized
                     />
                   )}
                   {kkUrl && (
@@ -76,6 +77,7 @@ const ProfilClient = ({ ktpUrl, kkUrl }: Props) => {
                       alt="ktp"
                       width={500}
                       height={500}
+                      unoptimized
                     />
                   )}
                 </div>

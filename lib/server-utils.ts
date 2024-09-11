@@ -1,6 +1,174 @@
 import prisma from "@/db/prisma";
 import cloudinary from "@/lib/cloudinary";
 import { UploadApiResponse } from "cloudinary";
+import { existsSync } from "fs";
+import { mkdir, writeFile, unlink, access } from "fs/promises";
+import { join } from "path";
+import { cwd } from "process";
+import { v4 as uuidv4 } from "uuid";
+import sharp from "sharp";
+
+// local file url
+export const getUrl = (filename: string, folder?: string) => {
+  return `/api/files?filename=${filename}&folder=${folder}`;
+};
+
+// Function to get buffer size in MB
+const getBufferSizeInMB = (buffer: Buffer) => {
+  return buffer.length / (1024 * 1024); // Convert bytes to MB
+};
+
+// Resize buffer recursively until it's under 3MB
+const resizeBuffer = async (
+  buffer: Buffer,
+  quality = 80,
+  widthReduction = 100
+): Promise<Buffer> => {
+  let metadata;
+  try {
+    metadata = await sharp(buffer).metadata();
+  } catch (error) {
+    throw new Error("Error retrieving metadata from image");
+  }
+
+  let bufferSizeMB = getBufferSizeInMB(buffer);
+
+  while (bufferSizeMB > 3) {
+    if (metadata?.format === "jpeg" || metadata?.format === "jpg") {
+      // Reduce JPEG quality progressively
+      buffer = await sharp(buffer)
+        .jpeg({ quality }) // Adjust JPEG quality
+        .toBuffer();
+      quality -= 10; // Reduce quality for next iteration
+    } else if (metadata?.format === "png") {
+      if (metadata.width) {
+        // Resize PNG progressively by reducing dimensions
+        buffer = await sharp(buffer)
+          .resize({ width: Math.max(1, metadata.width - widthReduction) }) // Ensure width is at least 1
+          .png({ compressionLevel: 9 }) // Max compression for PNG
+          .toBuffer();
+        widthReduction += 100; // Reduce dimensions further in each loop
+      }
+    }
+
+    bufferSizeMB = getBufferSizeInMB(buffer);
+  }
+
+  return buffer;
+};
+
+// Main function to handle the resizing based on buffer size
+export async function resizeImageBuffer(buffer: Buffer): Promise<Buffer> {
+  const bufferSizeMB = getBufferSizeInMB(buffer);
+
+  if (bufferSizeMB < 1) {
+    return buffer; // No resizing required if buffer is less than 1 MB
+  }
+
+  if (bufferSizeMB >= 1 && bufferSizeMB < 3) {
+    let metadata;
+    try {
+      metadata = await sharp(buffer).metadata();
+    } catch (error) {
+      throw new Error("Error retrieving metadata from image");
+    }
+
+    if (metadata?.format === "jpeg" || metadata?.format === "jpg") {
+      buffer = await sharp(buffer)
+        .resize({ width: 1000 }) // Reduce dimensions for JPEG
+        .jpeg({ quality: 80 }) // Adjust quality for JPEG
+        .toBuffer();
+    } else if (metadata?.format === "png") {
+      buffer = await sharp(buffer)
+        .resize({ width: 1000 }) // Reduce dimensions for PNG
+        .png({ compressionLevel: 9 }) // Max compression for PNG
+        .toBuffer();
+    }
+  }
+
+  if (bufferSizeMB >= 3) {
+    buffer = await resizeBuffer(buffer);
+  }
+
+  return buffer;
+}
+
+export const uploadFileToLocal = async (
+  file: File,
+  folder: string,
+  userId: string
+) => {
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+
+  // resize buffer file
+  const resizedBuffer = await resizeImageBuffer(buffer);
+
+  const fileExtension = file.name.split(".").pop();
+
+  // format filename with 'uuid--userId.ext'
+  const filename = `${uuidv4()}--${userId}.${fileExtension}`;
+
+  const filePath = join(cwd(), "uploads", folder, filename);
+  const dirPath = join(cwd(), "uploads", folder);
+
+  if (!existsSync(dirPath)) {
+    await mkdir(dirPath);
+  }
+
+  await writeFile(filePath, resizedBuffer);
+
+  return filename;
+};
+
+export const fileExists = async (filePath: string) => {
+  try {
+    await access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export const deleteFile = async (filePath: string) => {
+  if (await fileExists(filePath)) {
+    try {
+      await unlink(filePath);
+      console.log(`File deleted: ${filePath}`);
+    } catch (error) {
+      console.error(`Error deleting file: ${(error as any)?.message}`);
+    }
+  } else {
+    console.log(`File not found: ${filePath}`);
+  }
+};
+
+// Function to delete multiple files using Promise.all
+export const deleteMultipleLocalFiles = async (filePaths: string[]) => {
+  if (!Array.isArray(filePaths) || filePaths.length === 0) {
+    console.log("No files to delete.");
+    return;
+  }
+
+  // Create an array of promises for file deletions
+  const deletionPromises = filePaths.map(async (filePath) => {
+    try {
+      await deleteFile(filePath);
+    } catch (error) {
+      console.error(
+        `Error processing file ${filePath}: ${(error as any)?.message}`
+      );
+    }
+  });
+
+  try {
+    // Execute all deletion promises concurrently
+    await Promise.all(deletionPromises);
+    console.log("All files processed.");
+  } catch (error) {
+    console.error("Error in deleting files:", (error as any)?.message);
+  }
+};
 
 export const uploadFileToCloudinary = async (file: File, folder: string) => {
   const arrayBuffer = await file.arrayBuffer();

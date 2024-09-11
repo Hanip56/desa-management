@@ -2,7 +2,7 @@ import Header from "@/app/(dashboard)/components/header";
 import ClientComp from "./components/client-comp";
 import prisma from "@/db/prisma";
 import { auth } from "@/auth";
-import { getSignedUrl } from "@/lib/server-utils";
+import { getUrl } from "@/lib/server-utils";
 
 const DynamicPage = async ({ params }: { params: { id: string } }) => {
   const session = await auth();
@@ -33,11 +33,11 @@ const DynamicPage = async ({ params }: { params: { id: string } }) => {
         ...skTidakMampu.User,
         ktpUrl:
           skTidakMampu.User.ktpUrl && session?.user.role !== "USER"
-            ? getSignedUrl(skTidakMampu.User.ktpUrl)
+            ? getUrl(skTidakMampu.User.ktpUrl, "ktp")
             : undefined,
         kkUrl:
           skTidakMampu.User.kkUrl && session?.user.role !== "USER"
-            ? getSignedUrl(skTidakMampu.User.kkUrl)
+            ? getUrl(skTidakMampu.User.kkUrl, "kk")
             : undefined,
       },
     };

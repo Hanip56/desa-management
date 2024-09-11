@@ -18,7 +18,7 @@ import { Plus, Trash } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -29,19 +29,14 @@ type Props = {
 };
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 mb
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 const formSchema = z.object({
   ktp: z
     .any()
     .refine((file) => file, { message: "Kolom KTP harus diisi" })
     .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file?.type), {
-      message: "Format image harus; jpeg/jpg/png/webp",
+      message: "Format image harus; jpeg/jpg/png",
     })
     .refine((file) => file?.size <= MAX_FILE_SIZE, {
       message: "File harus kurang dari 5mb",
@@ -50,7 +45,7 @@ const formSchema = z.object({
     .any()
     .refine((file) => file, { message: "Kolom KK harus diisi" })
     .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file?.type), {
-      message: "Format image harus; jpeg/jpg/png/webp",
+      message: "Format image harus; jpeg/jpg/png",
     })
     .refine((file) => file?.size <= MAX_FILE_SIZE, {
       message: "File harus kurang dari 5mb",
@@ -75,12 +70,13 @@ const UploadDocumentDialog = ({ open, handleClose }: Props) => {
 
   const userMutation = useMutation({
     mutationFn: patchUser,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast("Dokumen berhasil diunggah.", {
         className: "text-emerald-600 font-semibold",
       });
       handleClose();
-      update({ ktpUrl: data.ktpUrl, kkUrl: data.kkUrl });
+      await update({ ktpUrl: data.ktpUrl, kkUrl: data.kkUrl });
+      router.refresh();
       form.reset();
     },
     onError: (error) => {
