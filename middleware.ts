@@ -14,10 +14,11 @@ export default auth(async (req) => {
   const isApiRoutes = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isGenerateRoutes = nextUrl.pathname.endsWith(generateRouteAffix);
 
-  // route for check if user exist in DB && for files
+  // route for check if user exist in DB && for files && for apk
   if (
     nextUrl.pathname === "/api/users/check" ||
-    nextUrl.pathname === "/api/files"
+    nextUrl.pathname === "/api/files" ||
+    nextUrl.pathname === "/api/apk"
   ) {
     return;
   }

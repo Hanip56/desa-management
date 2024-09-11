@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("[PATCH_USER]", error);
+    console.error("[FILES]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
