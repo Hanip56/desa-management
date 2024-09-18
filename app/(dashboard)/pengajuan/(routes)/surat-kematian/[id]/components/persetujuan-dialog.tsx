@@ -64,6 +64,9 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
       queryClient.invalidateQueries({
         queryKey: ["surat-kematians"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["notifications-admin"],
+      });
     },
     onError: (error) => {
       toast("Pengajuan gagal disetujui.", {

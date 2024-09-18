@@ -42,7 +42,7 @@ const TolakDialog = ({ open, handleClose, initialData }: Props) => {
 
   const tolakMutation = useMutation({
     mutationFn: updateSkIzinBekerja,
-    onSuccess: () => {
+    onSuccess: async () => {
       toast("Pengajuan berhasil ditolak.", {
         className: "text-emerald-600 font-semibold",
       });
@@ -52,6 +52,9 @@ const TolakDialog = ({ open, handleClose, initialData }: Props) => {
 
       queryClient.invalidateQueries({
         queryKey: ["sk-izin-bekerjas"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["notifications-admin"],
       });
     },
     onError: (error) => {

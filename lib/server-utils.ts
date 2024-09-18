@@ -381,3 +381,145 @@ export const getCountedPengajuan = async (batchSize = 5): Promise<results> => {
     pendaftaranPindahWniCount,
   };
 };
+
+interface resultsCountProses {
+  [key: string]: number;
+}
+
+interface RecordType {
+  id: string;
+  jenis: string;
+  status: string;
+  createdAt: string;
+}
+
+interface resultsGetDiprosesCountAndLatest {
+  totalDiproses: number;
+  latestRecords: RecordType[];
+}
+
+export const getDiprosesCountAndLatest = async (
+  batchSize = 5
+): Promise<resultsGetDiprosesCountAndLatest> => {
+  const tables = [
+    { model: prisma.suratKelahiran, name: "suratKelahiran" },
+    { model: prisma.suratKematian, name: "suratKematian" },
+    { model: prisma.skBelumMenikah, name: "skBelumMenikah" },
+    { model: prisma.skIjinKeramaian, name: "skIjinKeramaian" },
+    { model: prisma.skPenghasilanOrangTua, name: "skPenghasilanOrangTua" },
+    { model: prisma.skIzinBekerja, name: "skIzinBekerja" },
+    { model: prisma.skBelumMemilikiRumah, name: "skBelumMemilikiRumah" },
+    {
+      model: prisma.skTidakMemilikiPekerjaan,
+      name: "skTidakMemilikiPekerjaan",
+    },
+    { model: prisma.skUsaha, name: "skUsaha" },
+    { model: prisma.skDomisiliLembaga, name: "skDomisiliLembaga" },
+    { model: prisma.skDomisiliImigrasi, name: "skDomisiliImigrasi" },
+    { model: prisma.skDomisiliSementara, name: "skDomisiliSementara" },
+    { model: prisma.skTidakMampu, name: "skTidakMampu" },
+    {
+      model: prisma.suratRekomendasiPembelianBbm,
+      name: "suratRekomendasiPembelianBbm",
+    },
+    { model: prisma.pendaftaranPindahWni, name: "pendaftaranPindahWni" },
+  ];
+
+  const diprosesCount = 0;
+
+  const results: resultsCountProses = {
+    suratKelahiran: diprosesCount,
+    suratKematian: diprosesCount,
+    skBelumMenikah: diprosesCount,
+    skIjinKeramaian: diprosesCount,
+    skPenghasilanOrangTua: diprosesCount,
+    skIzinBekerja: diprosesCount,
+    skBelumMemilikiRumah: diprosesCount,
+    skTidakMemilikiPekerjaan: diprosesCount,
+    skUsaha: diprosesCount,
+    skDomisiliLembaga: diprosesCount,
+    skDomisiliImigrasi: diprosesCount,
+    skDomisiliSementara: diprosesCount,
+    skTidakMampu: diprosesCount,
+    suratRekomendasiPembelianBbm: diprosesCount,
+    pendaftaranPindahWni: diprosesCount,
+  };
+
+  for (let i = 0; i < tables.length; i += batchSize) {
+    const batch = tables.slice(i, i + batchSize);
+
+    const batchResults = await Promise.all(
+      batch.map(async (table) => {
+        try {
+          // @ts-ignore
+          const diprosesCount = await table.model.count({
+            where: { status: "DIPROSES" },
+          });
+          return { [table.name]: diprosesCount };
+        } catch (error) {
+          console.error(`Error fetching counts for ${table.name}:`, error);
+          return {
+            [table.name]: 0,
+          };
+        }
+      })
+    );
+
+    // Merge the results
+    batchResults.forEach((result) => {
+      Object.assign(results, result);
+    });
+  }
+
+  const totalDiproses = Object.keys(results)
+    .map((key) => results[key])
+    .reduce((acc, cur) => acc + cur, 0);
+
+  let latestRecords: any[] = [];
+
+  try {
+    latestRecords = await prisma.$queryRaw`
+  SELECT * FROM (
+    SELECT id,'Surat kelahiran' as jenis, "status", "createdAt" FROM "SuratKelahiran" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Surat kematian' as jenis, "status", "createdAt" FROM "SuratKematian" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Sk ijin keramaian' as jenis, "status", "createdAt" FROM "SkIjinKeramaian" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Sk belum menikah' as jenis, "status", "createdAt" FROM "SkBelumMenikah" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Sk penghasilan orang tua' as jenis, "status", "createdAt" FROM "SkPenghasilanOrangTua" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Sk izin bekerja' as jenis, "status", "createdAt" FROM "SkIzinBekerja" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Sk belum memiliki rumah' as jenis, "status", "createdAt" FROM "SkBelumMemilikiRumah" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Sk tidak memiliki pekerjaan' as jenis, "status", "createdAt" FROM "SkTidakMemilikiPekerjaan" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Sk usaha' as jenis, "status", "createdAt" FROM "SkUsaha" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Sk domisili lembaga' as jenis, "status", "createdAt" FROM "SkDomisiliLembaga" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Sk domisili imigrasi' as jenis, "status", "createdAt" FROM "SkDomisiliImigrasi" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Sk domisili sementara' as jenis, "status", "createdAt" FROM "SkDomisiliSementara" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Sk tidak mampu' as jenis, "status", "createdAt" FROM "SkTidakMampu" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Surat rekomendasi pembelian bbm' as jenis, "status", "createdAt" FROM "SuratRekomendasiPembelianBbm" WHERE "status" = 'DIPROSES'
+    UNION ALL
+    SELECT id,'Pendaftaran pindah wni' as jenis, "status", "createdAt" FROM "PendaftaranPindahWni"
+  ) AS combined
+  ORDER BY combined."createdAt" DESC
+  LIMIT 5;
+`;
+  } catch (error) {
+    console.log(error);
+    latestRecords = [];
+  }
+
+  return {
+    totalDiproses,
+    latestRecords: latestRecords,
+  };
+};

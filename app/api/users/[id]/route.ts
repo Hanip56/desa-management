@@ -2,6 +2,9 @@ import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import path from "path";
+import { cwd } from "process";
+import { deleteMultipleLocalFiles } from "@/lib/server-utils";
 
 // UPDATE USER
 export async function PUT(
@@ -98,6 +101,14 @@ export async function DELETE(
         id: params.id,
       },
     });
+
+    // delete images
+    if (user.ktpUrl && user.kkUrl) {
+      const ktpPath = path.join(cwd(), "uploads", "ktp", user.ktpUrl);
+      const kkPath = path.join(cwd(), "uploads", "kk", user.kkUrl);
+
+      await deleteMultipleLocalFiles([ktpPath, kkPath]);
+    }
 
     return NextResponse.json(`User with id:${params.id} has been deleted`, {
       status: 200,

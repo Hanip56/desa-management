@@ -53,6 +53,9 @@ const TolakDialog = ({ open, handleClose, initialData }: Props) => {
       queryClient.invalidateQueries({
         queryKey: ["sk-tidak-memiliki-pekerjaans"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["notifications-admin"],
+      });
     },
     onError: (error) => {
       toast("Pengajuan gagal ditolak.", {

@@ -34,6 +34,9 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
       queryClient.invalidateQueries({
         queryKey: ["surat-kelahirans"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["notifications-admin"],
+      });
     },
     onError: (error) => {
       toast(`Data gagal ${isUser ? "dibatalkan" : "dihapus"}.`, {

@@ -46,6 +46,9 @@ const ClientComp = ({ initialData }: Props) => {
       queryClient.invalidateQueries({
         queryKey: ["sk-penghasilan-orang-tuas"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["notifications-admin"],
+      });
     },
     onError: (error) => {
       toast("Pengajuan gagal dibatalkan.", {

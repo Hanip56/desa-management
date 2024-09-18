@@ -37,7 +37,7 @@ const ClientComp = ({ initialData }: Props) => {
 
   const batalMutation = useMutation({
     mutationFn: updateSkIzinBekerja,
-    onSuccess: () => {
+    onSuccess: async () => {
       toast("Pengajuan berhasil dibatalkan.", {
         className: "text-emerald-600 font-semibold",
       });
@@ -45,6 +45,9 @@ const ClientComp = ({ initialData }: Props) => {
 
       queryClient.invalidateQueries({
         queryKey: ["sk-izin-bekerjas"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["notifications-admin"],
       });
     },
     onError: (error) => {

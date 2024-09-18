@@ -53,6 +53,9 @@ const TolakDialog = ({ open, handleClose, initialData }: Props) => {
       queryClient.invalidateQueries({
         queryKey: ["surat-rekomendasi-pembelian-bbms"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["notifications-admin"],
+      });
     },
     onError: (error) => {
       toast("Pengajuan gagal ditolak.", {

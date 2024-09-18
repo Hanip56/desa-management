@@ -52,7 +52,7 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
 
   const persetujuanMutation = useMutation({
     mutationFn: updateSkIzinBekerja,
-    onSuccess: () => {
+    onSuccess: async () => {
       toast("Pengajuan berhasil disetujui.", {
         className: "text-emerald-600 font-semibold",
       });
@@ -62,6 +62,9 @@ const PersetujuanDialog = ({ open, handleClose, initialData }: Props) => {
 
       queryClient.invalidateQueries({
         queryKey: ["sk-izin-bekerjas"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["notifications-admin"],
       });
     },
     onError: (error) => {
