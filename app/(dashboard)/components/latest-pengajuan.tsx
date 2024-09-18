@@ -1,37 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DataTableSimple } from "@/components/ui/data-table-simple";
 import { Skeleton } from "@/components/ui/skeleton";
 import prisma from "@/db/prisma";
 import { formatDate } from "@/lib/utils";
-import { ColumnDef } from "@tanstack/react-table";
-import StatusBadge from "./status-badge";
-import { StatusType } from "@/types";
-
-type Info = {
-  id: string;
-  jenis: string;
-  status: StatusType;
-  tanggal: string;
-};
-
-export const latestPengajuanColumn: ColumnDef<Info>[] = [
-  {
-    accessorKey: "id",
-    header: "ID",
-  },
-  {
-    accessorKey: "jenis",
-    header: "Jenis",
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-  },
-  {
-    accessorKey: "tanggal",
-    header: "Tanggal",
-  },
-];
+import LatestPengajuanClient from "./latest-pengajuan-client";
 
 const LatestPengajuan = async () => {
   const latestRecords: any = await prisma.$queryRaw`
@@ -78,6 +49,7 @@ const LatestPengajuan = async () => {
     jenis: d.jenis,
     status: d.status,
     tanggal: formatDate(d.createdAt as Date),
+    link: `/pengajuan/${d.jenis.toLowerCase().replace(/\s/g, "-")}/${d.id}`,
   }));
 
   return (
@@ -86,7 +58,7 @@ const LatestPengajuan = async () => {
         <CardTitle>Pengajuan terbaru</CardTitle>
       </CardHeader>
       <CardContent>
-        <DataTableSimple columns={latestPengajuanColumn} data={data} />
+        <LatestPengajuanClient data={data} />
       </CardContent>
     </Card>
   );

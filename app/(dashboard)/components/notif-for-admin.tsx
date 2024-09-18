@@ -14,7 +14,7 @@ const NotifForAdmin = () => {
   const query = useQuery({
     queryKey: ["notifications-admin"],
     queryFn: () => getPengajuanCountAndLatest(),
-    refetchInterval: 60 * 1000 * 10, // 10 minutes
+    refetchInterval: 60 * 1000 * 5, // 5 minutes
   });
 
   if (query.isError) return null;
