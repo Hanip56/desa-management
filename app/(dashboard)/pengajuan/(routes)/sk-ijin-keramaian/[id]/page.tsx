@@ -3,6 +3,7 @@ import ClientComp from "./components/client-comp";
 import prisma from "@/db/prisma";
 import { auth } from "@/auth";
 import { getUrl } from "@/lib/server-utils";
+import { DateToDayAndDate, DatetoTime } from "@/lib/utils";
 
 const DynamicPage = async ({ params }: { params: { id: string } }) => {
   const session = await auth();
@@ -41,6 +42,14 @@ const DynamicPage = async ({ params }: { params: { id: string } }) => {
             : undefined,
       },
     };
+  }
+
+  let formatTanggal = "";
+  let formatWaktu = "";
+
+  if (initialData) {
+    formatTanggal = DateToDayAndDate(initialData.waktu);
+    formatWaktu = DatetoTime(initialData.waktu);
   }
 
   return (

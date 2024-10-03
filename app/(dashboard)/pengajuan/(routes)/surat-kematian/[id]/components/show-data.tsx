@@ -1,5 +1,5 @@
 import SemiField from "@/components/semi-field";
-import { DateToDayAndDate, DatetoTime, getAlamat } from "@/lib/utils";
+import { DateToDayAndDate, DatetoTime } from "@/lib/utils";
 import { SuratKematianWithUser } from "@/types";
 
 type Props = {
@@ -7,6 +7,14 @@ type Props = {
 };
 
 const ShowData = ({ data }: Props) => {
+  // this is for matching on the VPS
+  const offset = data.tanggal.getTimezoneOffset() * 60000;
+  const tanggal = new Date(data.tanggal.getTime() + offset);
+  // const tanggal =
+  //   process.env.NEXT_PUBLIC_NODE_ENV === "development"
+  //     ? data.tanggal
+  //     : new Date(data.tanggal.getTime() + offset);
+
   return (
     <div className="sm:p-6 sm:border rounded-br-2xl rounded-bl-2xl">
       <div className="p-4 bg-muted">
@@ -50,11 +58,8 @@ const ShowData = ({ data }: Props) => {
         <div>
           <h2 className="text-xl font-medium mb-5">Keterangan meninggal</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-x-6 md:gap-y-4">
-            <SemiField
-              label="Hari/Tanggal"
-              value={DateToDayAndDate(data.tanggal)}
-            />
-            <SemiField label="Waktu" value={`${DatetoTime(data.tanggal)}`} />
+            <SemiField label="Hari/Tanggal" value={DateToDayAndDate(tanggal)} />
+            <SemiField label="Waktu" value={`${DatetoTime(tanggal)}`} />
             <SemiField label="Penyebab" value={data.penyebab} />
             <SemiField label="Tempat" value={data.tempat} />
           </div>

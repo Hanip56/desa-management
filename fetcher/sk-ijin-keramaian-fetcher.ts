@@ -6,10 +6,11 @@ import { SkIjinKeramaianWithUser } from "@/types";
 
 type SkIjinKeramaianForDB = Omit<
   SkIjinKeramaian,
-  "tanggalLahir" | "tanggalPembuatan"
+  "tanggalLahir" | "tanggalPembuatan" | "waktu"
 > & {
   tanggalLahir: string;
   tanggalPembuatan: string;
+  waktu: string;
 };
 
 type GetAllParams = {

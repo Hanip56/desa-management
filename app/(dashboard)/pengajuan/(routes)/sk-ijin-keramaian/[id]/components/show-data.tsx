@@ -1,10 +1,5 @@
 import SemiField from "@/components/semi-field";
-import {
-  DateToDayAndDate,
-  DatetoTime,
-  formatDate,
-  getAlamat,
-} from "@/lib/utils";
+import { DateToDayAndDate, DatetoTime, formatDate } from "@/lib/utils";
 import { SkIjinKeramaianWithUser } from "@/types";
 
 type Props = {
@@ -12,6 +7,14 @@ type Props = {
 };
 
 const ShowData = ({ data }: Props) => {
+  // this is for matching on the VPS
+  const offset = data.waktu.getTimezoneOffset() * 60000;
+  const waktu = new Date(data.waktu.getTime() + offset);
+  // const waktu =
+  //   process.env.NEXT_PUBLIC_NODE_ENV === "development"
+  //     ? data.waktu
+  //     : new Date(data.waktu.getTime() + offset);
+
   return (
     <div className="sm:p-6 sm:border rounded-br-2xl rounded-bl-2xl">
       <div className="p-4 bg-muted">
@@ -30,9 +33,7 @@ const ShowData = ({ data }: Props) => {
             <SemiField label="Alamat" value={data.alamat} />
             <SemiField
               label="Waktu"
-              value={`${DateToDayAndDate(data.waktu)}, ${DatetoTime(
-                data.waktu
-              )}`}
+              value={`${DateToDayAndDate(waktu)}, ${DatetoTime(waktu)}`}
             />
             <SemiField label="Maksud" value={data.maksud} />
             <SemiField label="Acara" value={data.acara} />

@@ -91,7 +91,7 @@ export function DateToDayAndDate(date: Date) {
 }
 
 export function DatetoTime(date: Date) {
-  return format(date, "HH:mm");
+  return format(date, "HH:mm", { locale: id });
 }
 
 export function formatRupiah(amount: number) {
