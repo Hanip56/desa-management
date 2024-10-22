@@ -508,7 +508,7 @@ export const getDiprosesCountAndLatest = async (
     UNION ALL
     SELECT id,'Surat rekomendasi pembelian bbm' as jenis, "status", "createdAt" FROM "SuratRekomendasiPembelianBbm" WHERE "status" = 'DIPROSES'
     UNION ALL
-    SELECT id,'Pendaftaran pindah wni' as jenis, "status", "createdAt" FROM "PendaftaranPindahWni"
+    SELECT id,'Pendaftaran pindah wni' as jenis, "status", "createdAt" FROM "PendaftaranPindahWni" WHERE "status" = 'DIPROSES'
   ) AS combined
   ORDER BY combined."createdAt" DESC
   LIMIT 5;
