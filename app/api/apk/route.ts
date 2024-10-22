@@ -1,26 +1,33 @@
+import { createReadStream, statSync } from "fs";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
 
 export async function GET(req: NextRequest) {
   try {
-    const fileUrl = process.env.MOBILE_APP_LINK_DOWNLOAD!; // External file URL
+    // Construct the absolute file path to the APK file
+    const filePath = path.join(process.cwd(), "public", "margaasih.apk");
 
-    // Fetch the file from the external source
-    const response = await fetch(fileUrl);
+    // Get the file size (optional but recommended for the response header)
+    const fileStat = statSync(filePath);
 
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: "Failed to download the file" },
-        { status: 500 }
-      );
-    }
+    // Create a Node.js read stream for the APK file
+    const nodeStream = createReadStream(filePath);
 
-    const fileStream = await response.body;
+    // Convert the Node.js stream to a Web ReadableStream
+    const readableStream = new ReadableStream({
+      start(controller) {
+        nodeStream.on("data", (chunk) => controller.enqueue(chunk));
+        nodeStream.on("end", () => controller.close());
+        nodeStream.on("error", (err) => controller.error(err));
+      },
+    });
 
-    // Stream the file back to the client with appropriate headers
-    return new NextResponse(fileStream, {
+    // Return the file as a streamed response
+    return new Response(readableStream, {
       headers: {
-        "Content-Disposition": 'attachment; filename="margaasih.apk"', // Force the download as a file
+        "Content-Disposition": 'attachment; filename="margaasih.apk"', // Force download
         "Content-Type": "application/vnd.android.package-archive", // APK MIME type
+        "Content-Length": fileStat.size.toString(), // File size
       },
     });
   } catch (error) {

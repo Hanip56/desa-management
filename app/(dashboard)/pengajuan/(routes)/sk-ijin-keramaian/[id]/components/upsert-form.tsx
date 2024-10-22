@@ -227,7 +227,7 @@ const UpsertForm = ({ initialData }: Props) => {
                       disabled={disabledCondition}
                       {...field}
                       placeholder="Maksud"
-                      maxLength={maxLengthInput}
+                      maxLength={36}
                     />
                   </FormControl>
                   <FormMessage />

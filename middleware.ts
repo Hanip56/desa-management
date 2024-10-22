@@ -14,10 +14,12 @@ export default auth(async (req) => {
   const isApiRoutes = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isGenerateRoutes = nextUrl.pathname.endsWith(generateRouteAffix);
 
-  // route for check if user exist in DB && for files && for apk
+  // route for check if user exist in DB
   if (
     nextUrl.pathname === "/api/users/check" ||
+    // && for files
     nextUrl.pathname === "/api/files" ||
+    // && for download apk
     nextUrl.pathname === "/api/apk"
   ) {
     return;
@@ -57,11 +59,20 @@ export default auth(async (req) => {
   return;
 });
 
+// export const config = {
+//   matcher: [
+//     // Skip Next.js internals and all static files, unless found in search params
+//     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|apk|webmanifest)).*)",
+//     // Always run for API routes
+//     "/(api|trpc)(.*)",
+//   ],
+// };
+
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
+    // Protect the "/" route and others but skip /margaasih.apk
+    "/((?!margaasih\\.apk|_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // Always apply middleware for API routes
     "/(api|trpc)(.*)",
   ],
 };
