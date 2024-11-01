@@ -82,7 +82,7 @@ export const generateSuratKelahiran = async (
     7
   );
 
-  pColon(`Alamat`, data.alamatTerkait, 9);
+  pColon(`Alamat`, data.alamatTerkait.replace(/\n/g, " "), 9);
 
   p("Adalah benar Anak dari :", 14);
 
@@ -98,7 +98,7 @@ export const generateSuratKelahiran = async (
 
   pColon(`Agama`, data.agamaAyah, 23);
 
-  pColon(`Alamat`, data.alamatAyah, 25);
+  pColon(`Alamat`, data.alamatAyah.replace(/\n/g, " "), 25);
 
   pColon(`Nama`, data.namaIbu, 30);
 
@@ -112,7 +112,7 @@ export const generateSuratKelahiran = async (
 
   pColon(`Agama`, data.agamaIbu, 36);
 
-  pColon(`Alamat`, data.alamatIbu, 38);
+  pColon(`Alamat`, data.alamatIbu.replace(/\n/g, " "), 38);
 
   pJustify(
     "Demikian Surat Keterangan Kelahiran ini kami buat dengan sebenarnya untuk",

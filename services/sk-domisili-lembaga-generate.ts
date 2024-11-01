@@ -72,7 +72,7 @@ export const generateSkDomisiliLembaga = async (
   p("Margaasih dengan keterangan sebagai berikut :", 20);
 
   pColon("Nama Lembaga", data.namaLembaga, 23);
-  pColon("Alamat Lembaga", data.alamatLembaga, 25);
+  pColon("Alamat Lembaga", data.alamatLembaga.replace(/\n/g, " "), 25);
 
   pJustify(
     "Demikian surat keterangan ini kami buat dan untuk dipergunakan sebagaimana mestinya.",

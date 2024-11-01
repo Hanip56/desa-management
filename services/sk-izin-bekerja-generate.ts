@@ -65,7 +65,7 @@ export const generateSkIzinBekerja = async (
   pColon(`Pekerjaan`, data.pekerjaan, 18);
   pColon(`Bagian`, data.bagian, 20);
   pColon(`Nomor ID`, data.nomorId, 22);
-  pColon(`Alamat`, data.alamat, 24);
+  pColon(`Alamat`, data.alamat.replace(/\n/g, " "), 24);
 
   pJustify(
     "Sesuai dengan nama yang tertera diatas adalah benar bahwa orang tersebut",

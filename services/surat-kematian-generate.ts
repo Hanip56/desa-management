@@ -81,13 +81,13 @@ export const generateSuratKematian = async (
   pColon(`Jenis Kelamin`, getGender(data.jenisKelaminPemohon), 5);
   pColon(`No. NIK`, data.noNikPemohon, 7);
   pColon(`Hubungan Keluarga`, data.hubunganKeluargaPemohon, 9);
-  pColon(`Alamat`, data.alamatPemohon, 11);
+  pColon(`Alamat`, data.alamatPemohon.replace(/\n/g, " "), 11);
 
   p("Menerangkan bahwa yang bernama :", 16);
   pColon(`Nama`, data.namaTerkait, 19);
   pColon(`Jenis Kelamin`, getGender(data.jenisKelaminTerkait), 21);
   pColon(`No. NIK`, data.noNikTerkait, 23);
-  pColon(`Alamat`, data.alamatTerkait, 25);
+  pColon(`Alamat`, data.alamatTerkait.replace(/\n/g, " "), 25);
 
   p("Telah meninggal dunia pada :", 30);
   pColon(`Hari/Tanggal`, DateToDayAndDate(data.tanggal), 33);

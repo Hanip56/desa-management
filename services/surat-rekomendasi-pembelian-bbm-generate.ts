@@ -114,7 +114,7 @@ export const generateSuratRekomendasiPembelianBbm = async (
   pColon("Konsumen pengguna", data.konsumenPengguna, 25, 35);
   pColon("Jenis Usaha Kegiatan", data.jenisUsahaKegiatan, 27, 35);
   pColon("NIK", data.nik, 29, 35);
-  pColon("Alamat Usaha", data.alamatUsaha, 31, 35);
+  pColon("Alamat Usaha", data.alamatUsaha.replace(/\n/g, " "), 31, 35);
 
   p("1.", 36, noListIndent);
   p(

@@ -65,7 +65,7 @@ export const generateSkBelumMemilikiRumah = async (
   pColon(`Pekerjaan`, data.pekerjaan, 18);
   pColon(`Status Perkawinan`, getStatusPerkawinan(data.statusPerkawinan), 20);
   pColon(`Kewarganegaraan`, data.kewarganegaraan, 22);
-  pColon(`Alamat`, data.alamat, 24);
+  pColon(`Alamat`, data.alamat.replace(/\n/g, " "), 24);
 
   pJustify(
     "Orang tersebut diatas Benar penduduk warga Desa kami dan menurut keterangan dari",

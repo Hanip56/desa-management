@@ -73,7 +73,7 @@ export const generateSkTidakMemilikiPekerjaan = async (
   pColon(`Status Perkawinan`, getStatusPerkawinan(data.statusPerkawinan), 18);
   pColon(`Pekerjaan`, data.pekerjaan, 20);
   pColon(`Agama`, data.agama, 22);
-  pColon(`Alamat`, data.alamat, 24);
+  pColon(`Alamat`, data.alamat.replace(/\n/g, " "), 24);
 
   pJustify(
     "Orang tersebut diatas Benar penduduk warga Desa kami dan menurut keterangan dari",

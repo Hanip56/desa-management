@@ -78,7 +78,7 @@ export const generateSkTidakMampu = async (
   );
   pColon(`NO NIK`, data.nikOrangTua, 29);
   pColon(`Pekerjaan`, data.pekerjaanOrangTua, 31);
-  pColon(`Alamat`, data.alamatOrangTua, 33);
+  pColon(`Alamat`, data.alamatOrangTua.replace(/\n/g, " "), 33);
 
   pJustify(
     "Berdasarkan surat keterangan dari RT RW setempat dan data yang ada di kantor kami bahwa",

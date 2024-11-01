@@ -71,7 +71,7 @@ export const generateSkPenghasilanOrangTua = async (
   pColon(`Pekerjaan`, data.pekerjaan, 18);
   pColon(`Status Perkawinan`, getStatusPerkawinan(data.statusPerkawinan), 20);
   pColon(`Kewarganegaraan`, data.kewarganegaraan, 22);
-  pColon(`Alamat`, data.alamat, 24);
+  pColon(`Alamat`, data.alamat.replace(/\n/g, " "), 24);
 
   pJustify(
     "Menurut keterangan RT/RW setempat dan data yang ada, benar bahwa yang",

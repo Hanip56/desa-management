@@ -88,7 +88,7 @@ export const generateSkIjinKeramaian = async (
     16
   );
   pColon("Pukul", `${DatetoTime(data.waktu)}`, 18);
-  pColon("Alamat", data.alamat, 20);
+  pColon("Alamat", data.alamat.replace(/\n/g, " "), 20);
 
   pJustify(
     "Dengan ini menerangkan bahwa pada prinsipnya tidak keberatan atas permohonan yang",
