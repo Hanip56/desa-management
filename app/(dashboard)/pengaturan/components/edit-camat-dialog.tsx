@@ -30,9 +30,7 @@ const formSchema = z.object({
   nama: z.string().min(1, {
     message: "Kolom nama harus diisi",
   }),
-  noReg: z.string().min(1, {
-    message: "Kolom No Reg harus diisi",
-  }),
+  noReg: z.string().optional(),
 });
 
 const EditCamatDialog = ({ setting, open, handleClose }: Props) => {

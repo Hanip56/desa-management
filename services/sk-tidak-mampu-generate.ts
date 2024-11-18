@@ -109,7 +109,7 @@ export const generateSkTidakMampu = async (
   ttd(
     660,
     "left",
-    `No Reg. ${noRegCamat ?? "......................."}`,
+    `Reg : ${noRegCamat ?? "......................."}`,
     "Camat Cicalengka",
     namaCamat ?? "____________________",
     "",
