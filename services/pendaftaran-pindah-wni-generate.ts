@@ -1,6 +1,12 @@
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { generateTableWni, generateUtils } from "./utils";
 import { AnggotaPindahWni, PendaftaranPindahWni } from "@prisma/client";
+import {
+  NAMA_DESA,
+  NAMA_KABUPATEN,
+  NAMA_KECAMATAN,
+  NAMA_PROVINSI,
+} from "@/contants";
 
 export const generatePendaftaranPindahWni = async (
   data: PendaftaranPindahWni & {
@@ -64,10 +70,10 @@ export const generatePendaftaranPindahWni = async (
     tte,
   });
 
-  pHeader("PEMERINTAHAN PROVINSI JAWA BARAT", 2);
-  pHeader("PEMERINTAHAN KABUPATEN BANDUNG", 4);
-  pColonHeader("KECAMATAN", "CICALENGKA", 6);
-  pColonHeader("DESA/KELURAHAN", "MARGAASIH", 8);
+  pHeader(`PEMERINTAHAN PROVINSI ${NAMA_PROVINSI}`, 2);
+  pHeader(`PEMERINTAHAN KABUPATEN ${NAMA_KABUPATEN}`, 4);
+  pColonHeader("KECAMATAN", NAMA_KECAMATAN.toUpperCase(), 6);
+  pColonHeader("DESA/KELURAHAN", NAMA_DESA.toUpperCase(), 8);
 
   // Config
   //   startLine paragraph
@@ -152,8 +158,8 @@ export const generatePendaftaranPindahWni = async (
   ttd(
     695,
     "right",
-    `Margaasih, ${"-"}`,
-    "Kepala Desa Margaasih",
+    `${NAMA_DESA}, ${"-"}`,
+    `Kepala Desa ${NAMA_DESA}`,
     namaKepalaDesa ?? "",
     "",
     true

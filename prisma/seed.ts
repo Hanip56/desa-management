@@ -16,17 +16,17 @@ async function main() {
 
   const setting = await prisma.setting.create({
     data: {
-      namaKepalaDesa: "YAYAN SURYANA",
+      namaKepalaDesa: "NAMA KEPALA DESA",
 
       namaCamat: "______________",
       noRegCamat: "123456789",
 
-      namaBabinsa: "IIP NASARIP",
+      namaBabinsa: "NAMA BABINSA",
       pangkatBabinsa: "Sersan Dua",
       nrpBabinsa: "31010528541080",
       jabatanBabinsa: "Babinsa Margaasih Koramil 2402/Cicalengka",
 
-      namaBhabinkamtibmas: "ANDRIK SLAMET",
+      namaBhabinkamtibmas: "NAMA BHABINKAMTIBMAS",
       pangkatBhabinkamtibmas: "Bripka",
       nrpBhabinkamtibmas: "80040405",
       jabatanBhabinkamtibmas: "Bhabinkamtibmas desa Margaasih",

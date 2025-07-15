@@ -3,6 +3,12 @@ import path from "path";
 import fs from "fs";
 import { AnggotaPindahWni, SuratRekomendasiPembelianBbm } from "@prisma/client";
 import { formatDate } from "@/lib/utils";
+import {
+  JALAN_DESA,
+  NAMA_DESA,
+  NAMA_KABUPATEN,
+  NAMA_KECAMATAN,
+} from "@/contants";
 
 type GenerateKopSuratProps = {
   pdfDoc: PDFDocument;
@@ -282,7 +288,7 @@ export const generateKopSurat = async ({
   });
 
   const titleFontSize = 17;
-  const t1 = `PEMERINTAHAN KABUPATEN BANDUNG`;
+  const t1 = `PEMERINTAHAN KABUPATEN ${NAMA_KABUPATEN.toUpperCase()}`;
   const t1Width = font.widthOfTextAtSize(t1, titleFontSize);
 
   page.drawText(t1, {
@@ -292,7 +298,7 @@ export const generateKopSurat = async ({
     font: font,
   });
 
-  const t2 = `KECAMATAN CICALENGKA`;
+  const t2 = `KECAMATAN ${NAMA_KECAMATAN.toUpperCase()}`;
   const t2Width = font.widthOfTextAtSize(t2, titleFontSize);
 
   page.drawText(t2, {
@@ -302,7 +308,7 @@ export const generateKopSurat = async ({
     font: font,
   });
 
-  const t3 = `DESA MARGAASIH`;
+  const t3 = `DESA ${NAMA_DESA.toUpperCase()}`;
   const t3Width = font.widthOfTextAtSize(t3, 22);
 
   page.drawText(t3, {
@@ -313,7 +319,7 @@ export const generateKopSurat = async ({
     lineHeight: 15,
   });
 
-  const t4 = `Jl. Margaasih No. 24 Kec. Cicalengka Kab. Bandung, 40395`;
+  const t4 = JALAN_DESA;
   const t4Width = font.widthOfTextAtSize(t4, 12);
 
   page.drawText(t4, {

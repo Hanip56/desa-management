@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { NAMA_DESA } from "@/contants";
 import { daftarSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -63,8 +64,7 @@ const DaftarForm = () => {
           } else if (data?.success) {
             toast("Daftar telah berhasil!", {
               className: "text-emerald-600 font-semibold",
-              description:
-                "Selamat datang di aplikasi pengelolaan surat desa margaasih, silahkan masukan dokumen anda terlebih dahulu.",
+              description: `Selamat datang di aplikasi pengelolaan surat desa ${NAMA_DESA}, silahkan masukan dokumen anda terlebih dahulu.`,
               descriptionClassName: "text-slate-600",
             });
             window.location.href = "/";

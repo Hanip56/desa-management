@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import TanstackProvider from "@/providers/tanstack-provider";
+import { NAMA_DESA } from "@/contants";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -12,8 +13,8 @@ const font = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Desa Margaasih | Aplikasi pengelolaan",
-  description: "Aplikasi pengelolaan Desa Margaasih",
+  title: `Desa ${NAMA_DESA} | Aplikasi pengelolaan`,
+  description: `Aplikasi pengelolaan Desa ${NAMA_DESA}`,
 };
 
 export default async function RootLayout({

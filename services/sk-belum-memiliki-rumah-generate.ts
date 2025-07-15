@@ -2,6 +2,7 @@ import { PDFDocument, StandardFonts } from "pdf-lib";
 import { formatDate, getGender, getStatusPerkawinan } from "@/lib/utils";
 import { SkBelumMemilikiRumah } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
+import { NAMA_DESA, NAMA_KECAMATAN } from "@/contants";
 
 export const generateSkBelumMemilikiRumah = async (
   data: SkBelumMemilikiRumah,
@@ -52,7 +53,7 @@ export const generateSkBelumMemilikiRumah = async (
 
   //   Content
   pJustify(
-    "Yang bertanda tangan di bawah ini pemerintah Desa Margaasih Kecamatan Cicalengka",
+    `Yang bertanda tangan di bawah ini pemerintah Desa ${NAMA_DESA} Kecamatan ${NAMA_KECAMATAN}`,
     2,
     true
   );
@@ -97,10 +98,10 @@ export const generateSkBelumMemilikiRumah = async (
   ttd(
     635,
     "right",
-    `Margaasih, ${
+    `${NAMA_DESA}, ${
       data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
     }`,
-    "Kepala Desa Margaasih",
+    `Kepala Desa ${NAMA_DESA}`,
     namaKepalaDesa ?? "",
     "",
     true

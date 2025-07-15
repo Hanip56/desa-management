@@ -8,6 +8,7 @@ import {
 } from "@/lib/utils";
 import { SuratKematian } from "@prisma/client";
 import { generateUtils } from "./utils";
+import { NAMA_DESA } from "@/contants";
 
 export const generateSuratKematian = async (
   data: SuratKematian,
@@ -107,7 +108,7 @@ export const generateSuratKematian = async (
   ttd(
     635,
     "right",
-    `Margaasih, ${
+    `${NAMA_DESA}, ${
       data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
     }`,
     "Pelapor",
@@ -120,7 +121,7 @@ export const generateSuratKematian = async (
     635,
     "left",
     "Mengetahui",
-    "Kepala Desa Margaasih",
+    `Kepala Desa ${NAMA_DESA}`,
     namaKepalaDesa ?? "-",
     "",
     true

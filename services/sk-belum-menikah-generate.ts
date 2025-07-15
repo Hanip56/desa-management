@@ -7,6 +7,7 @@ import {
 } from "@/lib/utils";
 import { SkBelumMenikah } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
+import { NAMA_DESA, NAMA_KECAMATAN } from "@/contants";
 
 export const generateSkBelumMenikah = async (
   data: SkBelumMenikah,
@@ -56,7 +57,7 @@ export const generateSkBelumMenikah = async (
 
   //   Content
   pJustify(
-    "Yang bertanda tangan di bawah ini pemerintah Desa Margaasih Kecamatan Cicalengka",
+    `Yang bertanda tangan di bawah ini pemerintah Desa ${NAMA_DESA} Kecamatan ${NAMA_KECAMATAN}`,
     2,
     true
   );
@@ -100,7 +101,7 @@ export const generateSkBelumMenikah = async (
     635,
     "right",
     data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-",
-    "Kepala Desa Margaasih",
+    `Kepala Desa ${NAMA_DESA}`,
     namaKepalaDesa ?? "",
     "",
     true

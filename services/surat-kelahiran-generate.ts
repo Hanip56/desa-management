@@ -2,6 +2,7 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { formatDate, getAlamat, getGender } from "@/lib/utils";
 import { SuratKelahiran } from "@prisma/client";
 import { generateUtils } from "./utils";
+import { NAMA_DESA } from "@/contants";
 
 export const generateSuratKelahiran = async (
   data: SuratKelahiran,
@@ -68,7 +69,7 @@ export const generateSuratKelahiran = async (
   });
 
   p(
-    "Yang bertanda tangan dibawah ini Kepala Desa Margaasih menerangkan bahwa :"
+    `Yang bertanda tangan dibawah ini Kepala Desa ${NAMA_DESA} menerangkan bahwa :`
   );
 
   // Content
@@ -125,10 +126,10 @@ export const generateSuratKelahiran = async (
   ttd(
     635,
     "right",
-    `Margaasih, ${
+    `${NAMA_DESA}, ${
       data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
     }`,
-    "Kepala Desa Margaasih",
+    `Kepala Desa ${NAMA_DESA}`,
     namaKepalaDesa ?? "-",
     "",
     true

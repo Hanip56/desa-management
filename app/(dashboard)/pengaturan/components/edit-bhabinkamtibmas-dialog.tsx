@@ -142,9 +142,9 @@ const EditBhabinkamtibmasDialog = ({ setting, open, handleClose }: Props) => {
                     {...field}
                     placeholder="NRP"
                     disabled={disabledCondition}
-                    min={0}
-                    type="number"
-                    onWheel={(e: any) => e.target.blur()}
+                    // min={0}
+                    // type="number"
+                    // onWheel={(e: any) => e.target.blur()}
                   />
                 </FormControl>
                 <FormMessage />

@@ -1,0 +1,511 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  SUPERADMIN
+}
+
+enum Gender {
+  L
+  P
+}
+
+enum StatusPerkawinan {
+  BELUM_KAWIN
+  KAWIN
+  CERAI_HIDUP
+  CERAI_MATI
+}
+
+enum Status {
+  DIPROSES
+  DITERIMA
+  DITOLAK
+}
+
+model User {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  username     String
+  nomorWa      String   @unique
+  password     String
+  role         UserRole @default(USER)
+  ktpUrl       String?
+  kkUrl        String?
+  refreshToken String?
+  hidden       Boolean  @default(false)
+
+  suratKelahirans              SuratKelahiran[]
+  suratKematians               SuratKematian[]
+  skBelumMenikahs              SkBelumMenikah[]
+  skIjinKeramaian              SkIjinKeramaian[]
+  skPenghasilanOrangTua        SkPenghasilanOrangTua[]
+  SkIzinBekerja                SkIzinBekerja[]
+  SkBelumMemilikiRumah         SkBelumMemilikiRumah[]
+  SkTidakMemilikiPekerjaan     SkTidakMemilikiPekerjaan[]
+  SkUsaha                      SkUsaha[]
+  SkDomisiliLembaga            SkDomisiliLembaga[]
+  SkDomisiliImigrasi           SkDomisiliImigrasi[]
+  SkDomisiliSementara          SkDomisiliSementara[]
+  SkTidakMampu                 SkTidakMampu[]
+  SuratRekomendasiPembelianBbm SuratRekomendasiPembelianBbm[]
+  PendaftaranPindahWni         PendaftaranPindahWni[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Setting {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  namaKepalaDesa String
+  tte            Bytes?
+
+  namaCamat  String?
+  noRegCamat String?
+
+  namaBabinsa    String
+  pangkatBabinsa String
+  nrpBabinsa     String
+  jabatanBabinsa String
+
+  namaBhabinkamtibmas    String
+  pangkatBhabinkamtibmas String
+  nrpBhabinkamtibmas     String
+  jabatanBhabinkamtibmas String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SuratKelahiran {
+  id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+  namaTerkait         String
+  jenisKelaminTerkait Gender
+  tempatLahirTerkait  String
+  tanggalLahirTerkait DateTime
+  alamatTerkait       String
+  namaAyah            String
+  jenisKelaminAyah    Gender
+  agamaAyah           String
+  alamatAyah          String
+  tempatLahirAyah     String
+  tanggalLahirAyah    DateTime
+  namaIbu             String
+  jenisKelaminIbu     Gender
+  agamaIbu            String
+  alamatIbu           String
+  tempatLahirIbu      String
+  tanggalLahirIbu     DateTime
+  status              Status    @default(DIPROSES)
+  pesanDitolak        String?
+  noSurat             String?
+  tanggalPembuatan    DateTime?
+  User                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String    @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SuratKematian {
+  id                      String   @id @default(auto()) @map("_id") @db.ObjectId
+  namaPemohon             String
+  jenisKelaminPemohon     Gender
+  noNikPemohon            String
+  alamatPemohon           String
+  hubunganKeluargaPemohon String
+  namaTerkait             String
+  jenisKelaminTerkait     Gender
+  noNikTerkait            String
+  alamatTerkait           String
+  tanggal                 DateTime
+  penyebab                String
+  tempat                  String
+  status                  Status   @default(DIPROSES)
+
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkBelumMenikah {
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  namaLengkap      String
+  nik              String
+  tanggalLahir     DateTime
+  jenisKelamin     Gender
+  agama            String
+  pekerjaan        String
+  statusPerkawinan StatusPerkawinan
+  kewarganegaraan  String
+  alamat           String
+
+  namaKua          String?
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkIjinKeramaian {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  nama         String
+  nik          String
+  tempatLahir  String
+  tanggalLahir DateTime
+  alamat       String
+  waktu        DateTime
+  maksud       String
+  acara        String
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkPenghasilanOrangTua {
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  namaLengkap      String
+  nik              String
+  tanggalLahir     DateTime
+  jenisKelamin     Gender
+  agama            String
+  pekerjaan        String
+  statusPerkawinan StatusPerkawinan
+  kewarganegaraan  String
+  alamat           String
+  penghasilan      Int
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkIzinBekerja {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  namaLengkap    String
+  nik            String
+  tanggalLahir   DateTime
+  jenisKelamin   Gender
+  agama          String
+  pekerjaan      String
+  bagian         String
+  nomorId        String
+  alamat         String
+  tempatKerja    String
+  alasan         String
+  izinDariHari   DateTime
+  izinSampaiHari DateTime
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkBelumMemilikiRumah {
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  namaLengkap      String
+  nik              String
+  tanggalLahir     DateTime
+  jenisKelamin     Gender
+  agama            String
+  pekerjaan        String
+  statusPerkawinan StatusPerkawinan
+  kewarganegaraan  String
+  alamat           String
+  keperluan        String
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkTidakMemilikiPekerjaan {
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  nama             String
+  nik              String
+  noKk             String
+  tempatLahir      String
+  tanggalLahir     DateTime
+  jenisKelamin     Gender
+  statusPerkawinan StatusPerkawinan
+  pekerjaan        String
+  agama            String
+  alamat           String
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkUsaha {
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  namaLengkap      String
+  nik              String
+  tanggalLahir     DateTime
+  jenisKelamin     Gender
+  agama            String
+  pekerjaan        String
+  statusPerkawinan StatusPerkawinan
+  kewarganegaraan  String
+  alamat           String
+  namaUsaha        String
+  alamatUsaha      String
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkDomisiliLembaga {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  nama          String
+  tempatLahir   String
+  tanggalLahir  DateTime
+  jabatan       String
+  alamat        String
+  namaLembaga   String
+  alamatLembaga String
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkDomisiliImigrasi {
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  namaLengkap      String
+  tanggalLahir     DateTime
+  jenisKelamin     Gender
+  agama            String
+  pekerjaan        String
+  statusPerkawinan StatusPerkawinan
+  kewarganegaraan  String
+  alamat           String
+  keperluan        String
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkDomisiliSementara {
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
+  namaLengkap       String
+  nik               String
+  tanggalLahir      DateTime
+  jenisKelamin      Gender
+  agama             String
+  pekerjaan         String
+  statusPerkawinan  StatusPerkawinan
+  kewarganegaraan   String
+  alamat            String
+  domisiliSementara String
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkTidakMampu {
+  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
+  nama                 String
+  tempatLahir          String
+  tanggalLahir         DateTime
+  nik                  String
+  noKk                 String
+  pekerjaan            String
+  alamat               String
+  namaOrangTua         String
+  tempatLahirOrangTua  String
+  tanggalLahirOrangTua DateTime
+  nikOrangTua          String
+  pekerjaanOrangTua    String
+  alamatOrangTua       String
+  keperluan            String
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SuratRekomendasiPembelianBbm {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  nama               String
+  nik                String
+  alamatUsaha        String
+  konsumenPengguna   String
+  jenisUsahaKegiatan String
+
+  jenisAlat  String
+  jumlahAlat Int
+  fungsiAlat String
+  jamOperasi String
+  konsumsi   String
+
+  alokasiVolume          String?
+  tempatPengambilan      String?
+  nomorLembagaPenyalur   String?
+  lokasi                 String?
+  alatPembelianDigunakan String?
+  masaBerlakuRekomendasi DateTime?
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PendaftaranPindahWni {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  noKk               String
+  namaLengkapPemohon String
+  nik                String
+  jenisPermohonan    String
+
+  alamatAsal    String
+  desaAsal      String
+  kecamatanAsal String
+  kabupatenAsal String
+  provinsiAsal  String
+  kodePosAsal   String
+
+  alamatTujuan    String
+  desaTujuan      String
+  kecamatanTujuan String
+  kabupatenTujuan String
+  provinsiTujuan  String
+  kodePosTujuan   String
+
+  klasifikasiKepindahan String
+  alasanPindah          String
+  jenisKepindahan       String
+  anggotaPindah         AnggotaPindahWni[]
+
+  status           Status    @default(DIPROSES)
+  pesanDitolak     String?
+  noSurat          String?
+  tanggalPembuatan DateTime?
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AnggotaPindahWni {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  nik            String
+  namaLengkap    String
+  masaBerlakuKtp DateTime
+  shdk           String
+
+  PendaftaranPindahWni   PendaftaranPindahWni @relation(fields: [pendaftaranPindahWniId], references: [id], onDelete: Cascade)
+  pendaftaranPindahWniId String               @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

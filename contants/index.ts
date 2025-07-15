@@ -4,6 +4,15 @@ export const maxLengthInput = 50;
 export const alamatPlaceholder =
   "Kp. ... RT ... RW ... Ds. ... Kec. ... Kab. ...";
 
+export const NAMA_PROVINSI = "Jawa Barat";
+export const NAMA_KABUPATEN = "Purwakarta";
+export const NAMA_KECAMATAN = "Cicalengka";
+export const NAMA_DESA = "Sindangkasih";
+export const NAMA_BUPATI = "Saepul Bahri Binzein";
+export const NAMA_KADES = "Abang Ijo Hapidin";
+export const JALAN_DESA =
+  "Jalan Basuki Rahmat No. 34-36 Kec. Purwakarta, Kab.Purwakarta, 41112";
+
 type SuratList = {
   type: "online" | "offline";
   name: string;

@@ -2,6 +2,7 @@ import { PDFDocument, StandardFonts } from "pdf-lib";
 import { generateKopSurat, generateTableBbm, generateUtils } from "./utils";
 import { SuratRekomendasiPembelianBbm } from "@prisma/client";
 import { formatDate } from "@/lib/utils";
+import { NAMA_DESA } from "@/contants";
 
 export const generateSuratRekomendasiPembelianBbm = async (
   data: SuratRekomendasiPembelianBbm,
@@ -242,10 +243,10 @@ export const generateSuratRekomendasiPembelianBbm = async (
   ttd(
     700,
     "right",
-    `Margaasih, ${
+    `${NAMA_DESA}, ${
       data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : ""
     }`,
-    "Kepala Desa Margaasih",
+    `Kepala Desa ${NAMA_DESA}`,
     namaKepalaDesa,
     "",
     true

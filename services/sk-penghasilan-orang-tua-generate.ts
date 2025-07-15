@@ -8,6 +8,7 @@ import {
 } from "@/lib/utils";
 import { SkPenghasilanOrangTua } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
+import { NAMA_DESA } from "@/contants";
 
 export const generateSkPenghasilanOrangTua = async (
   data: SkPenghasilanOrangTua,
@@ -58,7 +59,7 @@ export const generateSkPenghasilanOrangTua = async (
 
   //   Content
   pJustify(
-    "Yang bertanda tangan di bawah ini pemerintah Desa Margaasih Kecamatan Cicalengka",
+    `Yang bertanda tangan di bawah ini pemerintah Desa ${NAMA_DESA} Kecamatan Cicalengka`,
     2,
     true
   );
@@ -78,7 +79,7 @@ export const generateSkPenghasilanOrangTua = async (
     30,
     true
   );
-  p("bersangkutan penduduk Desa Margaasih Kecamatan Cicalengka dan :", 32);
+  p(`bersangkutan penduduk Desa ${NAMA_DESA} Kecamatan Cicalengka dan :`, 32);
 
   p(
     `Benar mempunyai penghasilan rata-rata ${formatRupiah(
@@ -97,10 +98,10 @@ export const generateSkPenghasilanOrangTua = async (
   ttd(
     635,
     "right",
-    `Margaasih, ${
+    `${NAMA_DESA}, ${
       data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
     }`,
-    "Kepala Desa Margaasih",
+    `Kepala Desa ${NAMA_DESA}`,
     namaKepalaDesa ?? "",
     "",
     true

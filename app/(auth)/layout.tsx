@@ -1,4 +1,5 @@
 import Logo from "@/components/logo";
+import { NAMA_BUPATI, NAMA_KADES } from "@/contants";
 import Image from "next/image";
 import React from "react";
 
@@ -12,7 +13,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="text-white hidden lg:flex flex-col items-center justify-center h-full gap-[5%]">
           <h1 className="text-[2.1rem] font-bold leading-10 text-center">
             Selamat Datang di Website Pengelolaan{" "}
-            <span className="text-yellow-400">Desa Margaasih</span>
+            <span className="text-yellow-400">Desa Sindangkasih</span>
           </h1>
           <div className="w-[90%] mt-4 flex items-center justify-center">
             <div className="flex gap-10 [&>*]:flex-1">
@@ -27,17 +28,15 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
                 />
                 <div className="absolute pt-1 text-center w-[120%] left-1/2 -translate-x-1/2">
                   <p className="underline text-xs font-semibold leading-4">
-                    Dr. A.M Dadang Supriatna, S.IP., M.Si
+                    {NAMA_BUPATI}
                   </p>
-                  <p className="text-[0.7rem] leading-4">
-                    Bupati Kabupaten Bandung
-                  </p>
+                  <p className="text-[0.7rem] leading-4">Bupati Purwakarta</p>
                 </div>
               </div>
               <div className="relative">
                 <div className="absolute h-[5%] w-full bottom-0 bg-gradient-to-b from-transparent to-emerald-600" />
                 <Image
-                  src="/kades.png"
+                  src="/wakil_bupati.png"
                   alt="dokumen"
                   width={1000}
                   height={1000}
@@ -45,10 +44,10 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
                 />
                 <div className="absolute pt-1 text-center w-[120%] left-1/2 -translate-x-1/2">
                   <p className="underline text-xs font-semibold leading-4">
-                    Yayan Suryana
+                    {NAMA_KADES}
                   </p>
                   <p className="text-[0.7rem] leading-4">
-                    Kepala Desa Margaasih
+                    Wakil Bupati Purwakarta
                   </p>
                 </div>
               </div>

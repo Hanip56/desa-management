@@ -18,6 +18,7 @@ import { z } from "zod";
 import { useState, useTransition } from "react";
 import login from "@/actions/login";
 import { FormError } from "@/components/form-error";
+import { NAMA_DESA } from "@/contants";
 
 const MasukForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -40,8 +41,7 @@ const MasukForm = () => {
         } else if (data?.success) {
           toast("Selamat datang kembali!", {
             className: "text-emerald-600 font-semibold",
-            description:
-              "Aplikasi pengelolaan surat desa Margaasih, Buat surat pengajuan secara online.",
+            description: `Aplikasi pengelolaan surat desa ${NAMA_DESA}, Buat surat pengajuan secara online.`,
             descriptionClassName: "text-slate-600",
           });
           window.location.href = "/";

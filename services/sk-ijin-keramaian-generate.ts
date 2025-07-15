@@ -9,6 +9,7 @@ import { SkIjinKeramaian } from "@prisma/client";
 import { generateKopSurat, generateUtils } from "./utils";
 import fs from "fs";
 import path from "path";
+import { NAMA_DESA } from "@/contants";
 
 export const generateSkIjinKeramaian = async (
   data: SkIjinKeramaian,
@@ -69,7 +70,7 @@ export const generateSkIjinKeramaian = async (
 
   //   Content
   pJustify(
-    "Pemerintah Desa Margaasih Kecamatan Cicalengka Kabupaten Bandung dalam rangka",
+    `Pemerintah Desa ${NAMA_DESA} Kecamatan Cicalengka Kabupaten Bandung dalam rangka`,
     2,
     true
   );
@@ -142,7 +143,7 @@ export const generateSkIjinKeramaian = async (
     535,
     "right",
     undefined,
-    "Babinsa Desa Margaasih",
+    `Babinsa Desa ${NAMA_DESA}`,
     namaBabinsa ?? "",
     pangkatNrpBabinsa ?? ""
   );
@@ -152,7 +153,7 @@ export const generateSkIjinKeramaian = async (
     535,
     "left",
     undefined,
-    "Bhabinkamtibmas Desa Margaasih",
+    `Bhabinkamtibmas Desa ${NAMA_DESA}`,
     namaBhabinkamtibmas ?? "",
     pangkatNrpBhabinkamtibmas ?? ""
   );
@@ -161,10 +162,10 @@ export const generateSkIjinKeramaian = async (
   ttd(
     685,
     "center",
-    `Margaasih, ${
+    `${NAMA_DESA}, ${
       data.tanggalPembuatan ? formatDate(data.tanggalPembuatan) : "-"
     }`,
-    "Kepala Desa Margaasih",
+    `Kepala Desa ${NAMA_DESA}`,
     namaKepalaDesa ?? "",
     "",
     true
