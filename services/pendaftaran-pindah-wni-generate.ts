@@ -70,8 +70,8 @@ export const generatePendaftaranPindahWni = async (
     tte,
   });
 
-  pHeader(`PEMERINTAHAN PROVINSI ${NAMA_PROVINSI}`, 2);
-  pHeader(`PEMERINTAHAN KABUPATEN ${NAMA_KABUPATEN}`, 4);
+  pHeader(`PEMERINTAHAN PROVINSI ${NAMA_PROVINSI.toUpperCase()}`, 2);
+  pHeader(`PEMERINTAHAN KABUPATEN ${NAMA_KABUPATEN.toUpperCase()}`, 4);
   pColonHeader("KECAMATAN", NAMA_KECAMATAN.toUpperCase(), 6);
   pColonHeader("DESA/KELURAHAN", NAMA_DESA.toUpperCase(), 8);
 
